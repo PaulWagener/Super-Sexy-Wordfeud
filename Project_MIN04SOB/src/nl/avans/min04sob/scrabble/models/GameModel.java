@@ -137,7 +137,7 @@ public class GameModel extends CoreModel {
 		Object[][] newData = newBoard.getData();
 		System.out.println("NEW " +
 				"" + Arrays.deepToString(newData));
-
+		//hoi
 		// First find out which letters where played
 		Object[][] playedLetters =  MatrixUtils.xor(oldData, newData);
 		System.out.println(Arrays.deepToString(playedLetters));
