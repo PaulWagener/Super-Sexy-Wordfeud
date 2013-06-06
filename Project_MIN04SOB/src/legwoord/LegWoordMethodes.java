@@ -191,6 +191,63 @@ public class LegWoordMethodes {
 	////////////////////												\\\\\\\\\\\\\\\\\\\\
 	////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	
+
+	
+	
+	
+
+	
+	////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	////////////////////										\\\\\\\\\\\\\\\\\\\\
+	////////////////////										\\\\\\\\\\\\\\\\\\\\
+	////////////////////										\\\\\\\\\\\\\\\\\\\\
+	////////////////////										\\\\\\\\\\\\\\\\\\\\
+	////////////////////	de code onder dit blok werkt		\\\\\\\\\\\\\\\\\\\\
+	////////////////////										\\\\\\\\\\\\\\\\\\\\
+	////////////////////										\\\\\\\\\\\\\\\\\\\\
+	////////////////////										\\\\\\\\\\\\\\\\\\\\
+	////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	
+	
+	public Object[][] compareFields(Object[][] oldField, Object[][] newField){
+		Object[][] playedLetters = new Object[15][15];
+		for(int vertical = 0; vertical < 15; vertical++){
+			for(int horizontal = 0; horizontal < 15; horizontal++){
+				if(newField[vertical][horizontal] == null){
+					playedLetters[vertical][horizontal] = null;
+				}else if(newField[vertical][horizontal].equals(oldField[vertical][horizontal])){
+					playedLetters[vertical][horizontal] = null;
+				}else{
+					playedLetters[vertical][horizontal] = newField[vertical][horizontal];
+				}
+			}
+		}
+		return playedLetters;
+	}
+
+	public boolean firstTurn(){
+		if(getNextTurnId() == 3){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public int getNextTurnId() {
+		int nextTurn = 0;
+		String getLastTurnQuery = "SELECT Account_naam, ID FROM beurt WHERE Spel_ID = ? ORDER BY ID DESC LIMIT 0, 1";
+		try {
+			ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId))
+					.get();
+			rs.first();
+			nextTurn = rs.getInt(2) + 1;
+		} catch (InterruptedException | ExecutionException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		return nextTurn;
+	}
+
 	public String getNextTurnUsername() {
 		String nextuser = "";
 		String getLastTurnQuery = "SELECT Account_naam, ID FROM beurt WHERE Spel_ID = ? ORDER BY ID DESC LIMIT 0, 1";
@@ -221,54 +278,4 @@ public class LegWoordMethodes {
 		
 	}
 	
-	public int getNextTurnId() {
-		int nextTurn = 0;
-		String getLastTurnQuery = "SELECT Account_naam, ID FROM beurt WHERE Spel_ID = ? ORDER BY ID DESC LIMIT 0, 1";
-		try {
-			ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId))
-					.get();
-			rs.first();
-			nextTurn = rs.getInt(2) + 1;
-		} catch (InterruptedException | ExecutionException | SQLException e) {
-			e.printStackTrace();
-		}
-
-		return nextTurn;
-	}
-	
-	public boolean firstTurn(){
-		if(getNextTurnId() == 3){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	////////////////////										\\\\\\\\\\\\\\\\\\\\
-	////////////////////										\\\\\\\\\\\\\\\\\\\\
-	////////////////////										\\\\\\\\\\\\\\\\\\\\
-	////////////////////										\\\\\\\\\\\\\\\\\\\\
-	////////////////////	de code onder dit blok werkt		\\\\\\\\\\\\\\\\\\\\
-	////////////////////										\\\\\\\\\\\\\\\\\\\\
-	////////////////////										\\\\\\\\\\\\\\\\\\\\
-	////////////////////										\\\\\\\\\\\\\\\\\\\\
-	////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	
-	
-	public Object[][] compareFields(Object[][] oldField, Object[][] newField){
-		Object[][] playedLetters = new Object[15][15];
-		for(int vertical = 0; vertical < 15; vertical++){
-			for(int horizontal = 0; horizontal < 15; horizontal++){
-				if(newField[vertical][horizontal] == null){
-					playedLetters[vertical][horizontal] = null;
-				}else if(newField[vertical][horizontal].equals(oldField[vertical][horizontal])){
-					playedLetters[vertical][horizontal] = null;
-				}else{
-					playedLetters[vertical][horizontal] = newField[vertical][horizontal];
-				}
-			}
-		}
-		return playedLetters;
-	}
 }
