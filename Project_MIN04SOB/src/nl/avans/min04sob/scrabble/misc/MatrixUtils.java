@@ -42,7 +42,7 @@ public class MatrixUtils {
 	 * @return Point[] a list of not null coordinates in the matrix
 	 */
 	public static Point[] getCoordinates(Object[][] matrix) {
-		System.out.println(Arrays.deepToString(matrix));
+		//System.out.println(Arrays.deepToString(matrix));
 		// matrix = crop(matrix);
 		ArrayList<Point> coords = new ArrayList<Point>();
 		for (int col = 0; col < matrix[0].length; col++) {
