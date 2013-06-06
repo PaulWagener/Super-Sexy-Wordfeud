@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.reflect.TypeUtilsTest.This;
 
+import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 
@@ -15,36 +16,22 @@ public class WoordLeggenTest {
 	public static void main(String[] args) {
 		AccountModel acc =  new AccountModel();
 		acc.login("water", "water".toCharArray());
-		BoardModel bm = new BoardModel();
-		bm.setBoardToDefault();
-		LegWoordMethodes lwm = new LegWoordMethodes(651, acc, bm, null, false);
+		BoardModel bmo = new BoardModel();
+		BoardModel bmn = new BoardModel();
+		bmo.setBoardToDefault();
+		bmn.setBoardToDefault();
+		LegWoordMethodes lwm = new LegWoordMethodes(651, acc, null, null, false);
 		
 		//System.out.println(lwm.firstTurn());
 		//System.out.println(lwm.getNextTurnId());
 		//System.out.println(lwm.thisPlayersTurn());
-		System.out.println(lwm.getNextTurnUsername());
+		//System.out.println(lwm.getNextTurnUsername());
 		
-		//om arrayvergelijken te testen
-		/*
+		
+		
+		
 		Object[][] oldBoardData = {
-				{new String("1"), new String("2"), new String("3"), null, null, null, null, null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
-		};
-		Object[][] newBoardData = {
-				{new String("1"), new String("2"), new String("3"), new String("4"), null, null, null, null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -60,8 +47,63 @@ public class WoordLeggenTest {
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
 		};
+		Object[][] newBoardData1 = {
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+		};
 		
+		Object[][] newBoardData2 = {
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, new String("h"), null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+		};
 		
+		for(int vertical = 0; vertical < 15 ; vertical++){
+			for(int horizontal = 0;horizontal < 15; horizontal++){
+				bmo.setValueAt(oldBoardData[vertical][horizontal], vertical, horizontal);	
+			}
+			
+		}
+		for(int vertical = 0; vertical < 15 ; vertical++){
+			for(int horizontal = 0;horizontal < 15; horizontal++){
+				bmn.setValueAt(newBoardData2[vertical][horizontal], vertical, horizontal);	
+			}
+			
+		}
+		
+		try {
+			lwm.checkValidMove(bmo, bmn);
+		} catch (InvalidMoveException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		//om arrayvergelijken te testen
+				/*
 		
 		Object[][] playedTiles = lwm.compareFields(oldBoardData, newBoardData);
 		

@@ -100,86 +100,7 @@ public class LegWoordMethodes {
 	
 	
 	
-	public Object[][] checkValidMove(BoardModel oldBoard, BoardModel newBoard)
-			throws InvalidMoveException {
 
-		
-		Object[][] oldData = oldBoard.getData();
-		System.out.println("OLD " + Arrays.deepToString(oldData));
-		Object[][] newData = newBoard.getData();
-		System.out.println("NEW " +
-				"" + Arrays.deepToString(newData));
-
-		// First find out which letters where played
-		Object[][] playedLetters =  compareFields(oldData, newData);
-		System.out.println(Arrays.deepToString(playedLetters));
-		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-
-		if (firstTurn()) {
-			boolean onStar = false;
-			Point starCoord = oldBoard.getStartPoint();
-			System.out.println("LetterCount: " + letterPositions.length);
-			System.out.println("Star at: X" + starCoord.x + " Y" + starCoord.y);
-
-			// Coords for all currently played letters
-
-			for (Point letterPos : letterPositions) {
-				if (starCoord.x == letterPos.x && starCoord.y == letterPos.y) {
-					onStar = true;
-					break;
-				}
-			}
-
-			if (!onStar) {
-				throw new InvalidMoveException(
-						InvalidMoveException.NOT_ON_START);
-			}
-		}
-
-		if (!MatrixUtils.isEmpty(playedLetters)) {
-			throw new InvalidMoveException(InvalidMoveException.NO_LETTERS_PUT);
-		}
-
-		playedLetters = MatrixUtils.crop(playedLetters);
-
-		Dimension playedWordSize = MatrixUtils.getDimension(playedLetters);
-		if (!MatrixUtils.isAligned(playedWordSize)) {
-			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
-		}
-
-		double max = -1;
-		if (playedWordSize.getHeight() == 1) {
-
-			// Check horizontally connected
-			for (Point letterPos : letterPositions) {
-				if (max != letterPos.getY() - 1 && max != -1) {
-					throw new InvalidMoveException(
-							InvalidMoveException.NOT_CONNECTED);
-				}
-				max = letterPos.getY();
-			}
-		} else {
-			// Check vertically connected
-			for (Point letterPos : letterPositions) {
-				if (max != letterPos.getX() - 1 && max != -1) {
-					throw new InvalidMoveException(
-							InvalidMoveException.NOT_CONNECTED);
-				}
-				max = letterPos.getX();
-			}
-		}
-		
-		return playedLetters;
-		// Everything went better than expected.jpg :)
-	}
-
-	
-	
-	
-	
-	
-
-	
 	////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	////////////////////												\\\\\\\\\\\\\\\\\\\\
 	////////////////////												\\\\\\\\\\\\\\\\\\\\
@@ -277,5 +198,112 @@ public class LegWoordMethodes {
 		}
 		
 	}
+	
+	public Object[][] checkValidMove(BoardModel oldBoard, BoardModel newBoard)
+			throws InvalidMoveException {
+
+		
+		Object[][] oldData = oldBoard.getData();
+		System.out.println("OLD " + Arrays.deepToString(oldData));
+		Object[][] newData = newBoard.getData();
+		System.out.println("NEW " +
+				"" + Arrays.deepToString(newData));
+
+		// First find out which letters where played
+		Object[][] playedLetters =  compareFields(oldData, newData);
+		System.out.println(Arrays.deepToString(playedLetters));
+		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+
+		if (firstTurn()) {
+			boolean onStar = false;
+			Point starCoord = oldBoard.getStartPoint();
+			System.out.println("LetterCount: " + letterPositions.length);
+			System.out.println("Star at: X" + starCoord.x + " Y" + starCoord.y);
+
+			// Coords for all currently played letters
+
+			for (Point letterPos : letterPositions) {
+				if (starCoord.x == letterPos.x && starCoord.y == letterPos.y) {
+					onStar = true;
+					break;
+				}
+			}
+
+			if (!onStar) {
+				throw new InvalidMoveException(
+						InvalidMoveException.NOT_ON_START);
+			}
+		}
+
+		if (MatrixUtils.isEmpty(playedLetters)) {
+			throw new InvalidMoveException(InvalidMoveException.NO_LETTERS_PUT);
+		}
+		
+		if(letterPositions.length < 2){
+			throw new InvalidMoveException(InvalidMoveException.TO_SHORT);
+		}
+		
+		if (!isAlligned(playedLetters)) {
+			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
+		}
+
+		double max = -1;
+		if (getHeight(playedLetters) == 1) {
+
+			// Check horizontally connected
+			for (Point letterPos : letterPositions) {
+				if (max != letterPos.getX() - 1 && max != -1) {
+					throw new InvalidMoveException(
+							InvalidMoveException.NOT_CONNECTED);
+				}
+				max = letterPos.getX();
+			}
+		} else {
+			// Check vertically connected
+			for (Point letterPos : letterPositions) {
+				if (max != letterPos.getY() - 1 && max != -1) {
+					throw new InvalidMoveException(
+							InvalidMoveException.NOT_CONNECTED);
+				}
+				max = letterPos.getY();
+			}
+		}
+		
+		return playedLetters;
+		// Everything went better than expected.jpg :)
+	}
+	
+	public boolean isAlligned (Object[][] playedLetters){
+		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+		int holdX = (int) letterPositions[0].getX();
+		int holdY = (int) letterPositions[0].getY();;
+		if(holdX == (int)letterPositions[1].getX()){
+			for(Point p: letterPositions){
+				if(p.getX() != holdX){
+					return false;
+				}
+			}
+		}else if(holdY == (int)letterPositions[1].getY()){
+			for(Point p: letterPositions){
+				if(p.getY() != holdY){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public int getHeight(Object[][] playedLetters){
+		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+		int holdY = (int)letterPositions[0].getY();
+		for(Point p: letterPositions){
+			if((int)p.getY() != holdY){
+				return 0;
+			}
+		}
+		return 1;
+	}
+	
+	
 	
 }
