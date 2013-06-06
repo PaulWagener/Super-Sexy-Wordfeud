@@ -328,22 +328,6 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public String[][] compareArrays(String[][] bord, String[][] database) {
-		String[][] returns = new String[7][3];
-		int counter = 0;
-		for (int y = 0; y < 15; y++) {
-			for (int x = 0; x < 15; x++) {
-				if (bord[y][x].equals(database[y][x])) {
-				} else {
-					returns[counter][0] = bord[y][x];
-					returns[counter][1] = new String(x + "");
-					returns[counter][2] = new String(y + "");
-				}
-			}
-		}
-		return returns;
-	}
-
 	public void doTurn(int game_id, String accountname, int score, String action) {
 		String q = "INSERT INTO `beurt` (`spel_id`, `account_naam`, `score`, `aktie_type`) VALUES (?,?,?,?)";
 		try {
