@@ -419,7 +419,6 @@ public class GameModel extends CoreModel {
 				}
 			}
 		}
-
 	}
 
 	public BoardModel getBoardModel() {
@@ -556,7 +555,7 @@ public class GameModel extends CoreModel {
 
 				for (int xpos = 0; playedLetters.length > xpos; xpos++) {
 					for (int ypos = 0; playedLetters[xpos].length > ypos; ypos++) {
-						/*
+						
 						 * if
 						 * ((woorden.get(wordCounter).get(letterCounter).getTileId
 						 * () == playedLetters[xpos][ypos].getTileId())) {
@@ -566,7 +565,7 @@ public class GameModel extends CoreModel {
 						 * scoreofcurrentletter = scoreofcurrentletter * 3;
 						 * break; case 3: // dubbel letter scoreofcurrentletter
 						 * = scoreofcurrentletter * 2; break; case 2: // tripple
-						 * woord times3 = true;
+						 woord times3 = true;
 						 * 
 						 * break; case 1: // dubble woord times2 = true;
 						 * 

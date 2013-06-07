@@ -101,7 +101,7 @@ public class LegWoordMethodes {
 	//einde tijdelijk
 	
 	public ArrayList<ArrayList<Tile>> checkValidWord(Tile[][] playedLetters,
-			Tile[][] newBoard) {
+			Tile[][] newBoard) throws InvalidMoveException {
 		// verticaal woord
 		ArrayList<ArrayList<Tile>> verticalenWoorden = new ArrayList<ArrayList<Tile>>();
 		ArrayList<ArrayList<Tile>> horizontalenWoorden = new ArrayList<ArrayList<Tile>>();
@@ -115,10 +115,10 @@ public class LegWoordMethodes {
 					boolean beenLeft = false;
 					ArrayList<Tile> verticaalWoord = new ArrayList<Tile>();
 					ArrayList<Tile> horizontaalWoord = new ArrayList<Tile>();
-					while (counterX > 0) {
+					while (counterX >= 0) {
 						// hij gaat een letter naar links tot hij een lege
 						// plaats tegenkomt.
-						if (newBoard[counterY][counterX - 1] != null
+						if (counterX > 0 && newBoard[counterY][counterX - 1] != null
 								&& (!beenLeft)) {
 							counterX--;
 						} else if (newBoard[counterY][counterX + 1] != null
@@ -137,8 +137,8 @@ public class LegWoordMethodes {
 					counterY = y;
 					counterX = x;
 					boolean beenTop = false;
-					while (counterY > 0) {
-						if (newBoard[counterY - 1][counterX] != null
+					while (counterY >= 0) {
+						if (counterY > 0 && newBoard[counterY - 1][counterX] != null
 								&& (!beenTop)) {
 							counterY--;
 						} else if (newBoard[counterY + 1][counterX] != null
@@ -171,13 +171,87 @@ public class LegWoordMethodes {
 		for (ArrayList<Tile> woord : horizontalenWoorden) {
 			teVergelijkenWoorden.add(woord);
 		}
+		if(teVergelijkenWoorden.size() <2){
+			Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+			if(teVergelijkenWoorden.get(0).size() > letterPositions.length){	
+			}else if(!firstTurn()){
+				throw new InvalidMoveException(InvalidMoveException.STATE_NOT_ATTACHED);
+			}
+		}
 		return teVergelijkenWoorden;
 
 	}
 
 	public int getScore(Tile[][] playedLetters,
-			ArrayList<ArrayList<Tile>> woorden, BoardModel currentBoard) {
-		int Score = 0;
+		ArrayList<ArrayList<Tile>> words, BoardModel currentBoard) {
+		int[][] multipliers = new int[15][15];
+		int totalScore = 0;
+		for(int vertical = 0; vertical < 15; vertical++){
+			for(int horizontal = 0; horizontal < 15; horizontal++){
+				multipliers[vertical][horizontal] = currentBoard.getMultiplier(new Point(horizontal, vertical));
+			}
+		}
+		
+		for(ArrayList<Tile> word : words){
+			int wordscore = 0;
+			boolean times2_1 = false;
+			boolean times2_2 = false;
+			boolean times3_1 = false;
+			boolean times3_2 = false;
+			for(Tile t : word){
+				wordscore = wordscore + t.getValue();
+				for(int vertical=0;vertical<15;vertical++){
+					for(int horizontal=0;horizontal<15;horizontal++){
+						if(playedLetters[vertical][horizontal] != null){
+							if(playedLetters[vertical][horizontal].equals(t)){
+								int multi = multipliers[vertical][horizontal];
+								if(multi==BoardModel.DL){
+									wordscore = wordscore + t.getValue();
+								}else if(multi==BoardModel.TL){
+									wordscore = wordscore + (t.getValue() * 2);
+								}else if(multi==BoardModel.DW){
+									if(times2_1 == false){
+										times2_1 = true;
+									}else{
+										times2_2 = true;
+									}
+								}else if(multi==BoardModel.TW){
+									if(times3_1 == false){
+										times3_1 = true;
+									}else{
+										times3_2 = true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if(times2_1){
+				if(times2_2){
+					wordscore = wordscore * 4;
+				}else{
+					wordscore = wordscore * 2;
+				}
+			}
+			if(times3_1){
+				if(times3_2){
+					wordscore = wordscore * 9;
+				}else{
+					wordscore = wordscore * 3;
+				}
+			}
+			totalScore = totalScore + wordscore;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		/*int Score = 0;
 		for (int wordCounter = 0; wordCounter < woorden.size(); wordCounter++) {
 			int scoreofcurrentword = 0;
 			boolean times3 = false;
@@ -228,12 +302,12 @@ public class LegWoordMethodes {
 
 			Score = +scoreofcurrentword;
 
-		}
+		}*/
 
-		return Score;
+		return totalScore;
 	}
 
-	public void playWord(BoardModel newBoard) {
+	public void playWord(BoardModel newBoard) throws InvalidMoveException {
 		try {
 			Tile[][] newBoardData = newBoard.getTileData();
 			Tile[][] playedLetters = (Tile[][]) checkValidMove(boardModel,
@@ -250,20 +324,18 @@ public class LegWoordMethodes {
 			}
 			checkWordsInDatabase(teVergelijkenWoordenString);
 
-			// int score = getScore(playedLetters, teVergelijkenWoorden,
-			// newBoard);
+			 int score = getScore(playedLetters, teVergelijkenWoorden,
+			 newBoard);
 
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
-			// create een nieuwe beurt in de database;
+			//create een nieuwe beurt in de database;
 			int nextTurn = getNextTurnId();
-			int score = getScore(newBoardData, teVergelijkenWoorden,
-			 boardModel);
-			// Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
-			// .set(getNextTurnUsername()).set(score));
+			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
+			.set(getNextTurnUsername()).set(score));
 			System.out.println("works " + score);
 
 			// leg het woord in de database
-			/*for (int y = 0; y < 15; y++) {
+			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 15; x++) {
 					if (playedLetters[y][x] != null) {
 						Db.run(new Query(
@@ -274,8 +346,8 @@ public class LegWoordMethodes {
 								.set(y + 1).set("Standard").set(""));
 					}
 				}
-			}*/
-		} catch (Exception e) {
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
@@ -334,13 +406,10 @@ public class LegWoordMethodes {
 		Tile[][] playedLetters = new Tile[15][15];
 		for (int vertical = 0; vertical < 15; vertical++) {
 			for (int horizontal = 0; horizontal < 15; horizontal++) {
-				if (newField[vertical][horizontal] == null) {
-					playedLetters[vertical][horizontal] = null;
-				} else if (newField[vertical][horizontal]
-						.equals(oldField[vertical][horizontal])) {
-					playedLetters[vertical][horizontal] = null;
-				} else {
+				if(oldField[vertical][horizontal] == null && newField[vertical][horizontal] != null){
 					playedLetters[vertical][horizontal] = newField[vertical][horizontal];
+				} else {
+					playedLetters[vertical][horizontal] = null;
 				}
 			}
 		}
@@ -433,16 +502,13 @@ public class LegWoordMethodes {
 			throw new InvalidMoveException(InvalidMoveException.NO_LETTERS_PUT);
 		}
 
-		if (letterPositions.length < 2) {
-			throw new InvalidMoveException(InvalidMoveException.TO_SHORT);
-		}
-
 		if (!isAlligned(playedLetters)) {
 			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
 		}
 
-		double max = -1;
-		if (getHeight(playedLetters) == 1) {
+		/*double max = -1;
+		int height = getHeight(playedLetters);
+		if (height == 1) {
 
 			// Check horizontally connected
 			for (Point letterPos : letterPositions) {
@@ -462,11 +528,61 @@ public class LegWoordMethodes {
 				max = letterPos.getY();
 			}
 		}
-
+		*/
+		if(!lettersAreConnected(playedLetters, newBoard)){
+			throw new InvalidMoveException(
+					InvalidMoveException.NOT_CONNECTED);
+		}
+		
 		return playedLetters;
 		// Everything went better than expected.jpg :)
 	}
 
+	public boolean lettersAreConnected(Tile[][] playedLetters, BoardModel newBoard){
+		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+		int lowY = 100;
+		int maxY = 0;
+		int lowX = 100;
+		int maxX = 0;
+		
+		for(Point p :letterPositions){
+			if(p.x < lowX){
+				lowX =p.x;
+			}
+			if(p.x > maxX){
+				maxX =p.x;
+			}
+			if(p.y < lowY){
+				lowY =p.y;
+			}
+			if(p.y > maxY){
+				maxY =p.y;
+			}
+		}
+		
+		if(maxX - lowX == 0){
+			while(maxY >= lowY){
+				Tile[][] data = newBoard.getTileData();
+				Tile tile=data[lowX][maxY];
+				if( tile== null){
+					return false;
+				}
+				maxY--;
+			}
+			
+		}else if(maxY - lowY ==0){
+			while(maxX >= lowX){
+				if(newBoard.getTileData()[maxX][lowY] == null){
+					return false;
+				}
+				maxX--;
+			}
+		}else{
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean isAlligned(Object[][] playedLetters) {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int holdX = (int) letterPositions[0].getX();

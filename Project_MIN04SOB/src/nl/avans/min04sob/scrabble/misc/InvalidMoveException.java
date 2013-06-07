@@ -8,7 +8,7 @@ public class InvalidMoveException extends Exception {
 	public static final int NOT_CONNECTED = 2;
 	public static final int NOT_ON_START = 3;
 	public static final int NO_LETTERS_PUT = 4;
-	public static final int TO_SHORT = 5;
+	public static final int STATE_NOT_ATTACHED = 5;
 	public static final int STATE_DENIED = 6;
 	public static final int STATE_PENDING = 7;
 	public static final int STATE_SETPENDING = 8;
@@ -16,7 +16,7 @@ public class InvalidMoveException extends Exception {
 
 	public InvalidMoveException(int error) {
 		if (ArrayUtils.contains(new int[] { NOT_ALIGNED, NOT_CONNECTED,
-				NOT_ON_START, NO_LETTERS_PUT, TO_SHORT, STATE_DENIED, STATE_PENDING, STATE_SETPENDING}, error)) {
+				NOT_ON_START, NO_LETTERS_PUT, STATE_NOT_ATTACHED, STATE_DENIED, STATE_PENDING, STATE_SETPENDING}, error)) {
 			errorType = error;
 			return;
 		}
@@ -32,8 +32,8 @@ public class InvalidMoveException extends Exception {
 			return "Niet alle letters zijn aaneengesloten.";
 		case NOT_ON_START:
 			return "Er ligt geen letter op de start positie.";
-		case TO_SHORT :
-			return "Het gelegde woord is te kort";
+		case STATE_NOT_ATTACHED :
+			return "Het gelegde woord zit nergens aan vast";
 		case STATE_DENIED :
 			return "Woord is geweigerd";
 		case STATE_PENDING :
