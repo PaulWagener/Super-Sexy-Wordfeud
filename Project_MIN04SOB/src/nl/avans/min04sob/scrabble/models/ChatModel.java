@@ -70,7 +70,6 @@ public class ChatModel extends CoreModel {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void update() {
 		ArrayList<String> newMessages = getNewMessages();
 
