@@ -71,8 +71,13 @@ public class ChatModel extends CoreModel {
 
 	@Override
 	public void update() {
-		ArrayList<String> newMessages = getNewMessages();
-
+		@SuppressWarnings("unchecked")
+		 ArrayList<String> oldMessages = (ArrayList<String>) messages.clone();
+	     ArrayList<String> newMessages = getNewMessages();
+	 
+	    // Only keep the new messages
+		newMessages.removeAll(oldMessages);
+		
 		if (newMessages.size() > 0) {
 			firePropertyChange(Event.CHATUPDATE, null, newMessages);
 		}
