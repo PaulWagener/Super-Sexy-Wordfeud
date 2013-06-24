@@ -19,7 +19,7 @@ public class Tile implements Transferable {
 		mutatable = true;
 	}
 
-	public Tile(String letter, int value, boolean mutatable,int id) {
+	public Tile(String letter, int value, boolean mutatable, int id) {
 		this.letter = letter;
 		this.value = value;
 		this.mutatable = mutatable;
@@ -49,7 +49,8 @@ public class Tile implements Transferable {
 	public void lock() {
 		mutatable = false;
 	}
-	public int getTileId(){
+
+	public int getTileId() {
 		return this.tileId;
 	}
 
@@ -65,7 +66,7 @@ public class Tile implements Transferable {
 
 	@Override
 	public String toString() {
-		return letter;
+		return "<html>" + letter + "<sup>" + value + "</sup></html>";
 	}
 
 	@Override

@@ -95,10 +95,9 @@ public class StashModel extends CoreModel {
 			ResultSet tilewaarde = worker1.get();
 			tilewaarde.next();
 			letter = new Tile(res.getString(3),tilewaarde.getInt(1),Tile.MUTATABLE,res.getInt(2));;
-			String addlettertoplankje = " INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
-			Db.run(new Query(addlettertoplankje).set(spel_ID).set(res.getInt(2)).set(turnid));
+			
 			//addTileToStash(spel_ID, letter);
-		
+			addToPlankje(spel_ID,res.getInt(2),turnid);
 			}
 			
 
@@ -106,6 +105,16 @@ public class StashModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return letter;
+	}
+	public void addToPlankje(int spel_ID,int letter_ID,int turnid){
+		
+		String addlettertoplankje = " INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
+		try {
+			Db.run(new Query(addlettertoplankje).set(spel_ID).set(letter_ID).set(turnid));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public boolean letterleft() {

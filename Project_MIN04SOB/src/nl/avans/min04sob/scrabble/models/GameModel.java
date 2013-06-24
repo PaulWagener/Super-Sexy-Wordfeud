@@ -393,12 +393,14 @@ public class GameModel extends CoreModel {
 
 					newletters[counter] = stash.getRandomLetter(
 							this.getGameId(), turnid);
+					stash.addToPlankje(this.getGameId(),newletters[counter].getTileId(),turnid);
 				}
 			} else {
 				newletters[counter] = letters[counter];
 			}
 
 		}
+		
 		boardPanel.setPlayerTiles(newletters);
 	}
 
@@ -555,8 +557,10 @@ public class GameModel extends CoreModel {
 
 				for (int xpos = 0; playedLetters.length > xpos; xpos++) {
 					for (int ypos = 0; playedLetters[xpos].length > ypos; ypos++) {
-						
+
+						/*
 						 * if
+
 						 * ((woorden.get(wordCounter).get(letterCounter).getTileId
 						 * () == playedLetters[xpos][ypos].getTileId())) {
 						 * 
