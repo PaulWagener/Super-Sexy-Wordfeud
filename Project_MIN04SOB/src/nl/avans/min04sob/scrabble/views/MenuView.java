@@ -256,7 +256,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			addGamesToMenu(gameMenuView, user.getObserverAbleGames());
 			addMenuItemListeners(gameMenuOpen, openGameListener);
 			addMenuItemListeners(gameMenuView, viewGameListener);
-
+			
 			break;
 		case Event.LOGOUT:
 			setLoggedOutState();

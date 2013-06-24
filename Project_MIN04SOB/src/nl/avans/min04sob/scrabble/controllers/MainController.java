@@ -18,6 +18,7 @@ import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
+import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
@@ -38,6 +39,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
+	private CompetitionModel competitionModel;
 
 	private GameModel currentGame;
 
@@ -54,7 +56,7 @@ public class MainController extends CoreController {
 		addView(chatPanel);
 		addView(frame);
 		addModel(boardModel);
-
+		addModel(competitionModel);
 		addModel(account);
 		addModel(new ChallengeModel(account));
 
@@ -175,7 +177,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account).openChallengeView();
+				new CompetitionController(account, competitionModel).openChallengeView();
 				// crtl.toChallenge();
 
 			}
@@ -200,7 +202,7 @@ public class MainController extends CoreController {
 		menu.seeCompetitionsItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account).openCompetitionScores();
+				new CompetitionController(account, competitionModel).openCompetitionScores();
 			}
 		});
 
@@ -208,7 +210,7 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				new CompetitionController(account).openJoinCompetitionView();
+				new CompetitionController(account, competitionModel).openJoinCompetitionView();
 
 				// invController = new InviteController();
 				// invController.setButtonsJoin();
@@ -233,7 +235,7 @@ public class MainController extends CoreController {
 		menu.deleteFromCompetitionItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account)
+				new CompetitionController(account, competitionModel)
 						.openDeleteFromCompetitionView();
 			}
 		});
@@ -242,7 +244,7 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				new CompetitionController(account).openDeleteCompetitionView();
+				new CompetitionController(account, competitionModel).openDeleteCompetitionView();
 
 			}
 		});
@@ -250,7 +252,7 @@ public class MainController extends CoreController {
 		menu.createCompetitionItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new CompetitionController(account).openCreateCompetitionView();
+				new CompetitionController(account, competitionModel).openCreateCompetitionView();
 			}
 		});
 
@@ -363,7 +365,7 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 
 		currGamePanel = new BoardPanel();
-
+		competitionModel = new CompetitionModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
