@@ -92,39 +92,39 @@ public class MatrixUtils {
 	/**
 	 * Performs a XOR on both the matrices, <- is that a word?
 	 * 
-	 * @param oldMatrix
-	 * @param newMatrix
+	 * @param oldData
+	 * @param newData
 	 * @return Object[][] resulted XORed matrix other fields will be null
 	 */
-	public static Tile[][] xor(Tile[][] oldMatrix, Tile[][] newMatrix) {
-		int cols = newMatrix[0].length;
-		int rows = newMatrix.length;
-		Tile[][] xorMatrix = new Tile[rows][cols];
+	public static Object[][] xor(Object[][] oldData, Object[][] newData) {
+		int cols = newData[0].length;
+		int rows = newData.length;
+		Object[][] xorMatrix = new Tile[rows][cols];
 		try {
 			for (int col = 0; col < cols; col++) {
 				for (int row = 0; row < rows; row++) {
 
-					Tile field = null;
+					Object field = null;
 					// Row index exists in both matrices
-					if (row < oldMatrix.length && row < newMatrix.length) {
+					if (row < oldData.length && row < newData.length) {
 
 						// Col index exists in both matrices
-						if (col < oldMatrix[0].length
-								&& col < newMatrix[0].length) {
-							if (!oldMatrix[row][col]
-									.equals(newMatrix[row][col])) {
-								field = newMatrix[row][col];
+						if (col < oldData[0].length
+								&& col < newData[0].length) {
+							if (!oldData[row][col]
+									.equals(newData[row][col])) {
+								field = newData[row][col];
 							}
 
 						} else {
-							field = newMatrix[row][col];
+							field = newData[row][col];
 
 						}
 
 						// X and Y for the new matrix fall in the range
-					} else if (row <= newMatrix.length
-							&& col <= newMatrix[0].length) {
-						field = newMatrix[row][col];
+					} else if (row <= newData.length
+							&& col <= newData[0].length) {
+						field = newData[row][col];
 
 					}
 
