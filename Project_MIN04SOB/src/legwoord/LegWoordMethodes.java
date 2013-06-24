@@ -1,3 +1,4 @@
+
 package legwoord;
 
 import java.awt.Dimension;
@@ -194,32 +195,33 @@ public class LegWoordMethodes {
 		
 		for(ArrayList<Tile> word : words){
 			int wordscore = 0;
-			boolean times2_1 = false;
-			boolean times2_2 = false;
-			boolean times3_1 = false;
-			boolean times3_2 = false;
+			boolean doubleword1 = false;
+			boolean doubleword2 = false;
+			boolean tripleword1 = false;
+			boolean tripleword2 = false;
 			for(Tile t : word){
 				wordscore = wordscore + t.getValue();
 				for(int vertical=0;vertical<15;vertical++){
 					for(int horizontal=0;horizontal<15;horizontal++){
 						if(playedLetters[vertical][horizontal] != null){
 							if(playedLetters[vertical][horizontal].equals(t)){
-								int multi = multipliers[vertical][horizontal];
-								if(multi==BoardModel.DL){
-									wordscore = wordscore + t.getValue();
-								}else if(multi==BoardModel.TL){
-									wordscore = wordscore + (t.getValue() * 2);
-								}else if(multi==BoardModel.DW){
-									if(times2_1 == false){
-										times2_1 = true;
+								int multiplier = multipliers[vertical][horizontal];
+								switch(multiplier){
+								case BoardModel.DL:
+									wordscore = wordscore + (t.getValue()*2);
+								case BoardModel.TL :
+									wordscore = wordscore + (t.getValue() * 3);
+								case BoardModel.DW :
+									if(doubleword1 == false){
+										doubleword1 = true;
 									}else{
-										times2_2 = true;
+										doubleword2 = true;
 									}
-								}else if(multi==BoardModel.TW){
-									if(times3_1 == false){
-										times3_1 = true;
+								case BoardModel.TW :
+									if(tripleword1 == false){
+										tripleword1 = true;
 									}else{
-										times3_2 = true;
+										tripleword2 = true;
 									}
 								}
 							}
@@ -227,15 +229,15 @@ public class LegWoordMethodes {
 					}
 				}
 			}
-			if(times2_1){
-				if(times2_2){
+			if(doubleword1){
+				if(doubleword2){
 					wordscore = wordscore * 4;
 				}else{
 					wordscore = wordscore * 2;
 				}
 			}
-			if(times3_1){
-				if(times3_2){
+			if(tripleword1){
+				if(tripleword2){
 					wordscore = wordscore * 9;
 				}else{
 					wordscore = wordscore * 3;
@@ -243,67 +245,6 @@ public class LegWoordMethodes {
 			}
 			totalScore = totalScore + wordscore;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		/*int Score = 0;
-		for (int wordCounter = 0; wordCounter < woorden.size(); wordCounter++) {
-			int scoreofcurrentword = 0;
-			boolean times3 = false;
-			boolean times2 = false;
-			for (int letterCounter = 0; letterCounter < woorden
-					.get(wordCounter).size(); letterCounter++) {
-				int scoreofcurrentletter = 0;
-				scoreofcurrentletter = woorden.get(wordCounter)
-						.get(letterCounter).getValue();
-
-				// check if any played letter are on special tiles
-
-				for (int xpos = 0; playedLetters.length > xpos; xpos++) {
-					for (int ypos = 0; playedLetters[xpos].length > ypos; ypos++) {
-						if((woorden.get(wordCounter).get(letterCounter).getTileId() == playedLetters[xpos][ypos].getTileId())) { 
-							switch (currentBoard.getMultiplier(new Point(xpos,ypos))) { 
-								case 4: // Triple letter
-									scoreofcurrentletter = scoreofcurrentletter * 3;
-									break; 
-								case 3: // dubbel letter scoreofcurrentletter
-									scoreofcurrentletter = scoreofcurrentletter * 2; 
-									break; 
-								case 2: // tripplewoord
-									times3 = true;
-									break; 
-								case 1: // dubblewoord
-									times2 = true;
-									break; 
-							} 
-						}
-						 
-						if (currentBoard.getMultiplier(new Point(xpos, ypos)) == 1) {
-
-						}
-
-					}
-				}
-				scoreofcurrentword = +scoreofcurrentletter;
-
-			}
-			if (times3) {
-				scoreofcurrentword = scoreofcurrentword * 3;
-
-			}
-			if (times2) {
-				scoreofcurrentword = scoreofcurrentword * 2;
-			}
-
-			Score = +scoreofcurrentword;
-
-		}*/
-
 		return totalScore;
 	}
 

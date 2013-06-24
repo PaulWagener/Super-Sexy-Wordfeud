@@ -93,7 +93,7 @@ public class ChallengeModel extends CoreModel {
 		String insertLetters = "INSERT INTO `letter` (`ID`,`Spel_ID`,`LetterType_LetterSet_Code`,`LetterType_Karakter`) VALUES (?,?,?,?)";
 		String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?)";
 		String getSpelId = "SELECT Max(ID)FROM `spel` ";
-		String getSortOfLetter_Amount = "SELECT `karakter` , `aantal` FROM `lettertype`WHERE `LetterSet_code` = ?";
+		String getSortOfLetter_Amount = "SELECT `karakter`, `aantal` FROM `lettertype` WHERE `LetterSet_code` = ?";
 		try {
 
 			Db.run(new Query(query).set(compID).set(STATE_REQUEST)
@@ -117,7 +117,6 @@ public class ChallengeModel extends CoreModel {
 					Db.run(new Query(insertLetters).set(idCounter)
 							.set(spelId.getInt(1)).set("NL")
 							.set(res.getString(1)));
-
 					idCounter++;
 				}
 			}
