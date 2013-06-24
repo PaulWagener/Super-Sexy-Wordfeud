@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
@@ -323,6 +324,7 @@ public class CompetitionController extends CoreController {
 				String desc = createCompetitionView.getDiscription();
 				try {
 					competitionModel.createCompetition(accountModel, desc);
+					window2.dispose();
 				} catch (DuplicateCompetitionException dupE) {
 					System.out.println("Deze moet dus nog worden afgehandeld");
 					dupE.printStackTrace();
