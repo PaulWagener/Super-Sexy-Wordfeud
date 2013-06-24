@@ -391,11 +391,13 @@ public class GameModel extends CoreModel {
 
 				if (stash.letterleft()) {
 
-					newletters[counter] = stash.getRandomLetter(
-							this.getGameId(), turnid);
-					stash.addToPlankje(this.getGameId(),newletters[counter].getTileId(),turnid);
+					newletters[counter] = stash.getRandomLetter(this.getGameId(), turnid);
+					
+					stash.addToPlankje(this.gameId,newletters[counter].getTileId(),turnid);
 				}
 			} else {
+				
+				
 				newletters[counter] = letters[counter];
 			}
 
