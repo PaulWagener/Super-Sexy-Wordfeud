@@ -336,7 +336,26 @@ public class LegWoordMethodes {
 	
 	
 	
-	
+	public void putCharactersInDatabase (int gameId){
+		try {
+			int totalcounter = 0;
+			ResultSet rs = Db.run(new Query("SELECT * FROM lettertype")).get();
+			while (rs.next()){
+				int counter = 0;
+				int maxofthisletter = rs.getInt("aantal");
+				String letter = rs.getString("karakter");
+				String setcode = rs.getString("LetterSet_code");
+				while(counter < maxofthisletter){
+					Db.run(new Query("INSERT INTO letter(ID, spel_id, lettertype_letterset_code, lettertype_karakter) VALUES (?, ?, ?, ?);").set(totalcounter).set(gameId).set(setcode).set(letter));
+					counter++;
+					totalcounter++;
+				}
+			}
+		}catch (SQLException | InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
 	
 	
 	

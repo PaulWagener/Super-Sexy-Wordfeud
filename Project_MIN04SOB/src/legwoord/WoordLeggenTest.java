@@ -16,9 +16,12 @@ import nl.avans.min04sob.scrabble.models.Tile;
 
 public class WoordLeggenTest {
 
-	/**
-	 * @param args
-	 */
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		AccountModel acc =  new AccountModel();
 		acc.login("water", "water".toCharArray());
@@ -27,13 +30,13 @@ public class WoordLeggenTest {
 		bmo.setBoardToDefault();
 		bmn.setBoardToDefault();
 		LegWoordMethodes lwm = new LegWoordMethodes(656, acc, null, null, false);
-		
+		lwm.putCharactersInDatabase(678);
 		//System.out.println(lwm.firstTurn());
 		//System.out.println(lwm.getNextTurnId());
 		//System.out.println(lwm.thisPlayersTurn());
 		//System.out.println(lwm.getNextTurnUsername());
 		
-		
+		/*
 		Tile[][] oldBoardData1 = {
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -127,26 +130,8 @@ public class WoordLeggenTest {
 			e.printStackTrace();
 		}
 		
-		/*int spelid = 656;
-		try {
-			int totalcounter = 0;
-			ResultSet rs = Db.run(new Query("SELECT * FROM lettertype")).get();
-			while (rs.next()){
-				int counter = 0;
-				int aantal = rs.getInt("aantal");
-				String letter = rs.getString("karakter");
-				String setcode = rs.getString("LetterSet_code");
-				while(counter < aantal){
-					Db.run(new Query("INSERT INTO letter(ID, spel_id, lettertype_letterset_code, lettertype_karakter) VALUES (?, ?, ?, ?);").set(totalcounter).set(spelid).set(setcode).set(letter));
-					counter++;
-					totalcounter++;
-				}
-			}
-			
-		} catch (SQLException | InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		*/
+		
 		/*try {
 			lwm.checkValidMove(bmo, bmn);
 		} catch (InvalidMoveException e) {
@@ -163,5 +148,6 @@ public class WoordLeggenTest {
 		//System.out.println( "old : " + Arrays.deepToString(playedTiles));
 		
 	}
-
+	
+	
 }
