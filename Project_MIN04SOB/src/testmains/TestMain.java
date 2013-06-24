@@ -10,6 +10,7 @@ import nl.avans.min04sob.scrabble.controllers.MainController;
 
 public class TestMain implements Runnable {
 
+	
 	public static final ExecutorService executor = Executors.newFixedThreadPool(10);
 	
 	/**

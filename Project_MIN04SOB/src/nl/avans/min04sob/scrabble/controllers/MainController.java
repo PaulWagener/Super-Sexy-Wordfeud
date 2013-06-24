@@ -30,6 +30,7 @@ import nl.avans.min04sob.scrabble.views.SelectSwapView;
 
 public class MainController extends CoreController {
 
+	
 	private CoreWindow frame;
 	private MenuView menu;
 	private AccountModel account;
