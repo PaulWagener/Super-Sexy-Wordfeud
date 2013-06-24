@@ -12,7 +12,7 @@ import nl.avans.min04sob.scrabble.models.ModeratorModel;
 import nl.avans.min04sob.scrabble.views.AcceptDeclineView;
 
 public class AcceptDeclineController extends CoreController {
-
+ 
 	private AcceptDeclineView adView;
 	private ModeratorModel modModel;
 	public AcceptDeclineController() {
