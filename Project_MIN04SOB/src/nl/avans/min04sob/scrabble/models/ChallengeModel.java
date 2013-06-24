@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
@@ -52,11 +53,11 @@ public class ChallengeModel extends CoreModel {
 					e.printStackTrace();
 				}
 				while (result.next()) {
-					if ((	result.getString(7).equals(STATE_UNKNOWN)
+					if ((result.getString(7).equals(STATE_UNKNOWN)
 							&& result.getString(4).equals(challenger)
 							&& result.getString(5).equals(opponent)
-							&& result.getString(3).equals(STATE_REQUEST) 
-							&& result.getInt(2) == compID)) {
+							&& result.getString(3).equals(STATE_REQUEST) && result
+								.getInt(2) == compID)) {
 
 						error = true;
 						break;
@@ -121,9 +122,11 @@ public class ChallengeModel extends CoreModel {
 				}
 			}
 			String addTurn = "INSERT INTO beurt(ID, spel_id, account_naam, score, aktie_type) VALUES(?, ?, ?, ?, ?)";
-			Db.run(new Query(addTurn).set(1).set(spelId.getInt(1)).set(challenger).set(0).set("Begin"));
-			Db.run(new Query(addTurn).set(2).set(spelId.getInt(1)).set(opponent).set(0).set("Begin"));
-			
+			Db.run(new Query(addTurn).set(1).set(spelId.getInt(1))
+					.set(challenger).set(0).set("Begin"));
+			Db.run(new Query(addTurn).set(2).set(spelId.getInt(1))
+					.set(opponent).set(0).set("Begin"));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -134,7 +137,7 @@ public class ChallengeModel extends CoreModel {
 			throws SQLException // uitgedaagde
 
 	{
-		
+
 		// where
 		String compId = compIdAccountName[0];
 		String nameuitdager = compIdAccountName[1];
@@ -143,8 +146,8 @@ public class ChallengeModel extends CoreModel {
 		String currentdate = dateFormat.format(date);
 
 		String query = "SELECT * FROM Spel WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? AND `competitie_id` = ?";
-		Future<ResultSet> worker = Db.run(new Query(query).set(yourname).set(
-				yourname).set(compId)); 
+		Future<ResultSet> worker = Db.run(new Query(query).set(yourname)
+				.set(yourname).set(compId));
 		ResultSet resultset = null;
 		try {
 			resultset = worker.get();
@@ -156,14 +159,16 @@ public class ChallengeModel extends CoreModel {
 		if (accepted == true) {
 			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? AND `competitie_id` = ?";
 			Db.run(new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED)
-					.set(currentdate).set(nameuitdager).set(yourname).set(compId));
+					.set(currentdate).set(nameuitdager).set(yourname)
+					.set(compId));
 
 		}
 
 		else {
 			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? AND `competitie_id` = ?";
 			Db.run(new Query(query2).set(STATE_FINISHED).set(STATE_REJECTED)
-					.set(currentdate).set(nameuitdager).set(yourname).set(compId));
+					.set(currentdate).set(nameuitdager).set(yourname)
+					.set(compId));
 		}
 		resultset.next();
 		for (int index = 0; index < challenge.size(); index++) {
@@ -184,14 +189,16 @@ public class ChallengeModel extends CoreModel {
 
 	}
 
-	public AccountModel[] getChallengeAblePlayers(int competition_id, String username) {
+	public AccountModel[] getChallengeAblePlayers(int competition_id,
+			String username) {
 		AccountModel[] accounts = new AccountModel[0];
 		int x = 0;
 		try {
 			Future<ResultSet> worker = Db
 					.run(new Query(
 							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` NOT LIKE ? AND `account_naam` NOT IN (SELECT `account_naam_tegenstander` FROM `spel` WHERE `account_naam_uitdager` = ? AND `competitie_id` = ? AND `toestand_type` = ?)")
-							.set(competition_id).set(username).set(username).set(competition_id).set(STATE_REQUEST));
+							.set(competition_id).set(username).set(username)
+							.set(competition_id).set(STATE_REQUEST));
 			ResultSet dbResult = worker.get();
 			accounts = new AccountModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
@@ -203,7 +210,7 @@ public class ChallengeModel extends CoreModel {
 			sql.printStackTrace();
 		}
 		return accounts;
-		
+
 	}
-	
+
 }

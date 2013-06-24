@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
@@ -167,7 +168,9 @@ public class CompetitionModel extends CoreModel {
 				if (dbResult.next()) {
 					compId = dbResult.getInt("id");
 					join(compId, user.getUsername());
+					firePropertyChange(Event.NEWCOMPETITION, null, this);
 				}
+				
 			} catch (SQLException | InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			}
