@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
@@ -15,6 +16,9 @@ public class ModeratorModel extends CoreModel{
 	private final String requestWord = "SELECT woord FROM woordenboek WHERE status = 'Pending' ORDER BY woord ASC";
 	private final String acceptWord = "UPDATE woordenboek set status = 'Accepted' WHERE woord = ?";
 	private final String deniedWord = "UPDATE woordenboek set status = 'Denied' WHERE woord = ?";
+	private int wordsCount;
+	
+	
 	
 	public void acceptWord(String word){
 		
@@ -50,7 +54,10 @@ public class ModeratorModel extends CoreModel{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		String[] words = getRequestedWordList();
+		if (words.length != wordsCount) {
+			firePropertyChange(Event.NEWWORD, null, words);
+			wordsCount = words.length;
+		}
 	}
 }
