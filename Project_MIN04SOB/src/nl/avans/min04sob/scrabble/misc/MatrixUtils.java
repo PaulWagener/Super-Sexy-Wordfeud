@@ -3,7 +3,6 @@ package nl.avans.min04sob.scrabble.misc;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import nl.avans.min04sob.scrabble.models.Tile;
 
