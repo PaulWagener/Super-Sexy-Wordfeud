@@ -274,6 +274,7 @@ public class MenuView extends JMenuBar implements CoreView {
 				gameMenuOpen.setEnabled(true);
 				gameMenu.setEnabled(true);
 			}
+			addMenuItemListeners(gameMenuOpen, openGameListener);
 			break;
 		case Event.NEWCOMPETITION:
 			createCompetitionItem.setEnabled(false);
