@@ -137,8 +137,7 @@ public class MainController extends CoreController {
 				// view maken om de letters te selecteren
 				// TODO moest de methode verander waardoor jullie ding niet goed
 				// meer werkte je moet getValueAt gebruiken nu.
-				Tile[] letters = stashModel
-						.getPlayerTiles(account, currentGame);
+				Tile[] letters = stashModel.getPlayerTiles(account, currentGame);
 				
 				selectSwap(letters);
 			}
@@ -358,7 +357,7 @@ public class MainController extends CoreController {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
-
+		stashModel = new StashModel();
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
@@ -485,20 +484,24 @@ public class MainController extends CoreController {
 		swapWindow.setResizable(false);
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();
-
+		
 		swapView.addButtonListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
+				System.out.println(selectedTiles.get(0).getLetter());
 				for (Tile tile : selectedTiles) {
-					currentGame.doTurn(currentGame.getGameId(), account.getUsername(), 0, "swap");
+					
+					
 					stashModel.RemoveTileFromHand(currentGame.getGameId(), tile);
+					refresh();
 					// elke tile uit hand verwijderen en aan de pot toevoegen
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
 					// rij toevoegen aan beurt
 				}
+				currentGame.doTurn(currentGame.getGameId(), account.getUsername(), 0, "swap");
 			}
 		});
 	}

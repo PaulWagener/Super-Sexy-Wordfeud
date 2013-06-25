@@ -34,17 +34,15 @@ public class SelectSwapView extends CorePanel {
 		
 		list = new JList<Tile>();
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		list.setListData(lettersArray);
 		add(list, "cell 0 1,grow");
 		
 		swapButton = new JButton("Wisselen");
 		add(swapButton, "cell 0 2,alignx right");
-		fillList();
+		
 		
 		}
 
-	public void fillList(){
-		list.setListData(lettersArray);
-	}
 	
 	public void addListListener(MouseAdapter listener){
 		list.addMouseListener(listener);
@@ -59,8 +57,9 @@ public class SelectSwapView extends CorePanel {
 	}
 	
 	public List<Tile> getSelectedTiles(){
-		//return list.getSelectedValue();
 		return list.getSelectedValuesList();
+
+		
 	}
 	
 

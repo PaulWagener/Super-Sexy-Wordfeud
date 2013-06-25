@@ -13,7 +13,7 @@ import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 
 public class StashModel extends CoreModel {
-	private final String letterfrompot = "SELECT L.Spel_ID AS Spel_ID, L.ID AS Letter_ID, L.LetterType_karakter AS Karakter FROM Letter L WHERE L.ID NOT IN (  SELECT Letter_ID  FROM gelegdeletter GL WHERE GL.Spel_ID = L.Spel_ID )AND L.ID NOT IN( SELECT Letter_ID   FROM letterbakjeletter LB WHERE LB.Spel_ID = L.Spel_ID AND LB.Beurt_ID IN  (SELECT MAX(Beurt_ID)  FROM `letterbakjeletter` LX JOIN `beurt` BX ON LX.`Beurt_ID` = BX.`ID` WHERE LX.`Spel_ID` = L.Spel_ID GROUP BY BX.`Account_naam`  ))and L.Spel_ID = 561 ORDER BY L.Spel_ID, L.ID ";
+	private final String letterfrompot = "SELECT L.Spel_ID AS Spel_ID, L.ID AS Letter_ID, L.LetterType_karakter AS Karakter FROM Letter L WHERE L.ID NOT IN (  SELECT Letter_ID  FROM gelegdeletter GL WHERE GL.Spel_ID = L.Spel_ID )AND L.ID NOT IN( SELECT Letter_ID   FROM letterbakjeletter LB WHERE LB.Spel_ID = L.Spel_ID AND LB.Beurt_ID IN  (SELECT MAX(Beurt_ID)  FROM `letterbakjeletter` LX JOIN `beurt` BX ON LX.`Beurt_ID` = BX.`ID` WHERE LX.`Spel_ID` = L.Spel_ID GROUP BY BX.`Account_naam`  ))and L.Spel_ID = ? ORDER BY L.Spel_ID, L.ID ";
 
 
 	public StashModel() {
@@ -97,7 +97,7 @@ public class StashModel extends CoreModel {
 			letter = new Tile(res.getString(3),tilewaarde.getInt(1),Tile.MUTATABLE,res.getInt(2));;
 			
 			//addTileToStash(spel_ID, letter);
-		
+			
 			}
 			
 
@@ -108,7 +108,7 @@ public class StashModel extends CoreModel {
 	}
 	public void addToPlankje(int spel_ID,int letter_ID,int turnid){
 		
-		String addlettertoplankje = " INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
+		String addlettertoplankje = "INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
 		try {
 			Db.run(new Query(addlettertoplankje).set(spel_ID).set(letter_ID).set(turnid));
 		} catch (SQLException e) {
@@ -117,15 +117,18 @@ public class StashModel extends CoreModel {
 		}
 	}
 
-	public boolean letterleft() {
+	public boolean letterleft(int game_id) {
 
-		Future<ResultSet> worker;
 		try {
-			worker = Db.run(new Query(letterfrompot));
+
+			Future<ResultSet> worker =  Db.run(new Query(letterfrompot).set(game_id));
+			
 			ResultSet res = worker.get();
 
 			int numRows = Query.getNumRows(res);
+			System.out.println(numRows);
 			if (numRows == 0) {
+				
 				return false;
 			} else {
 				return true;
@@ -151,7 +154,7 @@ public class StashModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		getRandomLetter(game_id, turn_id);
+	 
 	}
 
 	@Override
