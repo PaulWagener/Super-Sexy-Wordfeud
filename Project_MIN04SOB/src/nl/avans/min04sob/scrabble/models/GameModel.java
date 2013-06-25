@@ -147,7 +147,8 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public void getBoardFromDatabase() {
+	public BoardModel getBoardFromDatabase() {
+		BoardModel oldBoard = new BoardModel();
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getBoardQuery)
 					.set(gameId));
@@ -160,7 +161,7 @@ public class GameModel extends CoreModel {
 					String character = rs.getString("LetterType_karakter");
 					if (character.equalsIgnoreCase("?")) {
 
-						boardModel
+						oldBoard
 								.setValueAt(
 										new Tile(
 												rs.getString("BlancoLetterKarakter"),
@@ -172,7 +173,7 @@ public class GameModel extends CoreModel {
 								getTileValue).set(character).set(letterSet));
 						ResultSet tilewaarde = worker1.get();
 						tilewaarde.next();
-						boardModel.setValueAt(
+						oldBoard.setValueAt(
 								new Tile(character, tilewaarde.getInt(1),
 										Tile.NOT_MUTATABLE, rs.getInt("ID")),
 								y, x);
@@ -183,6 +184,7 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
+		return oldBoard;
 	}
 
 	
@@ -623,14 +625,14 @@ public class GameModel extends CoreModel {
 	}
 	
 	//legwoord methodes // 
-	public void playWord(BoardModel newBoard) throws InvalidMoveException {
+	public void playWord() throws InvalidMoveException {
 		if(!getNextTurnUsername().equals(currentUser.getUsername())){
 			throw new InvalidMoveException(InvalidMoveException.STATE_NOTYOURTURN);
 		}
 		try {
-			Tile[][] newBoardData = newBoard.getTileData();
-			Tile[][] playedLetters = (Tile[][]) checkValidMove(boardModel,
-					newBoard);
+			Tile[][] newBoardData = boardModel.getTileData();
+			Tile[][] playedLetters = (Tile[][]) checkValidMove(getBoardFromDatabase(),
+					boardModel);
 			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
 					playedLetters, newBoardData);
@@ -644,7 +646,7 @@ public class GameModel extends CoreModel {
 			checkWordsInDatabase(teVergelijkenWoordenString);
 
 			 int score = getScore(playedLetters, teVergelijkenWoorden,
-			 newBoard);
+			 boardModel);
 
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
 			//create een nieuwe beurt in de database;
