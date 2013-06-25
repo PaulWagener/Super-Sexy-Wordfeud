@@ -65,8 +65,7 @@ public class CompetitionController extends CoreController {
 	}
 
 	public void getCompetitions(String username) {
-		competitionView
-				.fillCompetitions(accountModel.getCompetitions());
+		competitionView.fillCompetitions(accountModel.getCompetitions());
 	}
 
 	public int getCompID() { // competition ID meegeven
@@ -75,14 +74,14 @@ public class CompetitionController extends CoreController {
 
 	public void getParticipants(int competition_id) {
 		competitionView.fillPlayerList(competitionModel
-				.getUsersFromCompetition(competition_id, accountModel.getUsername()));
+				.getUsersFromCompetition(competition_id,
+						accountModel.getUsername()));
 	}
-	
-	public void getChallengeAbleUsers(int competition_id) {
-		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(competition_id, accountModel.getUsername()));
-	}
-	
 
+	public void getChallengeAbleUsers(int competition_id) {
+		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(
+				competition_id, accountModel.getUsername()));
+	}
 
 	@Override
 	public void initialize() {
@@ -94,7 +93,7 @@ public class CompetitionController extends CoreController {
 		window1.add(competitionScoreView);
 		window1.setResizable(false);
 		window1.setTitle("Competitie Scores");
-		window1.setPreferredSize(new Dimension(1000,300));
+		window1.setPreferredSize(new Dimension(1000, 300));
 		window1.pack();
 		window1.setLocationRelativeTo(null);
 		getAllCompetitionsScore();
@@ -111,16 +110,15 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					CompetitionModel selectedComp = competitionScoreView.getSelectedCompetition();
+					CompetitionModel selectedComp = competitionScoreView
+							.getSelectedCompetition();
 					competitionScoreView.emptyTable();
-					for (Object[] row : selectedComp.getRanking(selectedComp.getCompId())) {
+					for (Object[] row : selectedComp.getRanking()) {
 						competitionScoreView.addRow(row);
 					}
 				}
 			}
 		});
-
-		
 
 	}
 
@@ -128,7 +126,7 @@ public class CompetitionController extends CoreController {
 		window = new CoreWindow();
 		window.add(competitionView);
 		window.setTitle("Speler uitdagen");
-		window.setMinimumSize(new Dimension(550,450));
+		window.setMinimumSize(new Dimension(550, 450));
 		window.setResizable(true);
 		window.pack();
 		window.setLocationRelativeTo(null);
@@ -175,7 +173,7 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		window.setTitle("Competitie verwijderen");
 
-		window.setMinimumSize(new Dimension(550,450));
+		window.setMinimumSize(new Dimension(550, 450));
 		window.setResizable(true);
 		window.pack();
 		window.setLocationRelativeTo(null);
@@ -211,7 +209,7 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		window.setTitle("Verwijderen uit competitie");
 
-		window.setMinimumSize(new Dimension(550,450));
+		window.setMinimumSize(new Dimension(550, 450));
 		window.pack();
 		window.setLocationRelativeTo(null);
 		competitionView.addBackListener(new ActionListener() {
@@ -245,7 +243,7 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		window.setTitle("Competitie deelnemen");
 
-		window.setMinimumSize(new Dimension(550,450));
+		window.setMinimumSize(new Dimension(550, 450));
 		window.setResizable(true);
 		window.pack();
 		window.setLocationRelativeTo(null);
@@ -295,8 +293,8 @@ public class CompetitionController extends CoreController {
 
 	}
 
-	public void openCreateCompetitionView(){
-		//createCompetitionView= new CreateCompetitionView();
+	public void openCreateCompetitionView() {
+		// createCompetitionView= new CreateCompetitionView();
 		window2 = new CoreWindow();
 		window2.add(createCompetitionView);
 		window2.setTitle("Competitie aanmaken");

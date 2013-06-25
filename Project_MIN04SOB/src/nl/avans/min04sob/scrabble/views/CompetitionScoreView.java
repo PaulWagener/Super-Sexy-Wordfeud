@@ -59,11 +59,12 @@ public class CompetitionScoreView extends CorePanel {
 
 	public void setColumns() {
 		tableModel.addColumn("Naam");
-		//tableModel.addColumn("Aantal wedstrijden");
-		//tableModel.addColumn("Totaal punten");
-		//tableModel.addColumn("gemiddelde punten");
-		//tableModel.addColumn("gewonnen/ verloren");
-		tableModel.addColumn("Bayesian_gemiddelde");
+		tableModel.addColumn("Aantal wedstrijden");
+		tableModel.addColumn("Totaal punten");
+		tableModel.addColumn("Gemiddelde punten");
+		tableModel.addColumn("Gewonnen");
+		tableModel.addColumn("Verloren");
+		tableModel.addColumn("Bayesian");
 	}
 
 	public void addRow(Object[] dataRow) {
@@ -106,11 +107,6 @@ public class CompetitionScoreView extends CorePanel {
 	}
 
 	public void emptyTable() {
-		int i = 0;
-		while (tableModel.getRowCount() > i) {
-			tableModel.removeRow(i);
-			i++;
-		}
-		
+		tableModel.setRowCount(0);
 	}
 }
