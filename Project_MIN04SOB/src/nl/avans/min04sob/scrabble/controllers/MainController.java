@@ -151,13 +151,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				/*
-				 * BoardModel newBoard = BoardModel.newInstance(boardModel);
-				 * currentGame.getBoardFromDatabase(); BoardModel oldBoard =
-				 * BoardModel.newInstance(boardModel);
-				 * currentGame.checkValidMove(oldBoard, newBoard);
-				 */
-				currentGame.playWord(boardModel);
+				
 			}
 		});
 	}
