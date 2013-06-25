@@ -289,17 +289,24 @@ public class BoardPanel extends CorePanel {
 		passButton.setEnabled(false);
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
-		//playButton.setEnabled(false);
+		playButton.setEnabled(false);
+		
 	}
 	
 	public void playerView() {
 		passButton.setEnabled(true);
 		resignButton.setEnabled(true);
 		swapButton.setEnabled(true);
-		//playButton.setEnabled(false);
+		playButton.setEnabled(true);
 	}
 
 	public void infoBox(String infoMessage, String location){
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
     }
+	public void enablePreviousButton(){
+		this.prevButton.setEnabled(true);
+	}
+	public void disablePreviousButton(){
+		this.prevButton.setEnabled(false);
+	}
 }
