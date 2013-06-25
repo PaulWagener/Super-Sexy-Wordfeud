@@ -28,10 +28,8 @@ import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
 import nl.avans.min04sob.scrabble.views.SelectSwapView;
 
-
 public class MainController extends CoreController {
 
-	
 	private CoreWindow frame;
 	private MenuView menu;
 	private AccountModel account;
@@ -49,13 +47,14 @@ public class MainController extends CoreController {
 	private SelectSwapView swapView;
 
 	private StashModel stashModel;
+
 	
-	private boolean firstgame;
 
 	public MainController() {
 
 		initialize();
 		addListeners();
+		
 		addView(menu);
 		addView(chatPanel);
 		addView(frame);
@@ -109,7 +108,7 @@ public class MainController extends CoreController {
 					currentGame.getBoardModel().update();
 
 					updatelabels(currentGame.getCurrentobserveturn());
-				} else{
+				} else {
 					currGamePanel.disableNextButton();
 				}
 			}
@@ -140,9 +139,10 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				Tile[] letters = stashModel.getPlayerTiles(account, currentGame);
-				
+
+				Tile[] letters = stashModel
+						.getPlayerTiles(account, currentGame);
+
 				selectSwap(letters);
 			}
 		});
@@ -151,10 +151,12 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				/*BoardModel newBoard = BoardModel.newInstance(boardModel);
-				currentGame.getBoardFromDatabase();
-				BoardModel oldBoard = BoardModel.newInstance(boardModel);
-				currentGame.checkValidMove(oldBoard, newBoard);*/
+				/*
+				 * BoardModel newBoard = BoardModel.newInstance(boardModel);
+				 * currentGame.getBoardFromDatabase(); BoardModel oldBoard =
+				 * BoardModel.newInstance(boardModel);
+				 * currentGame.checkValidMove(oldBoard, newBoard);
+				 */
 				currentGame.playWord(boardModel);
 			}
 		});
@@ -178,7 +180,8 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account, competitionModel).openChallengeView();
+				new CompetitionController(account, competitionModel)
+						.openChallengeView();
 				// crtl.toChallenge();
 
 			}
@@ -203,7 +206,8 @@ public class MainController extends CoreController {
 		menu.seeCompetitionsItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account, competitionModel).openCompetitionScores();
+				new CompetitionController(account, competitionModel)
+						.openCompetitionScores();
 			}
 		});
 
@@ -211,7 +215,8 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				new CompetitionController(account, competitionModel).openJoinCompetitionView();
+				new CompetitionController(account, competitionModel)
+						.openJoinCompetitionView();
 
 				// invController = new InviteController();
 				// invController.setButtonsJoin();
@@ -245,7 +250,8 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				new CompetitionController(account, competitionModel).openDeleteCompetitionView();
+				new CompetitionController(account, competitionModel)
+						.openDeleteCompetitionView();
 
 			}
 		});
@@ -253,7 +259,8 @@ public class MainController extends CoreController {
 		menu.createCompetitionItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new CompetitionController(account, competitionModel).openCreateCompetitionView();
+				new CompetitionController(account, competitionModel)
+						.openCreateCompetitionView();
 			}
 		});
 
@@ -334,7 +341,7 @@ public class MainController extends CoreController {
 	}
 
 	private void refresh() {
-		boardModel.removeMutatable();
+
 		openGame(currentGame);
 	}
 
@@ -362,7 +369,7 @@ public class MainController extends CoreController {
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		stashModel = new StashModel();
-		firstgame = true;
+		
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
@@ -382,6 +389,7 @@ public class MainController extends CoreController {
 	protected void openGame(GameModel selectedGame) {
 		addModel(selectedGame);
 		removeModel(chatModel);
+
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
@@ -406,12 +414,11 @@ public class MainController extends CoreController {
 
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
-		
-		if(firstgame){
+		if (!(selectedGame.HasButtons())) {
+
 			addButtonListeners();
-			firstgame = false;
+			selectedGame.SetButtons(true);
 		}
-		
 
 		openPanels();
 
@@ -493,24 +500,25 @@ public class MainController extends CoreController {
 		swapWindow.setResizable(false);
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();
-		
+
 		swapView.addButtonListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				System.out.println(selectedTiles.get(0).getLetter());
 				for (Tile tile : selectedTiles) {
-					
-					
+
 					stashModel.RemoveTileFromHand(currentGame.getGameId(), tile);
-					refresh();
+
 					// elke tile uit hand verwijderen en aan de pot toevoegen
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
 					// rij toevoegen aan beurt
 				}
-				currentGame.doTurn(currentGame.getGameId(), account.getUsername(), 0, "swap");
+				refresh();
+				currentGame.doTurn(currentGame.getGameId(),
+						account.getUsername(), 0, "swap");
 			}
 		});
 	}

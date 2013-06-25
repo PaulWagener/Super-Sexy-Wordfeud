@@ -72,6 +72,7 @@ public class GameModel extends CoreModel {
 	private final String getnumberofturns = "SELECT max(ID) FROM beurt   WHERE Spel_ID = ?";
 	private final boolean observer;
 	private boolean hasTurn = false;
+	private boolean hasButtons = false;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
 			BoardPanel boardPanel, boolean observer) {
@@ -274,6 +275,12 @@ public class GameModel extends CoreModel {
 		}
 		return teVergelijkenWoorden;
 
+	}
+	public boolean HasButtons(){
+		return hasButtons;
+	}
+	public void SetButtons(boolean hasbuttons){
+		this.hasButtons = hasbuttons;
 	}
 
 	public void playWord(BoardModel newBoard) {
