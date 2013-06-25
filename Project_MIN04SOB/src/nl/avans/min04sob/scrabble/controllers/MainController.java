@@ -340,7 +340,7 @@ public class MainController extends CoreController {
 	}
 
 	private void refresh() {
-
+		boardModel.removeMutatable();
 		openGame(currentGame);
 	}
 
@@ -517,7 +517,7 @@ public class MainController extends CoreController {
 				}
 				refresh();
 				currentGame.doTurn(currentGame.getGameId(),
-						account.getUsername(), 0, "swap");
+						account.getUsername(), 0, "Swap");
 			}
 		});
 	}

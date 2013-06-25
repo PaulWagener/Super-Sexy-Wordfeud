@@ -59,10 +59,10 @@ public class CompetitionScoreView extends CorePanel {
 
 	public void setColumns() {
 		tableModel.addColumn("Naam");
-		tableModel.addColumn("Aantal wedstrijden");
-		tableModel.addColumn("Totaal punten");
-		tableModel.addColumn("gemiddelde punten");
-		tableModel.addColumn("gewonnen/ verloren");
+		//tableModel.addColumn("Aantal wedstrijden");
+		//tableModel.addColumn("Totaal punten");
+		//tableModel.addColumn("gemiddelde punten");
+		//tableModel.addColumn("gewonnen/ verloren");
 		tableModel.addColumn("Bayesian_gemiddelde");
 	}
 
@@ -106,8 +106,11 @@ public class CompetitionScoreView extends CorePanel {
 	}
 
 	public void emptyTable() {
-		for (int i = 0; i < tableModel.getRowCount(); i++) {
+		int i = 0;
+		while (tableModel.getRowCount() > i) {
 			tableModel.removeRow(i);
+			i++;
 		}
+		
 	}
 }
