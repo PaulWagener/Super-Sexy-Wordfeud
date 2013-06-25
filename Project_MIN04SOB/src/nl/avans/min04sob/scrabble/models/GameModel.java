@@ -28,6 +28,7 @@ public class GameModel extends CoreModel {
 	private boolean iamchallenger;
 	private BoardPanel boardPanel;
 	private int currentobserveturn;
+	private StashModel stash;
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
@@ -73,7 +74,7 @@ public class GameModel extends CoreModel {
 		this.boardModel = boardModel;
 		this.boardPanel = boardPanel;
 		currentUser = user;
-		 new StashModel();
+		stash = new StashModel();
 
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getGameQuery)
