@@ -13,11 +13,12 @@ public class InvalidMoveException extends Exception {
 	public static final int STATE_PENDING = 7;
 	public static final int STATE_SETPENDING = 8;
 	public static final int STATE_NOTYOURTURN = 9;
+	public static final int STATE_TOSHORT_NOTATTACHED = 10;
 	private int errorType;
 
 	public InvalidMoveException(int error) {
 		if (ArrayUtils.contains(new int[] { NOT_ALIGNED, NOT_CONNECTED,
-				NOT_ON_START, NO_LETTERS_PUT, STATE_NOT_ATTACHED, STATE_DENIED, STATE_PENDING, STATE_SETPENDING, STATE_NOTYOURTURN}, error)) {
+				NOT_ON_START, NO_LETTERS_PUT, STATE_NOT_ATTACHED, STATE_DENIED, STATE_PENDING, STATE_SETPENDING, STATE_NOTYOURTURN, STATE_TOSHORT_NOTATTACHED}, error)) {
 			errorType = error;
 			return;
 		}
@@ -43,6 +44,8 @@ public class InvalidMoveException extends Exception {
 			return "Woord wordt voorgesteld";
 		case STATE_NOTYOURTURN :
 			return "Het is uw beurt niet";
+		case STATE_TOSHORT_NOTATTACHED :
+			return "Er zijn te weinig letters gelegd";
 		case NO_LETTERS_PUT:
 		default:
 			return "Er zijn geen letters neergelegd.";

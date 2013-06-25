@@ -289,17 +289,40 @@ public class BoardPanel extends CorePanel {
 		passButton.setEnabled(false);
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
-		//playButton.setEnabled(false);
+		playButton.setEnabled(false);
+		refreshButton.setEnabled(false);
+
 	}
 	
 	public void playerView() {
 		passButton.setEnabled(true);
 		resignButton.setEnabled(true);
 		swapButton.setEnabled(true);
-		//playButton.setEnabled(false);
+		playButton.setEnabled(true);
+		refreshButton.setEnabled(true);
+
 	}
 
-	public void infoBox(String infoMessage, String location){
-        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
+	public void infoBox(String infoMessage, String title){
+        JOptionPane.showMessageDialog(null, infoMessage, title, JOptionPane.INFORMATION_MESSAGE);
     }
+
+	public void enablePreviousButton(){
+		this.prevButton.setEnabled(true);
+	}
+	public void disablePreviousButton(){
+		this.prevButton.setEnabled(false);
+	}
+
+	
+	public Tile[][] getNewBoard(){
+		Tile[][] newBoard = new Tile[15][15];
+		for(int rowIndex=0;rowIndex<15;rowIndex++){
+			for(int columnIndex=0;columnIndex<15;columnIndex++){
+				newBoard[rowIndex][columnIndex] = (Tile)this.playBoard.getModel().getValueAt(rowIndex, columnIndex);
+			}
+		}
+		return newBoard;
+	}
+
 }
