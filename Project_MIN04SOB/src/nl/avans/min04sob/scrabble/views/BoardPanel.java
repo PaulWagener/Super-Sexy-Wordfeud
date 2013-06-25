@@ -299,8 +299,8 @@ public class BoardPanel extends CorePanel {
 		//playButton.setEnabled(false);
 	}
 
-	public void infoBox(String infoMessage, String location){
-        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
+	public void infoBox(String infoMessage, String title){
+        JOptionPane.showMessageDialog(null, infoMessage, title, JOptionPane.INFORMATION_MESSAGE);
     }
 	
 	public Tile[][] getNewBoard(){

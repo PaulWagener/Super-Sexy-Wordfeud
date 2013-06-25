@@ -785,7 +785,10 @@ public class GameModel extends CoreModel {
 		}
 		if (teVergelijkenWoorden.size() < 2) {
 			Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-			if (teVergelijkenWoorden.get(0).size() > letterPositions.length) {
+			if(teVergelijkenWoorden.size()==0){
+				throw new InvalidMoveException(
+						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
+			}else if (teVergelijkenWoorden.get(0).size() > letterPositions.length) {
 			} else if (!thisTurnIsFirstTurn()) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
