@@ -152,7 +152,14 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					currentGame.playWord();
+					BoardModel newBoard = new BoardModel();
+					for(int vertical = 0; vertical < 15 ; vertical++){
+						for(int horizontal = 0;horizontal < 15; horizontal++){
+							newBoard.setValueAt(currGamePanel.getNewBoard()[vertical][horizontal], vertical, horizontal);	
+						}
+						
+					}
+					currentGame.playWord(newBoard);
 					
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
@@ -402,7 +409,7 @@ public class MainController extends CoreController {
 		boardModel = selectedGame.getBoardModel();
 		addModel(boardModel);
 		addView(currGamePanel);
-
+		currentGame.setBoardModel(currentGame.getBoardFromDatabase());
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 

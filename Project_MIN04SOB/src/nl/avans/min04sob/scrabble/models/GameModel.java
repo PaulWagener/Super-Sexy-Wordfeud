@@ -234,7 +234,11 @@ public class GameModel extends CoreModel {
 	public int getCurrentobserveturn() {
 		return currentobserveturn;
 	}
-
+	
+	public void setBoardModel(BoardModel model){
+		boardModel = model;
+	}
+	
 	public int getCurrentValueForThisTurn() {
 
 		// Tile[][] oldData = (Tile[][]) boardModel.getData();
@@ -624,16 +628,16 @@ public class GameModel extends CoreModel {
 
 
 	// legwoord methodes //
-	public void playWord() throws InvalidMoveException {
+	public void playWord(BoardModel newBoard) throws InvalidMoveException {
 		if (!getNextTurnUsername().equals(currentUser.getUsername())) {
 			throw new InvalidMoveException(
 					InvalidMoveException.STATE_NOTYOURTURN);
 
 		}
 		try {
-			Tile[][] newBoardData = boardModel.getTileData();
+			Tile[][] newBoardData = newBoard.getTileData();
 			Tile[][] playedLetters = (Tile[][]) checkValidMove(getBoardFromDatabase(),
-					boardModel);
+					newBoard);
 			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
 					playedLetters, newBoardData);
@@ -648,7 +652,7 @@ public class GameModel extends CoreModel {
 
 
 			 int score = getScore(playedLetters, teVergelijkenWoorden,
-			 boardModel);
+			 newBoard);
 
 
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
@@ -961,13 +965,13 @@ public class GameModel extends CoreModel {
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
 		;
-		if (holdX == (int) letterPositions[1].getX()) {
+		if (holdX == (int) letterPositions[0].getX()) {
 			for (Point p : letterPositions) {
 				if (p.getX() != holdX) {
 					return false;
 				}
 			}
-		} else if (holdY == (int) letterPositions[1].getY()) {
+		} else if (holdY == (int) letterPositions[0].getY()) {
 			for (Point p : letterPositions) {
 				if (p.getY() != holdY) {
 					return false;
