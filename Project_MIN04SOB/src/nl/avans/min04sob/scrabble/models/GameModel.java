@@ -80,7 +80,7 @@ public class GameModel extends CoreModel {
 		this.boardModel = boardModel;
 		this.boardPanel = boardPanel;
 		currentUser = user;
-		 stash = new StashModel();
+		stash = new StashModel();
 
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getGameQuery)
@@ -128,21 +128,26 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-
-
-	public boolean HasButtons(){
+	public boolean HasButtons() {
 		return hasButtons;
 	}
-	public void SetButtons(boolean hasbuttons){
+
+	public void SetButtons(boolean hasbuttons) {
 		this.hasButtons = hasbuttons;
 	}
 
 	public void doTurn(int game_id, String accountname, int score, String action) {
-		String q = "INSERT INTO `beurt` (`spel_id`, `account_naam`, `score`, `aktie_type`) VALUES (?,?,?,?)";
+		int x = 0;
+		String s = "SELECT Max( id ) FROM beurt WHERE `Spel_ID` =?";
+		
 		try {
-			Db.run(new Query(q).set(game_id).set(accountname).set(score)
-					.set(action));
-		} catch (SQLException e) {
+			Future<ResultSet> worker = Db.run(new Query(s).set(gameId));
+			ResultSet rs = worker.get();
+			rs.next();
+			 x = rs.getInt(1)+1;
+			 String q1 = "INSERT INTO `beurt` (`ID`, `Spel_ID`, `Account_naam`, `score`, `Aktie_type`) VALUES('"+x+"', '"+game_id+"', '"+accountname+"', '"+score+"', '"+action+"')";
+			Db.run(new Query(q1));
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
@@ -185,8 +190,6 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	
-	
 	public void setplayertilesfromdatabase(int turnid) {
 
 		StashModel stash = new StashModel();
@@ -200,18 +203,19 @@ public class GameModel extends CoreModel {
 
 				if (stash.letterleft(this.getGameId())) {
 
-					newletters[counter] = stash.getRandomLetter(this.getGameId(), turnid);
-					stash.addToPlankje(this.gameId,newletters[counter].getTileId(),turnid);
-					
+					newletters[counter] = stash.getRandomLetter(
+							this.getGameId(), turnid);
+					stash.addToPlankje(this.gameId,
+							newletters[counter].getTileId(), turnid);
+
 				}
 			} else {
-				
-				
+
 				newletters[counter] = letters[counter];
 			}
 
 		}
-		
+
 		boardPanel.setPlayerTiles(newletters);
 	}
 
@@ -621,11 +625,12 @@ public class GameModel extends CoreModel {
 	public void updatelastturn() {
 		currentobserveturn = getNumberOfTotalTurns();
 	}
-	
-	//legwoord methodes // 
+
+	// legwoord methodes //
 	public void playWord(BoardModel newBoard) throws InvalidMoveException {
-		if(!getNextTurnUsername().equals(currentUser.getUsername())){
-			throw new InvalidMoveException(InvalidMoveException.STATE_NOTYOURTURN);
+		if (!getNextTurnUsername().equals(currentUser.getUsername())) {
+			throw new InvalidMoveException(
+					InvalidMoveException.STATE_NOTYOURTURN);
 		}
 		try {
 			Tile[][] newBoardData = newBoard.getTileData();
@@ -643,14 +648,13 @@ public class GameModel extends CoreModel {
 			}
 			checkWordsInDatabase(teVergelijkenWoordenString);
 
-			 int score = getScore(playedLetters, teVergelijkenWoorden,
-			 newBoard);
+			int score = getScore(playedLetters, teVergelijkenWoorden, newBoard);
 
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
-			//create een nieuwe beurt in de database;
+			// create een nieuwe beurt in de database;
 			int nextTurn = getNextTurnId();
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
-			.set(getNextTurnUsername()).set(score));
+					.set(getNextTurnUsername()).set(score));
 			System.out.println("works " + score);
 
 			// leg het woord in de database
@@ -671,7 +675,7 @@ public class GameModel extends CoreModel {
 		}
 
 	}
-	
+
 	private void checkWordsInDatabase(ArrayList<String> words)
 			throws InvalidMoveException {
 		for (String s : words) {
@@ -699,7 +703,7 @@ public class GameModel extends CoreModel {
 			}
 		}
 	}
-	
+
 	private ArrayList<ArrayList<Tile>> checkValidWord(Tile[][] playedLetters,
 			Tile[][] newBoard) throws InvalidMoveException {
 		// verticaal woord
@@ -718,7 +722,8 @@ public class GameModel extends CoreModel {
 					while (counterX >= 0) {
 						// hij gaat een letter naar links tot hij een lege
 						// plaats tegenkomt.
-						if (counterX > 0 && newBoard[counterY][counterX - 1] != null
+						if (counterX > 0
+								&& newBoard[counterY][counterX - 1] != null
 								&& (!beenLeft)) {
 							counterX--;
 						} else if (newBoard[counterY][counterX + 1] != null
@@ -738,7 +743,8 @@ public class GameModel extends CoreModel {
 					counterX = x;
 					boolean beenTop = false;
 					while (counterY >= 0) {
-						if (counterY > 0 && newBoard[counterY - 1][counterX] != null
+						if (counterY > 0
+								&& newBoard[counterY - 1][counterX] != null
 								&& (!beenTop)) {
 							counterY--;
 						} else if (newBoard[counterY + 1][counterX] != null
@@ -771,11 +777,12 @@ public class GameModel extends CoreModel {
 		for (ArrayList<Tile> woord : horizontalenWoorden) {
 			teVergelijkenWoorden.add(woord);
 		}
-		if(teVergelijkenWoorden.size() <2){
+		if (teVergelijkenWoorden.size() < 2) {
 			Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-			if(teVergelijkenWoorden.get(0).size() > letterPositions.length){	
-			}else if(!thisTurnIsFirstTurn()){
-				throw new InvalidMoveException(InvalidMoveException.STATE_NOT_ATTACHED);
+			if (teVergelijkenWoorden.get(0).size() > letterPositions.length) {
+			} else if (!thisTurnIsFirstTurn()) {
+				throw new InvalidMoveException(
+						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
 		}
 		return teVergelijkenWoorden;
@@ -792,68 +799,69 @@ public class GameModel extends CoreModel {
 
 	private int getScore(Tile[][] playedLetters,
 			ArrayList<ArrayList<Tile>> words, BoardModel currentBoard) {
-			int[][] multipliers = new int[15][15];
-			int totalScore = 0;
-			for(int vertical = 0; vertical < 15; vertical++){
-				for(int horizontal = 0; horizontal < 15; horizontal++){
-					multipliers[vertical][horizontal] = currentBoard.getMultiplier(new Point(horizontal, vertical));
-				}
+		int[][] multipliers = new int[15][15];
+		int totalScore = 0;
+		for (int vertical = 0; vertical < 15; vertical++) {
+			for (int horizontal = 0; horizontal < 15; horizontal++) {
+				multipliers[vertical][horizontal] = currentBoard
+						.getMultiplier(new Point(horizontal, vertical));
 			}
-			
-			for(ArrayList<Tile> word : words){
-				int wordscore = 0;
-				boolean doubleword1 = false;
-				boolean doubleword2 = false;
-				boolean tripleword1 = false;
-				boolean tripleword2 = false;
-				for(Tile t : word){
-					wordscore = wordscore + t.getValue();
-					for(int vertical=0;vertical<15;vertical++){
-						for(int horizontal=0;horizontal<15;horizontal++){
-							if(playedLetters[vertical][horizontal] != null){
-								if(playedLetters[vertical][horizontal].equals(t)){
-									int multiplier = multipliers[vertical][horizontal];
-									switch(multiplier){
-									case BoardModel.DL:
-										wordscore = wordscore + (t.getValue()*2);
-									case BoardModel.TL :
-										wordscore = wordscore + (t.getValue() * 3);
-									case BoardModel.DW :
-										if(doubleword1 == false){
-											doubleword1 = true;
-										}else{
-											doubleword2 = true;
-										}
-									case BoardModel.TW :
-										if(tripleword1 == false){
-											tripleword1 = true;
-										}else{
-											tripleword2 = true;
-										}
+		}
+
+		for (ArrayList<Tile> word : words) {
+			int wordscore = 0;
+			boolean doubleword1 = false;
+			boolean doubleword2 = false;
+			boolean tripleword1 = false;
+			boolean tripleword2 = false;
+			for (Tile t : word) {
+				wordscore = wordscore + t.getValue();
+				for (int vertical = 0; vertical < 15; vertical++) {
+					for (int horizontal = 0; horizontal < 15; horizontal++) {
+						if (playedLetters[vertical][horizontal] != null) {
+							if (playedLetters[vertical][horizontal].equals(t)) {
+								int multiplier = multipliers[vertical][horizontal];
+								switch (multiplier) {
+								case BoardModel.DL:
+									wordscore = wordscore + (t.getValue() * 2);
+								case BoardModel.TL:
+									wordscore = wordscore + (t.getValue() * 3);
+								case BoardModel.DW:
+									if (doubleword1 == false) {
+										doubleword1 = true;
+									} else {
+										doubleword2 = true;
+									}
+								case BoardModel.TW:
+									if (tripleword1 == false) {
+										tripleword1 = true;
+									} else {
+										tripleword2 = true;
 									}
 								}
 							}
 						}
 					}
 				}
-				if(doubleword1){
-					if(doubleword2){
-						wordscore = wordscore * 4;
-					}else{
-						wordscore = wordscore * 2;
-					}
-				}
-				if(tripleword1){
-					if(tripleword2){
-						wordscore = wordscore * 9;
-					}else{
-						wordscore = wordscore * 3;
-					}
-				}
-				totalScore = totalScore + wordscore;
 			}
-			return totalScore;
+			if (doubleword1) {
+				if (doubleword2) {
+					wordscore = wordscore * 4;
+				} else {
+					wordscore = wordscore * 2;
+				}
+			}
+			if (tripleword1) {
+				if (tripleword2) {
+					wordscore = wordscore * 9;
+				} else {
+					wordscore = wordscore * 3;
+				}
+			}
+			totalScore = totalScore + wordscore;
 		}
+		return totalScore;
+	}
 
 	private Tile[][] checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
@@ -892,60 +900,60 @@ public class GameModel extends CoreModel {
 			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
 		}
 
-		if(!lettersAreConnected(playedLetters, newBoard)){
-			throw new InvalidMoveException(
-					InvalidMoveException.NOT_CONNECTED);
+		if (!lettersAreConnected(playedLetters, newBoard)) {
+			throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
 		}
-		
+
 		return playedLetters;
 		// Everything went better than expected.jpg :)
 	}
-	
-	private boolean lettersAreConnected(Tile[][] playedLetters, BoardModel newBoard){
+
+	private boolean lettersAreConnected(Tile[][] playedLetters,
+			BoardModel newBoard) {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int lowY = 100;
 		int maxY = 0;
 		int lowX = 100;
 		int maxX = 0;
-		
-		for(Point p :letterPositions){
-			if(p.x < lowX){
-				lowX =p.x;
+
+		for (Point p : letterPositions) {
+			if (p.x < lowX) {
+				lowX = p.x;
 			}
-			if(p.x > maxX){
-				maxX =p.x;
+			if (p.x > maxX) {
+				maxX = p.x;
 			}
-			if(p.y < lowY){
-				lowY =p.y;
+			if (p.y < lowY) {
+				lowY = p.y;
 			}
-			if(p.y > maxY){
-				maxY =p.y;
+			if (p.y > maxY) {
+				maxY = p.y;
 			}
 		}
-		
-		if(maxX - lowX == 0){
-			while(maxY >= lowY){
+
+		if (maxX - lowX == 0) {
+			while (maxY >= lowY) {
 				Tile[][] data = newBoard.getTileData();
-				Tile tile=data[lowX][maxY];
-				if( tile== null){
+				Tile tile = data[lowX][maxY];
+				if (tile == null) {
 					return false;
 				}
 				maxY--;
 			}
-			
-		}else if(maxY - lowY ==0){
-			while(maxX >= lowX){
-				if(newBoard.getTileData()[maxX][lowY] == null){
+
+		} else if (maxY - lowY == 0) {
+			while (maxX >= lowX) {
+				if (newBoard.getTileData()[maxX][lowY] == null) {
 					return false;
 				}
 				maxX--;
 			}
-		}else{
+		} else {
 			return false;
 		}
 		return true;
 	}
-	
+
 	private boolean wordIsAlligned(Object[][] playedLetters) {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int holdX = (int) letterPositions[0].getX();
@@ -966,12 +974,13 @@ public class GameModel extends CoreModel {
 		}
 		return true;
 	}
-	
+
 	public Tile[][] compareFields(Tile[][] oldField, Tile[][] newField) {
 		Tile[][] playedLetters = new Tile[15][15];
 		for (int vertical = 0; vertical < 15; vertical++) {
 			for (int horizontal = 0; horizontal < 15; horizontal++) {
-				if(oldField[vertical][horizontal] == null && newField[vertical][horizontal] != null){
+				if (oldField[vertical][horizontal] == null
+						&& newField[vertical][horizontal] != null) {
 					playedLetters[vertical][horizontal] = newField[vertical][horizontal];
 				} else {
 					playedLetters[vertical][horizontal] = null;
@@ -981,5 +990,5 @@ public class GameModel extends CoreModel {
 		return playedLetters;
 	}
 
-	//einde legwoordmethodes//
+	// einde legwoordmethodes//
 }
