@@ -134,9 +134,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// view maken om de letters te selecteren
-				// TODO moest de methode verander waardoor jullie ding niet goed
-				// meer werkte je moet getValueAt gebruiken nu.
+				
 				Tile[] letters = stashModel.getPlayerTiles(account, currentGame);
 				
 				selectSwap(letters);
