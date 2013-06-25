@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 
@@ -27,6 +28,7 @@ import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
 import nl.avans.min04sob.scrabble.views.SelectSwapView;
+import net.miginfocom.swing.MigLayout;
 
 public class MainController extends CoreController {
 
@@ -72,6 +74,7 @@ public class MainController extends CoreController {
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		
 		startUp();
 	}
 
@@ -384,6 +387,7 @@ public class MainController extends CoreController {
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
+		
 	}
 
 	public void closePanels() {
@@ -437,9 +441,9 @@ public class MainController extends CoreController {
 	}
 
 	public void openPanels() {
-		frame.add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
-		frame.add(chatPanel, "cell 0 0 4 6,alignx left,aligny top");
+		frame.getContentPane().add(chatPanel, "cell 0 0 4 6,alignx left,aligny top");
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -502,7 +506,7 @@ public class MainController extends CoreController {
 	public void selectSwap(Tile[] letters) {
 		swapWindow = new CoreWindow();
 		swapView = new SelectSwapView(letters);
-		swapWindow.add(swapView);
+		swapWindow.getContentPane().add(swapView);
 		swapWindow.setResizable(false);
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();
@@ -522,9 +526,11 @@ public class MainController extends CoreController {
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
 					// rij toevoegen aan beurt
 				}
+				
 				refresh();
 				currentGame.doTurn(currentGame.getGameId(),
 						account.getUsername(), 0, "Swap");
+				swapWindow.dispose();
 			}
 		});
 	}

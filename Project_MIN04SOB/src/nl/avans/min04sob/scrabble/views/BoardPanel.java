@@ -289,7 +289,7 @@ public class BoardPanel extends CorePanel {
 		passButton.setEnabled(false);
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
-		//playButton.setEnabled(false);
+		playButton.setEnabled(false);
 	}
 	
 	public void playerView() {
