@@ -62,10 +62,12 @@ public class ChatPanel extends CorePanel {
 	
 	public void observerView() {
 		chatSendButton.setEnabled(false);
+		chatFieldSend.setEnabled(false);
 	}
 	
 	public void playerView() {
 		chatSendButton.setEnabled(true);
+		chatFieldSend.setEnabled(true);
 	}
 
 	public void empty() {
@@ -101,6 +103,7 @@ public class ChatPanel extends CorePanel {
 			break;
 		case Event.LOGIN:
 			chatFieldSend.setEnabled(true);
+			
 			break;
 		case Event.LOGOUT:
 			chatFieldSend.setEnabled(false);

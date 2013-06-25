@@ -102,7 +102,7 @@ public class MainController extends CoreController {
 					currGamePanel.enableNextButton();
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() + 1);
-
+					currGamePanel.enablePreviousButton();
 					currGamePanel.update();
 
 					currentGame.updateboardfromdatabasetoturn(currentGame
@@ -126,14 +126,19 @@ public class MainController extends CoreController {
 							.getCurrentobserveturn() - 1);
 					currentGame.getBoardModel().setBoardToDefault();
 					currGamePanel.update();
+					currGamePanel.enableNextButton();
 					for (int x = 0; currentGame.getCurrentobserveturn() > x
 							|| currentGame.getCurrentobserveturn() == x; x++) {
 						currentGame.updateboardfromdatabasetoturn(x);
 
 					}
 					updatelabels(currentGame.getCurrentobserveturn());
+					}else{
+						currGamePanel.disablePreviousButton();
+					}
+					
 
-				}
+				
 			}
 
 		});
