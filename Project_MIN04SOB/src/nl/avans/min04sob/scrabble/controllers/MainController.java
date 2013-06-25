@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 
@@ -27,6 +28,7 @@ import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
 import nl.avans.min04sob.scrabble.views.SelectSwapView;
+import net.miginfocom.swing.MigLayout;
 
 public class MainController extends CoreController {
 
@@ -72,6 +74,7 @@ public class MainController extends CoreController {
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		
 		startUp();
 	}
 
@@ -157,7 +160,14 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					currentGame.playWord();
+					BoardModel newBoard = new BoardModel();
+					for(int vertical = 0; vertical < 15 ; vertical++){
+						for(int horizontal = 0;horizontal < 15; horizontal++){
+							newBoard.setValueAt(currGamePanel.getNewBoard()[vertical][horizontal], vertical, horizontal);	
+						}
+						
+					}
+					currentGame.playWord(newBoard);
 					
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
@@ -382,6 +392,7 @@ public class MainController extends CoreController {
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
+		
 	}
 
 	public void closePanels() {
@@ -407,7 +418,7 @@ public class MainController extends CoreController {
 		boardModel = selectedGame.getBoardModel();
 		addModel(boardModel);
 		addView(currGamePanel);
-
+		currentGame.setBoardModel(currentGame.getBoardFromDatabase());
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
@@ -435,9 +446,9 @@ public class MainController extends CoreController {
 	}
 
 	public void openPanels() {
-		frame.add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
-		frame.add(chatPanel, "cell 0 0 4 6,alignx left,aligny top");
+		frame.getContentPane().add(chatPanel, "cell 0 0 4 6,alignx left,aligny top");
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -500,7 +511,7 @@ public class MainController extends CoreController {
 	public void selectSwap(Tile[] letters) {
 		swapWindow = new CoreWindow();
 		swapView = new SelectSwapView(letters);
-		swapWindow.add(swapView);
+		swapWindow.getContentPane().add(swapView);
 		swapWindow.setResizable(false);
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();

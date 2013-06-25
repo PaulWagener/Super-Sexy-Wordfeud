@@ -290,7 +290,7 @@ public class BoardPanel extends CorePanel {
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
 		playButton.setEnabled(false);
-		
+
 	}
 	
 	public void playerView() {
@@ -303,10 +303,23 @@ public class BoardPanel extends CorePanel {
 	public void infoBox(String infoMessage, String location){
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
     }
+
 	public void enablePreviousButton(){
 		this.prevButton.setEnabled(true);
 	}
 	public void disablePreviousButton(){
 		this.prevButton.setEnabled(false);
 	}
+
+	
+	public Tile[][] getNewBoard(){
+		Tile[][] newBoard = new Tile[15][15];
+		for(int rowIndex=0;rowIndex<15;rowIndex++){
+			for(int columnIndex=0;columnIndex<15;columnIndex++){
+				newBoard[rowIndex][columnIndex] = (Tile)this.playBoard.getModel().getValueAt(rowIndex, columnIndex);
+			}
+		}
+		return newBoard;
+	}
+
 }
