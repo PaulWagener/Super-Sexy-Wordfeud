@@ -1,11 +1,9 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -29,8 +27,8 @@ public class GameModel extends CoreModel {
 	private String letterSet;
 	private boolean iamchallenger;
 	private BoardPanel boardPanel;
-	private StashModel stash;
 	private int currentobserveturn;
+	private StashModel stash;
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
@@ -55,8 +53,6 @@ public class GameModel extends CoreModel {
 	private final String getLastTurnQuery = "SELECT Account_naam, ID FROM beurt WHERE Spel_ID = ? ORDER BY ID DESC LIMIT 0, 1";
 
 	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter`,`l`.`ID` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
-	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
-
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`beurt`.`id`) AS `last_turn`, `account_naam_uitdager` AS `challenger` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE `beurt`.`spel_id` = ? GROUP BY `spel_id` ORDER BY `beurt`.`id`";
 	private final String whosTurnAtTurn = "SELECT account_naam, ID FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
@@ -66,8 +62,6 @@ public class GameModel extends CoreModel {
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 	// private final String getnumberofturns =
 	// "SELECT max(beurt_ID) FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID ";
-
-	private final String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
 
 	private final String getnumberofturns = "SELECT max(ID) FROM beurt   WHERE Spel_ID = ?";
 	private final boolean observer;
@@ -152,7 +146,8 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public void getBoardFromDatabase() {
+	public BoardModel getBoardFromDatabase() {
+		BoardModel oldBoard = new BoardModel();
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getBoardQuery)
 					.set(gameId));
@@ -165,7 +160,7 @@ public class GameModel extends CoreModel {
 					String character = rs.getString("LetterType_karakter");
 					if (character.equalsIgnoreCase("?")) {
 
-						boardModel
+						oldBoard
 								.setValueAt(
 										new Tile(
 												rs.getString("BlancoLetterKarakter"),
@@ -177,7 +172,7 @@ public class GameModel extends CoreModel {
 								getTileValue).set(character).set(letterSet));
 						ResultSet tilewaarde = worker1.get();
 						tilewaarde.next();
-						boardModel.setValueAt(
+						oldBoard.setValueAt(
 								new Tile(character, tilewaarde.getInt(1),
 										Tile.NOT_MUTATABLE, rs.getInt("ID")),
 								y, x);
@@ -188,6 +183,7 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
+		return oldBoard;
 	}
 
 	public void setplayertilesfromdatabase(int turnid) {
@@ -626,16 +622,18 @@ public class GameModel extends CoreModel {
 		currentobserveturn = getNumberOfTotalTurns();
 	}
 
+
 	// legwoord methodes //
 	public void playWord(BoardModel newBoard) throws InvalidMoveException {
 		if (!getNextTurnUsername().equals(currentUser.getUsername())) {
 			throw new InvalidMoveException(
 					InvalidMoveException.STATE_NOTYOURTURN);
+
 		}
 		try {
-			Tile[][] newBoardData = newBoard.getTileData();
-			Tile[][] playedLetters = (Tile[][]) checkValidMove(boardModel,
-					newBoard);
+			Tile[][] newBoardData = boardModel.getTileData();
+			Tile[][] playedLetters = (Tile[][]) checkValidMove(getBoardFromDatabase(),
+					boardModel);
 			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
 					playedLetters, newBoardData);
@@ -648,7 +646,10 @@ public class GameModel extends CoreModel {
 			}
 			checkWordsInDatabase(teVergelijkenWoordenString);
 
-			int score = getScore(playedLetters, teVergelijkenWoorden, newBoard);
+
+			 int score = getScore(playedLetters, teVergelijkenWoorden,
+			 boardModel);
+
 
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
 			// create een nieuwe beurt in de database;
@@ -661,6 +662,7 @@ public class GameModel extends CoreModel {
 			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 15; x++) {
 					if (playedLetters[y][x] != null) {
+						stash.RemoveTileFromHand(gameId, playedLetters[y][x]);
 						Db.run(new Query(
 								"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
 										+ "VALUES (?, ?, ?, ?, ?, ?, ?);")
