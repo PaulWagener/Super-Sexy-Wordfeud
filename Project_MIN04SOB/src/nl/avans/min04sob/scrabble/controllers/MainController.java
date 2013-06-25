@@ -519,9 +519,11 @@ public class MainController extends CoreController {
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
 					// rij toevoegen aan beurt
 				}
+				
 				refresh();
 				currentGame.doTurn(currentGame.getGameId(),
 						account.getUsername(), 0, "Swap");
+				swapWindow.dispose();
 			}
 		});
 	}
