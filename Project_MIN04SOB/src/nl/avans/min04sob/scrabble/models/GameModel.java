@@ -133,13 +133,20 @@ public class GameModel extends CoreModel {
 	public void doTurn(int game_id, String accountname, int score, String action) {
 		int x = 0;
 		String s = "SELECT Max( id ) FROM beurt WHERE `Spel_ID` =?";
-		
+
 		try {
 			Future<ResultSet> worker = Db.run(new Query(s).set(gameId));
 			ResultSet rs = worker.get();
 			rs.next();
-			 x = rs.getInt(1)+1;
-			 String q1 = "INSERT INTO `beurt` (`ID`, `Spel_ID`, `Account_naam`, `score`, `Aktie_type`) VALUES('"+x+"', '"+game_id+"', '"+accountname+"', '"+score+"', '"+action+"')";
+			x = rs.getInt(1) + 1;
+			String q1 = "INSERT INTO `beurt` (`ID`, `Spel_ID`, `Account_naam`, `score`, `Aktie_type`) VALUES('"
+					+ x
+					+ "', '"
+					+ game_id
+					+ "', '"
+					+ accountname
+					+ "', '"
+					+ score + "', '" + action + "')";
 			Db.run(new Query(q1));
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
@@ -160,12 +167,10 @@ public class GameModel extends CoreModel {
 					String character = rs.getString("LetterType_karakter");
 					if (character.equalsIgnoreCase("?")) {
 
-						oldBoard
-								.setValueAt(
-										new Tile(
-												rs.getString("BlancoLetterKarakter"),
-												0, Tile.NOT_MUTATABLE, rs
-														.getInt("ID")), y, x);
+						oldBoard.setValueAt(
+								new Tile(rs.getString("BlancoLetterKarakter"),
+										0, Tile.NOT_MUTATABLE, rs.getInt("ID")),
+								y, x);
 					} else {
 
 						Future<ResultSet> worker1 = Db.run(new Query(
@@ -234,11 +239,11 @@ public class GameModel extends CoreModel {
 	public int getCurrentobserveturn() {
 		return currentobserveturn;
 	}
-	
-	public void setBoardModel(BoardModel model){
+
+	public void setBoardModel(BoardModel model) {
 		boardModel = model;
 	}
-	
+
 	public int getCurrentValueForThisTurn() {
 
 		// Tile[][] oldData = (Tile[][]) boardModel.getData();
@@ -627,43 +632,38 @@ public class GameModel extends CoreModel {
 		currentobserveturn = getNumberOfTotalTurns();
 	}
 
-
 	// legwoord methodes //
 	public void playWord(BoardModel newBoard) throws InvalidMoveException {
-		if (!getNextTurnUsername().equals(currentUser.getUsername())) {
+		if (!yourturn()) {
 			throw new InvalidMoveException(
 					InvalidMoveException.STATE_NOTYOURTURN);
-
 		}
+
 		try {
 			Tile[][] newBoardData = newBoard.getTileData();
-			Tile[][] playedLetters = (Tile[][]) checkValidMove(getBoardFromDatabase(),
-					newBoard);
-			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
-			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
+			Tile[][] playedLetters = (Tile[][]) checkValidMove(
+					getBoardFromDatabase(), newBoard);
+			ArrayList<String> playedWords = new ArrayList<String>();
+			ArrayList<ArrayList<Tile>> letterMatrix = checkValidWord(
 					playedLetters, newBoardData);
-			for (ArrayList<Tile> woord : teVergelijkenWoorden) {
-				String tempwoord = "";
-				for (Tile t : woord) {
-					tempwoord += t.getLetter();
+			for (ArrayList<Tile> word : letterMatrix) {
+				String tmpWord = "";
+				for (Tile t : word) {
+					tmpWord += t.getLetter();
 				}
-				teVergelijkenWoordenString.add(tempwoord);
+				playedWords.add(tmpWord);
 			}
-			checkWordsInDatabase(teVergelijkenWoordenString);
+			checkWordsInDatabase(playedWords);
 
-
-			 int score = getScore(playedLetters, teVergelijkenWoorden,
-			 newBoard);
-
+			int score = getScore(playedLetters, letterMatrix, newBoard);
 
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
-			// create een nieuwe beurt in de database;
 			int nextTurn = getNextTurnId();
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
 			System.out.println("works " + score);
 
-			// leg het woord in de database
+			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 15; x++) {
 					if (playedLetters[y][x] != null) {
@@ -714,8 +714,8 @@ public class GameModel extends CoreModel {
 	private ArrayList<ArrayList<Tile>> checkValidWord(Tile[][] playedLetters,
 			Tile[][] newBoard) throws InvalidMoveException {
 		// verticaal woord
-		ArrayList<ArrayList<Tile>> verticalenWoorden = new ArrayList<ArrayList<Tile>>();
-		ArrayList<ArrayList<Tile>> horizontalenWoorden = new ArrayList<ArrayList<Tile>>();
+		ArrayList<ArrayList<Tile>> verticalWords = new ArrayList<ArrayList<Tile>>();
+		ArrayList<ArrayList<Tile>> horizontalWords = new ArrayList<ArrayList<Tile>>();
 		for (int y = 0; y < 15; y++) {
 			for (int x = 0; x < 15; x++) {
 				if (playedLetters[y][x] != null) {
@@ -724,8 +724,8 @@ public class GameModel extends CoreModel {
 					int counterY = y;
 					int counterX = x;
 					boolean beenLeft = false;
-					ArrayList<Tile> verticaalWoord = new ArrayList<Tile>();
-					ArrayList<Tile> horizontaalWoord = new ArrayList<Tile>();
+					ArrayList<Tile> verticalWord = new ArrayList<Tile>();
+					ArrayList<Tile> horizontalWord = new ArrayList<Tile>();
 					while (counterX >= 0) {
 						// hij gaat een letter naar links tot hij een lege
 						// plaats tegenkomt.
@@ -739,10 +739,10 @@ public class GameModel extends CoreModel {
 							// als hij nog niet terug rechts is slaat hij de
 							// letter op in de array en telt hij en gaat hij
 							// naar de volgende;
-							horizontaalWoord.add(newBoard[counterY][counterX]);
+							horizontalWord.add(newBoard[counterY][counterX]);
 							counterX++;
 						} else if (newBoard[counterY][counterX] != null) {
-							horizontaalWoord.add(newBoard[counterY][counterX]);
+							horizontalWord.add(newBoard[counterY][counterX]);
 							break;
 						}
 					}
@@ -757,45 +757,45 @@ public class GameModel extends CoreModel {
 						} else if (newBoard[counterY + 1][counterX] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenTop = true;
-							verticaalWoord.add(newBoard[counterY][counterX]);
+							verticalWord.add(newBoard[counterY][counterX]);
 							counterY++;
 						} else if (newBoard[counterY][counterX] != null) {
-							verticaalWoord.add(newBoard[counterY][counterX]);
+							verticalWord.add(newBoard[counterY][counterX]);
 							break;
 						}
 					}
-					if (!verticalenWoorden.contains(verticaalWoord)) {
-						if (verticaalWoord.size() > 1) {
-							verticalenWoorden.add(verticaalWoord);
+					if (!verticalWords.contains(verticalWord)) {
+						if (verticalWord.size() > 1) {
+							verticalWords.add(verticalWord);
 						}
 					}
-					if (!horizontalenWoorden.contains(horizontaalWoord)) {
-						if (horizontaalWoord.size() > 1) {
-							horizontalenWoorden.add(horizontaalWoord);
+					if (!horizontalWords.contains(horizontalWord)) {
+						if (horizontalWord.size() > 1) {
+							horizontalWords.add(horizontalWord);
 						}
 					}
 				}
 			}
 		}
-		ArrayList<ArrayList<Tile>> teVergelijkenWoorden = new ArrayList<ArrayList<Tile>>();
-		for (ArrayList<Tile> woord : verticalenWoorden) {
-			teVergelijkenWoorden.add(woord);
+		ArrayList<ArrayList<Tile>> comparableWords = new ArrayList<ArrayList<Tile>>();
+		for (ArrayList<Tile> word : verticalWords) {
+			comparableWords.add(word);
 		}
-		for (ArrayList<Tile> woord : horizontalenWoorden) {
-			teVergelijkenWoorden.add(woord);
+		for (ArrayList<Tile> word : horizontalWords) {
+			comparableWords.add(word);
 		}
-		if (teVergelijkenWoorden.size() < 2) {
+		if (comparableWords.size() < 2) {
 			Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-			if(teVergelijkenWoorden.size()==0){
+			if (comparableWords.size() == 0) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
-			}else if (teVergelijkenWoorden.get(0).size() > letterPositions.length) {
+			} else if (comparableWords.get(0).size() > letterPositions.length) {
 			} else if (!thisTurnIsFirstTurn()) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
 		}
-		return teVergelijkenWoorden;
+		return comparableWords;
 
 	}
 
