@@ -154,8 +154,9 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					currentGame.playWord();
+					
 				} catch (InvalidMoveException e) {
-					e.printStackTrace();
+					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
 				}
 			}
 		});
