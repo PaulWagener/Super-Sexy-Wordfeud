@@ -249,6 +249,9 @@ public class LegWoordMethodes {
 	}
 
 	public void playWord(BoardModel newBoard) throws InvalidMoveException {
+		if(!getNextTurnUsername().equals(currentUser.getUsername())){
+			throw new InvalidMoveException(InvalidMoveException.STATE_NOTYOURTURN);
+		}
 		try {
 			Tile[][] newBoardData = newBoard.getTileData();
 			Tile[][] playedLetters = (Tile[][]) checkValidMove(boardModel,
