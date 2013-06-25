@@ -98,7 +98,7 @@ public class CompetitionController extends CoreController {
 		window1.setTitle("Competitie Scores");
 		window1.setPreferredSize(new Dimension(1000,300));
 		window1.pack();
-
+		window1.setLocationRelativeTo(null);
 		competitionScoreView.addBackListener(new ActionListener() {
 
 			@Override
@@ -133,7 +133,7 @@ public class CompetitionController extends CoreController {
 		window.setMinimumSize(new Dimension(550,450));
 		window.setResizable(true);
 		window.pack();
-
+		window.setLocationRelativeTo(null);
 		competitionView.addBackListener(new ActionListener() {
 
 			@Override
@@ -180,7 +180,7 @@ public class CompetitionController extends CoreController {
 		window.setMinimumSize(new Dimension(550,450));
 		window.setResizable(true);
 		window.pack();
-
+		window.setLocationRelativeTo(null);
 		competitionView.addBackListener(new ActionListener() {
 
 			@Override
@@ -215,7 +215,7 @@ public class CompetitionController extends CoreController {
 
 		window.setMinimumSize(new Dimension(550,450));
 		window.pack();
-
+		window.setLocationRelativeTo(null);
 		competitionView.addBackListener(new ActionListener() {
 
 			@Override
@@ -250,7 +250,7 @@ public class CompetitionController extends CoreController {
 		window.setMinimumSize(new Dimension(550,450));
 		window.setResizable(true);
 		window.pack();
-
+		window.setLocationRelativeTo(null);
 		competitionView.addBackListener(new ActionListener() {
 
 			@Override
@@ -306,7 +306,7 @@ public class CompetitionController extends CoreController {
 		window2.setPreferredSize(new Dimension(250, 130));
 		window2.setResizable(false);
 		window2.pack();
-
+		window2.setLocationRelativeTo(null);
 		createCompetitionView.addBackButtonListener(new ActionListener() {
 
 			@Override
