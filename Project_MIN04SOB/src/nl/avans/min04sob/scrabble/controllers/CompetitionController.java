@@ -5,9 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
@@ -99,6 +97,7 @@ public class CompetitionController extends CoreController {
 		window1.setPreferredSize(new Dimension(1000,300));
 		window1.pack();
 		window1.setLocationRelativeTo(null);
+		getAllCompetitionsScore();
 		competitionScoreView.addBackListener(new ActionListener() {
 
 			@Override
@@ -113,7 +112,6 @@ public class CompetitionController extends CoreController {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
 					CompetitionModel selectedComp = competitionScoreView.getSelectedCompetition();
-					ArrayList<Object[]> rankingData = selectedComp.getRanking(selectedComp.getCompId());
 					competitionScoreView.emptyTable();
 					for (Object[] row : selectedComp.getRanking(selectedComp.getCompId())) {
 						competitionScoreView.addRow(row);
@@ -122,7 +120,7 @@ public class CompetitionController extends CoreController {
 			}
 		});
 
-		getAllCompetitionsScore();
+		
 
 	}
 

@@ -624,7 +624,7 @@ public class GameModel extends CoreModel {
 
 
 	// legwoord methodes //
-	public void playWord(BoardModel newBoard) throws InvalidMoveException {
+	public void playWord() throws InvalidMoveException {
 		if (!getNextTurnUsername().equals(currentUser.getUsername())) {
 			throw new InvalidMoveException(
 					InvalidMoveException.STATE_NOTYOURTURN);
