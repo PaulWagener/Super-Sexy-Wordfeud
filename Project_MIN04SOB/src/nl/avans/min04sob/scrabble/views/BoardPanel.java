@@ -10,7 +10,6 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
@@ -289,7 +288,7 @@ public class BoardPanel extends CorePanel {
 		passButton.setEnabled(false);
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
-		//playButton.setEnabled(false);
+		playButton.setEnabled(false);
 	}
 	
 	public void playerView() {
@@ -299,7 +298,5 @@ public class BoardPanel extends CorePanel {
 		//playButton.setEnabled(false);
 	}
 
-	public void infoBox(String infoMessage, String location){
-        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
-    }
+
 }
