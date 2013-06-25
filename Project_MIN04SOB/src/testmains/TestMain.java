@@ -30,6 +30,7 @@ public class TestMain implements Runnable {
 		} catch (IllegalAccessException e) {
 			// handle exception
 		}
+		
 		executor.submit(new MainController());
 		//new Thread(new MainController()).start();
 	

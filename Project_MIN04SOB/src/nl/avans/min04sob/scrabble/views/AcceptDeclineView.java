@@ -76,10 +76,10 @@ public class AcceptDeclineView extends CorePanel {
 		deniedButton.addActionListener(listener);
 	}
 
-	public void addListSelectionListener(ListSelectionListener listener){
+	public void addListSelectionListener(ListSelectionListener listener) {
 		wordList.addListSelectionListener(listener);
 	}
-	
+
 	public void fillWordList(String[] list) {
 		wordList.removeAll();
 		wordList.setListData(list);
@@ -96,7 +96,8 @@ public class AcceptDeclineView extends CorePanel {
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
 		case Event.NEWWORD:
-			// TODO add to list
+			String[] words = (String[]) evt.getNewValue();
+			fillWordList(words);
 			break;
 
 		default:
@@ -107,8 +108,8 @@ public class AcceptDeclineView extends CorePanel {
 	public void removeWindow() {
 		myFrame.dispose();
 	}
-	
-	public void setButtonsEnabled(boolean enabled){
+
+	public void setButtonsEnabled(boolean enabled) {
 		acceptButton.setEnabled(enabled);
 		deniedButton.setEnabled(enabled);
 	}

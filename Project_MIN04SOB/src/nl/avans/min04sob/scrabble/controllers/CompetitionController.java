@@ -31,10 +31,10 @@ public class CompetitionController extends CoreController {
 	private int index; // competitie id meegeven
 	private CreateCompetitionView createCompetitionView;
 
-	public CompetitionController(AccountModel user) {
+	public CompetitionController(AccountModel user, CompetitionModel comp) {
 
 		accountModel = user;
-		competitionModel = new CompetitionModel();
+		competitionModel = comp;
 		competitionView = new CompetitionView();
 		challengeModel = new ChallengeModel(accountModel);
 		competitionScoreView = new CompetitionScoreView();

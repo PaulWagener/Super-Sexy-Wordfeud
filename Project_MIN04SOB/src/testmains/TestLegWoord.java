@@ -59,7 +59,7 @@ public class TestLegWoord {
 			//	bNew.setValueAt(newBoard[y][x], y, x);
 			//}
 	//	}
-		gm.playWord(playerdLetters, newBoard);
+		//gm.playWord(playerdLetters, newBoard);
 		
 	}
 

@@ -256,7 +256,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			addGamesToMenu(gameMenuView, user.getObserverAbleGames());
 			addMenuItemListeners(gameMenuOpen, openGameListener);
 			addMenuItemListeners(gameMenuView, viewGameListener);
-
+			
 			break;
 		case Event.LOGOUT:
 			setLoggedOutState();
@@ -267,14 +267,15 @@ public class MenuView extends JMenuBar implements CoreView {
 			setChallengeCount(numChallenge);
 			break;
 			
-	/*	case Event.NEWGAME:
+		case Event.NEWGAME:
 			ArrayList<GameModel> games = (ArrayList<GameModel>) evt.getNewValue();
 			addGamesToMenu(gameMenuOpen, games);
 			if(games.size() > 0){
 				gameMenuOpen.setEnabled(true);
 				gameMenu.setEnabled(true);
 			}
-			break;*/
+			addMenuItemListeners(gameMenuOpen, openGameListener);
+			break;
 		case Event.NEWCOMPETITION:
 			createCompetitionItem.setEnabled(false);
 			break;
