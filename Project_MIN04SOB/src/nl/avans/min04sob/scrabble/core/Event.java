@@ -10,4 +10,5 @@ public class Event {
 	public final static String LOGINFAIL = "loginfail";
 	public final static String NEWWORD = "newword";
 	public final static String NEWCOMPETITION = "newcompetition";
+	public final static String RESIGN = "resign";
 }

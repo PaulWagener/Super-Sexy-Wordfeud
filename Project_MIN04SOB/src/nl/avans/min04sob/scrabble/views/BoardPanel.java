@@ -226,6 +226,9 @@ public class BoardPanel extends CorePanel {
 			}
 
 			break;
+		case Event.RESIGN:
+			observerView();
+			break;
 		/*case Event.MOVE:
 			boolean playerTurn = (boolean) evt.getNewValue();
 			if (playerTurn) {
@@ -291,7 +294,8 @@ public class BoardPanel extends CorePanel {
 		swapButton.setEnabled(false);
 		playButton.setEnabled(false);
 		refreshButton.setEnabled(false);
-
+		playerTilesField.setEnabled(false);
+		playBoard.setEnabled(false);
 	}
 	
 	public void playerView() {
@@ -300,7 +304,8 @@ public class BoardPanel extends CorePanel {
 		swapButton.setEnabled(true);
 		playButton.setEnabled(true);
 		refreshButton.setEnabled(true);
-
+		playerTilesField.setEnabled(true);
+		playBoard.setEnabled(true);
 	}
 
 	public void infoBox(String infoMessage, String title){

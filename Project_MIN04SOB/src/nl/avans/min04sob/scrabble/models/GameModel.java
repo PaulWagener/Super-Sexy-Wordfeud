@@ -122,11 +122,11 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public boolean HasButtons() {
+	public boolean hasButtons() {
 		return hasButtons;
 	}
 
-	public void SetButtons(boolean hasbuttons) {
+	public void setButtons(boolean hasbuttons) {
 		this.hasButtons = hasbuttons;
 	}
 
@@ -382,6 +382,7 @@ public class GameModel extends CoreModel {
 		try {
 			Db.run(new Query(resignQuery).set(STATE_RESIGNED).set(
 					this.getGameId()));
+			firePropertyChange(Event.RESIGN, null, Event.RESIGN);
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

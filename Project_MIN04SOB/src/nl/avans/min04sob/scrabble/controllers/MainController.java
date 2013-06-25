@@ -429,10 +429,10 @@ public class MainController extends CoreController {
 
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
-		if (!(selectedGame.HasButtons())) {
+		if (!(selectedGame.hasButtons())) {
 
 			addButtonListeners();
-			selectedGame.SetButtons(true);
+			selectedGame.setButtons(true);
 		}
 
 		openPanels();
