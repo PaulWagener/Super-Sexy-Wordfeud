@@ -54,7 +54,7 @@ public class BoardPanel extends CorePanel {
 	private JLabel opponentScoreLabel;
 	private JLabel playerNameLabel;
 	private JLabel playerScoreLabel;
-	
+
 	private DefaultTableModel playerStash;
 	private JButton refreshButton;
 
@@ -113,7 +113,6 @@ public class BoardPanel extends CorePanel {
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
-		
 		playBoard.setDragEnabled(true);
 		playBoard.setDropMode(DropMode.USE_SELECTION);
 		playBoard.setTransferHandler(new TileTransferHandler());
@@ -173,26 +172,26 @@ public class BoardPanel extends CorePanel {
 
 		add(nextButton, "cell 4 6,grow");
 
-
 	}
-	//enable nextButton
-	public void enableNextButton(){
+
+	// enable nextButton
+	public void enableNextButton() {
 		nextButton.setEnabled(true);
 	}
-	
-	//disable nextButton
-	public void disableNextButton(){
+
+	// disable nextButton
+	public void disableNextButton() {
 		nextButton.setEnabled(false);
 	}
 
 	public void atValue() {
 		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
 	}
-	
+
 	public void addPlayActionListener(ActionListener listener) {
 		playButton.addActionListener(listener);
 	}
-	
+
 	public void addNextActionListener(ActionListener listener) {
 		nextButton.addActionListener(listener);
 	}
@@ -226,18 +225,13 @@ public class BoardPanel extends CorePanel {
 			}
 
 			break;
-		/*case Event.MOVE:
-			boolean playerTurn = (boolean) evt.getNewValue();
-			if (playerTurn) {
-				playButton.setEnabled(true);
-				swapButton.setEnabled(true);
-				passButton.setEnabled(true);
-			} else {
-				playButton.setEnabled(false);
-				swapButton.setEnabled(false);
-				passButton.setEnabled(false);
-			}
-			break;*/
+		/*
+		 * case Event.MOVE: boolean playerTurn = (boolean) evt.getNewValue(); if
+		 * (playerTurn) { playButton.setEnabled(true);
+		 * swapButton.setEnabled(true); passButton.setEnabled(true); } else {
+		 * playButton.setEnabled(false); swapButton.setEnabled(false);
+		 * passButton.setEnabled(false); } break;
+		 */
 		}
 
 	}
@@ -293,7 +287,7 @@ public class BoardPanel extends CorePanel {
 		refreshButton.setEnabled(false);
 
 	}
-	
+
 	public void playerView() {
 		passButton.setEnabled(true);
 		resignButton.setEnabled(true);
@@ -303,23 +297,36 @@ public class BoardPanel extends CorePanel {
 
 	}
 
-	public void infoBox(String infoMessage, String location){
-        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
-    }
+	public void infoBox(String infoMessage, String location) {
+		JOptionPane.showMessageDialog(null, infoMessage,
+				"InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
 
-	public void enablePreviousButton(){
+	}
+
+	public void ChooseLetter(Tile tile) {
+		// TODO dit moet worden aangeroepen als je een vraagteken neerlegd
+		String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
+				"letter needed ", JOptionPane.WARNING_MESSAGE);
+		if (letter.length() < 2) {
+			tile.setLetter(letter);
+		}
+
+	}
+
+	public void enablePreviousButton() {
 		this.prevButton.setEnabled(true);
 	}
-	public void disablePreviousButton(){
+
+	public void disablePreviousButton() {
 		this.prevButton.setEnabled(false);
 	}
 
-	
-	public Tile[][] getNewBoard(){
+	public Tile[][] getNewBoard() {
 		Tile[][] newBoard = new Tile[15][15];
-		for(int rowIndex=0;rowIndex<15;rowIndex++){
-			for(int columnIndex=0;columnIndex<15;columnIndex++){
-				newBoard[rowIndex][columnIndex] = (Tile)this.playBoard.getModel().getValueAt(rowIndex, columnIndex);
+		for (int rowIndex = 0; rowIndex < 15; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < 15; columnIndex++) {
+				newBoard[rowIndex][columnIndex] = (Tile) this.playBoard
+						.getModel().getValueAt(rowIndex, columnIndex);
 			}
 		}
 		return newBoard;
