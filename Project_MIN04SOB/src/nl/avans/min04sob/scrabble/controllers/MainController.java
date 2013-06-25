@@ -49,6 +49,8 @@ public class MainController extends CoreController {
 	private SelectSwapView swapView;
 
 	private StashModel stashModel;
+	
+	private boolean firstgame;
 
 	public MainController() {
 
@@ -360,6 +362,7 @@ public class MainController extends CoreController {
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		stashModel = new StashModel();
+		firstgame = true;
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
@@ -403,8 +406,12 @@ public class MainController extends CoreController {
 
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
-
-		addButtonListeners();
+		
+		if(firstgame){
+			addButtonListeners();
+			firstgame = false;
+		}
+		
 
 		openPanels();
 
