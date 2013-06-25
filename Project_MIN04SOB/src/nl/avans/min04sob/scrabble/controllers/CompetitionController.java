@@ -112,11 +112,10 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					CompetitionModel selectedComp = competitionScoreView
-							.getSelectedCompetition();
+					CompetitionModel selectedComp = competitionScoreView.getSelectedCompetition();
 					ArrayList<Object[]> rankingData = selectedComp.getRanking(selectedComp.getCompId());
 					competitionScoreView.emptyTable();
-					for (Object[] row : rankingData) {
+					for (Object[] row : selectedComp.getRanking(selectedComp.getCompId())) {
 						competitionScoreView.addRow(row);
 					}
 				}
