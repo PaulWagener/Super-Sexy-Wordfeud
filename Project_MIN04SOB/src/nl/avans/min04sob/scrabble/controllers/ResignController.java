@@ -32,6 +32,7 @@ public class ResignController extends CoreController {
 		frame.pack();
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 	}
 	
 	@Override

@@ -10,7 +10,6 @@ import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
-import nl.avans.min04sob.scrabble.models.AccountModel;
 
 @SuppressWarnings("serial")
 public class ChallengeView extends CorePanel {

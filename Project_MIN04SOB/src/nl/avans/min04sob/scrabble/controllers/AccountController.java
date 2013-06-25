@@ -192,6 +192,7 @@ public class AccountController extends CoreController {
 		frame.pack();
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 	}
 
 	@Override
@@ -256,6 +257,7 @@ public class AccountController extends CoreController {
 		frame.add(changepassPaneladmin);
 		frame.repaint();
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 
 	public void loginToRegister() {
@@ -265,6 +267,7 @@ public class AccountController extends CoreController {
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 
 	public void registerToLogin() {
@@ -274,6 +277,7 @@ public class AccountController extends CoreController {
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 
 	public void setChangePassPanel() {
@@ -282,6 +286,7 @@ public class AccountController extends CoreController {
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 
 	private void tryToRegister() {

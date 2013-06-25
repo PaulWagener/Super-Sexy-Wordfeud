@@ -62,6 +62,7 @@ public class AcceptDeclineView extends CorePanel {
 		myFrame.pack();
 		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		myFrame.setVisible(true);
+		myFrame.setLocationRelativeTo(null);
 	}
 
 	public void addAcceptActionListener(ActionListener listener) {
