@@ -290,6 +290,7 @@ public class BoardPanel extends CorePanel {
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
 		playButton.setEnabled(false);
+		refreshButton.setEnabled(false);
 
 	}
 	
@@ -298,6 +299,8 @@ public class BoardPanel extends CorePanel {
 		resignButton.setEnabled(true);
 		swapButton.setEnabled(true);
 		playButton.setEnabled(true);
+		refreshButton.setEnabled(true);
+
 	}
 
 	public void infoBox(String infoMessage, String location){
