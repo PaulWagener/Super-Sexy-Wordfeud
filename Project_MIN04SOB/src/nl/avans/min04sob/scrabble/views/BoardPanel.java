@@ -171,6 +171,7 @@ public class BoardPanel extends CorePanel {
 		nextButton.setText("Volgende");
 
 		add(nextButton, "cell 4 6,grow");
+		observerView();
 
 	}
 
@@ -226,6 +227,15 @@ public class BoardPanel extends CorePanel {
 
 			break;
 
+		case Event.MOVE:
+			boolean hasTurn = (boolean) evt.getNewValue();
+			if (hasTurn) {
+				playerView();
+			} else {
+				observerView();
+			}
+			break;
+
 		/*
 		 * case Event.MOVE: boolean playerTurn = (boolean) evt.getNewValue(); if
 		 * (playerTurn) { playButton.setEnabled(true);
@@ -237,18 +247,13 @@ public class BoardPanel extends CorePanel {
 		case Event.RESIGN:
 			observerView();
 			break;
-		/*case Event.MOVE:
-			boolean playerTurn = (boolean) evt.getNewValue();
-			if (playerTurn) {
-				playButton.setEnabled(true);
-				swapButton.setEnabled(true);
-				passButton.setEnabled(true);
-			} else {
-				playButton.setEnabled(false);
-				swapButton.setEnabled(false);
-				passButton.setEnabled(false);
-			}
-			break;*/
+		/*
+		 * case Event.MOVE: boolean playerTurn = (boolean) evt.getNewValue(); if
+		 * (playerTurn) { playButton.setEnabled(true);
+		 * swapButton.setEnabled(true); passButton.setEnabled(true); } else {
+		 * playButton.setEnabled(false); swapButton.setEnabled(false);
+		 * passButton.setEnabled(false); } break;
+		 */
 
 		}
 
@@ -319,7 +324,6 @@ public class BoardPanel extends CorePanel {
 		playBoard.setEnabled(true);
 	}
 
-
 	public void infoBox(String infoMessage, String location) {
 		JOptionPane.showMessageDialog(null, infoMessage,
 				"InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
@@ -336,9 +340,7 @@ public class BoardPanel extends CorePanel {
 
 	}
 
-	
-
-	public void enablePreviousButton(){
+	public void enablePreviousButton() {
 
 		this.prevButton.setEnabled(true);
 	}

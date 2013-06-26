@@ -440,7 +440,7 @@ public class MainController extends CoreController {
 			addButtonListeners();
 			selectedGame.setButtons(true);
 		}
-
+		currGamePanel.observerView();
 		openPanels();
 
 		chatPanel.empty();

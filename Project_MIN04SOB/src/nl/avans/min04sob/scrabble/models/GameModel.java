@@ -472,10 +472,10 @@ public class GameModel extends CoreModel {
 
 	@Override
 	public void update() {
-
 		boolean oldHasTurn = hasTurn;
 		hasTurn = yourturn();
-		firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
+
+		firePropertyChange(Event.MOVE, null, hasTurn);
 
 		// TODO fire property change for new games and changed game states
 		// TODO also fire property change for a when the player needs to make a
