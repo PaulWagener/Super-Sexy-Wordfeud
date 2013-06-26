@@ -70,7 +70,7 @@ public class MainController extends CoreController {
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-
+	
 		startUp();
 	}
 
@@ -370,7 +370,7 @@ public class MainController extends CoreController {
 		accountcontroller = new AccountController(account);
 		accountcontroller.addView(menu);
 		accountcontroller.addView(chatPanel);
-
+		frame.setIconImage(menu.getImageForIcon());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -391,6 +391,7 @@ public class MainController extends CoreController {
 		chatPanel = new ChatPanel();
 
 	}
+	
 
 	public void closePanels() {
 		frame.remove(currGamePanel);

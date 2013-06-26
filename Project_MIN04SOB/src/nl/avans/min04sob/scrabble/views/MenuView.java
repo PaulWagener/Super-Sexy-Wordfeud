@@ -1,10 +1,12 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -47,6 +49,8 @@ public class MenuView extends JMenuBar implements CoreView {
 	private ActionListener viewGameListener;
 	private JMenuItem createCompetitionItem;
 	private JMenuItem viewPlayers;
+	
+	private ImageIcon icon;
 
 	public MenuView() {
 		createMenus();
@@ -54,7 +58,9 @@ public class MenuView extends JMenuBar implements CoreView {
 		createChallengeMenu();
 		createModeratorMenu();
 		createCompetitionMenu();
-
+		
+		icon = new ImageIcon(this.getClass().getResource("/images/W.png"));
+		
 		setLoggedOutState();
 	}
 
@@ -377,5 +383,9 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	public void Accountaanmaken(ActionListener listener) {
 		AccountaanmakenItem.addActionListener(listener);
+	}
+
+	public Image getImageForIcon() {
+		return icon.getImage();
 	}
 }
