@@ -721,7 +721,7 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY][counterX - 1] != null
 								&& (!beenLeft)) {
 							counterX--;
-						} else if (newBoard[counterY][counterX + 1] != null
+						} else if (counterX<14 && newBoard[counterY][counterX + 1] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenLeft = true;
 							// als hij nog niet terug rechts is slaat hij de
@@ -742,7 +742,7 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY - 1][counterX] != null
 								&& (!beenTop)) {
 							counterY--;
-						} else if (newBoard[counterY + 1][counterX] != null
+						} else if (counterY<14 && newBoard[counterY + 1][counterX] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenTop = true;
 							verticalWord.add(newBoard[counterY][counterX]);
