@@ -225,6 +225,7 @@ public class BoardPanel extends CorePanel {
 			}
 
 			break;
+
 		/*
 		 * case Event.MOVE: boolean playerTurn = (boolean) evt.getNewValue(); if
 		 * (playerTurn) { playButton.setEnabled(true);
@@ -232,6 +233,23 @@ public class BoardPanel extends CorePanel {
 		 * playButton.setEnabled(false); swapButton.setEnabled(false);
 		 * passButton.setEnabled(false); } break;
 		 */
+
+		case Event.RESIGN:
+			observerView();
+			break;
+		/*case Event.MOVE:
+			boolean playerTurn = (boolean) evt.getNewValue();
+			if (playerTurn) {
+				playButton.setEnabled(true);
+				swapButton.setEnabled(true);
+				passButton.setEnabled(true);
+			} else {
+				playButton.setEnabled(false);
+				swapButton.setEnabled(false);
+				passButton.setEnabled(false);
+			}
+			break;*/
+
 		}
 
 	}
@@ -286,6 +304,9 @@ public class BoardPanel extends CorePanel {
 		playButton.setEnabled(false);
 		refreshButton.setEnabled(false);
 
+		playerTilesField.setEnabled(false);
+		playBoard.setEnabled(false);
+
 	}
 
 	public void playerView() {
@@ -294,7 +315,8 @@ public class BoardPanel extends CorePanel {
 		swapButton.setEnabled(true);
 		playButton.setEnabled(true);
 		refreshButton.setEnabled(true);
-
+		playerTilesField.setEnabled(true);
+		playBoard.setEnabled(true);
 	}
 
 
