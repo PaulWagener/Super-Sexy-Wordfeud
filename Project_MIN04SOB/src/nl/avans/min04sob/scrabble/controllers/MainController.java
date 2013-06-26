@@ -283,6 +283,10 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
 				closePanels();
+				frame.getContentPane().add(startPanel,
+						"cell 0 0 10 6,alignx left,aligny top");
+				frame.revalidate();
+				frame.repaint();
 				// addLoginListener();
 			}
 		});

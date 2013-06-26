@@ -16,7 +16,7 @@ public class StartPanel extends CorePanel {
 
 	public StartPanel() {
 		this.setPreferredSize(new Dimension(1000, 680));
-		this.setBackground(new Color(37, 41, 53));
+		this.setBackground(new Color(33, 36, 46));
 		this.setVisible(true);
 		startIcon = new ImageIcon(this.getClass().getResource(
 				"/images/startup.png"));
@@ -26,8 +26,7 @@ public class StartPanel extends CorePanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		g.setColor(new Color(37, 41, 53));
-		g.drawRect(0, 0, this.getWidth(), this.getHeight());
+		super.paintComponent(g);
 		g.drawImage(startIcon.getImage(), 148, 128, null);
 	}
 
