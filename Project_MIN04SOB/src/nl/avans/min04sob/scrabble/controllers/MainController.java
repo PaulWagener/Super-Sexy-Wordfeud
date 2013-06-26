@@ -371,6 +371,7 @@ public class MainController extends CoreController {
 		accountcontroller.addView(menu);
 		accountcontroller.addView(chatPanel);
 		frame.setIconImage(menu.getImageForIcon());
+		
 	}
 
 	@SuppressWarnings("deprecation")
