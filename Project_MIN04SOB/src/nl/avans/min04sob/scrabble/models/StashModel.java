@@ -14,7 +14,6 @@ import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 public class StashModel extends CoreModel {
 	private final String letterfrompot = "SELECT L.Spel_ID AS Spel_ID, L.ID AS Letter_ID, L.LetterType_karakter AS Karakter FROM Letter L WHERE L.ID NOT IN (  SELECT Letter_ID  FROM gelegdeletter GL WHERE GL.Spel_ID = L.Spel_ID )AND L.ID NOT IN( SELECT Letter_ID   FROM letterbakjeletter LB WHERE LB.Spel_ID = L.Spel_ID AND LB.Beurt_ID IN  (SELECT MAX(Beurt_ID)  FROM `letterbakjeletter` LX JOIN `beurt` BX ON LX.`Beurt_ID` = BX.`ID` WHERE LX.`Spel_ID` = L.Spel_ID GROUP BY BX.`Account_naam`  ))and L.Spel_ID = ? ORDER BY L.Spel_ID, L.ID ";
 
-
 	public StashModel() {
 
 	}
@@ -40,26 +39,44 @@ public class StashModel extends CoreModel {
 		return letters;
 	}
 
-	public Tile[] getPlayerTiles(AccountModel user, GameModel game) {
-		
+	public Tile[] getPlayerTiles(AccountModel user, GameModel game,
+			int currentbeurtid) {
+
 		int gameId = game.getGameId();
 		int numRows;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(Queries.CURRENT_TILES)
-					.set(user.getUsername()).set(gameId));
+			if (game.yourturn()) {
+
+			}
+			if (currentbeurtid - 1 < 0) {
+				currentbeurtid = 1;
+			}
+			Future<ResultSet> worker;
+			if (game.yourturn()) {
+				worker = Db.run(new Query(Queries.CURRENT_TILES)
+						.set(user.getUsername()).set(gameId)
+						.set(currentbeurtid - 1));
+			} else {
+				worker = Db.run(new Query(Queries.CURRENT_TILES)
+						.set(user.getUsername()).set(gameId)
+						.set(currentbeurtid));
+			}
+			System.out.println(user.getUsername()+gameId+currentbeurtid);
+
 			ResultSet res = worker.get();
 			numRows = Query.getNumRows(res);
-			
+
 			Tile[] tiles = new Tile[numRows];
 			int i = 0;
 			while (res.next()) {
-				
-				String getTileValue =  "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
-				Future<ResultSet> worker1 = Db.run(new Query(getTileValue).set(res.getString(5)).set("NL"));
+
+				String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
+				Future<ResultSet> worker1 = Db.run(new Query(getTileValue).set(
+						res.getString(5)).set("NL"));
 				ResultSet tilewaarde = worker1.get();
 				tilewaarde.next();
-				tiles[i] = new Tile(res.getString(5), tilewaarde.getInt(1), Tile.MUTATABLE,
-						res.getInt(4));
+				tiles[i] = new Tile(res.getString(5), tilewaarde.getInt(1),
+						Tile.MUTATABLE, res.getInt(4));
 				i++;
 			}
 
@@ -70,7 +87,7 @@ public class StashModel extends CoreModel {
 		return null;
 	}
 
-	public Tile getRandomLetter(int spel_ID,int turnid) {
+	public Tile getRandomLetter(int spel_ID, int turnid) {
 
 		Tile letter = null;
 		String q = "SELECT L.Spel_ID AS Spel_ID, L.ID AS Letter_ID, L.LetterType_karakter AS Karakter FROM Letter L  WHERE L.ID NOT IN   (  SELECT Letter_ID    FROM gelegdeletter GL WHERE GL.Spel_ID = L.Spel_ID ) AND L.ID NOT IN ( SELECT Letter_ID  FROM letterbakjeletter LB  WHERE LB.Spel_ID = L.Spel_ID  AND LB.Beurt_ID IN  (SELECT MAX(Beurt_ID) FROM `letterbakjeletter` LX   JOIN `beurt` BX   ON LX.`Beurt_ID` = BX.`ID`   WHERE LX.`Spel_ID` = L.Spel_ID   GROUP BY BX.`Account_naam` ))AND Spel_ID  = ? ORDER BY L.Spel_ID, L.ID";
@@ -80,36 +97,40 @@ public class StashModel extends CoreModel {
 			res.next();
 			int numRows = Query.getNumRows(res);
 			System.out.println(numRows);
-			
-			if(numRows > 1){
-				
-			Random randominteger = new Random();
-			int r = randominteger.nextInt(numRows-1);
-			res.next();
-			for (int x = 0; x < r; x++) {
+
+			if (numRows > 1) {
+
+				Random randominteger = new Random();
+				int r = randominteger.nextInt(numRows - 1);
 				res.next();
+				for (int x = 0; x < r; x++) {
+					res.next();
+				}
+				String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
+				Future<ResultSet> worker1 = Db.run(new Query(getTileValue).set(
+						res.getString(3)).set("NL"));
+				ResultSet tilewaarde = worker1.get();
+				tilewaarde.next();
+				letter = new Tile(res.getString(3), tilewaarde.getInt(1),
+						Tile.MUTATABLE, res.getInt(2));
+				;
+
+				// addTileToStash(spel_ID, letter);
+
 			}
-			String getTileValue =  "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
-			Future<ResultSet> worker1 = Db.run(new Query(getTileValue).set(res.getString(3)).set("NL"));
-			ResultSet tilewaarde = worker1.get();
-			tilewaarde.next();
-			letter = new Tile(res.getString(3),tilewaarde.getInt(1),Tile.MUTATABLE,res.getInt(2));;
-			
-			//addTileToStash(spel_ID, letter);
-			
-			}
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return letter;
 	}
-	public void addToPlankje(int spel_ID,int letter_ID,int turnid){
-		
+
+	public void addToPlankje(int spel_ID, int letter_ID, int turnid) {
+
 		String addlettertoplankje = "INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
 		try {
-			Db.run(new Query(addlettertoplankje).set(spel_ID).set(letter_ID).set(turnid));
+			Db.run(new Query(addlettertoplankje).set(spel_ID).set(letter_ID)
+					.set(turnid + 1));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -120,14 +141,15 @@ public class StashModel extends CoreModel {
 
 		try {
 
-			Future<ResultSet> worker =  Db.run(new Query(letterfrompot).set(game_id));
-			
+			Future<ResultSet> worker = Db.run(new Query(letterfrompot)
+					.set(game_id));
+
 			ResultSet res = worker.get();
 
 			int numRows = Query.getNumRows(res);
 			System.out.println(numRows);
 			if (numRows == 0) {
-				
+
 				return false;
 			} else {
 				return true;
@@ -138,22 +160,24 @@ public class StashModel extends CoreModel {
 		}
 		return false;
 	}
-	
-	public void RemoveTileFromHand(int game_id, Tile tile){
-		int turn_id= 0;
+
+	public void RemoveTileFromHand(int game_id, Tile tile) {
+		int turn_id = 0;
 		String getTurn_id = "SELECT  MAX(`id`) AS `id` FROM `beurt` WHERE `spel_id` = ?";
 		String removeTileFromHand = "DELETE FROM `letterbakjeletter` WHERE `letterbakjeletter`.`Spel_ID` = ? AND `letterbakjeletter`.`Letter_ID` = ? ";
 		try {
-			Future<ResultSet> worker1 = Db.run(new Query(getTurn_id).set(game_id));
+			Future<ResultSet> worker1 = Db.run(new Query(getTurn_id)
+					.set(game_id));
 			ResultSet res = worker1.get();
-			if(res.next()){
+			if (res.next()) {
 				turn_id = res.getInt("id");
-			}		
-			Db.run(new Query(removeTileFromHand).set(game_id).set(tile.getTileId()));
+			}
+			Db.run(new Query(removeTileFromHand).set(game_id).set(
+					tile.getTileId()));
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-	 
+
 	}
 
 	@Override

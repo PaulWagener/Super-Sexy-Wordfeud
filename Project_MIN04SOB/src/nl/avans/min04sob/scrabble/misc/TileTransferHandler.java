@@ -6,6 +6,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
 import javax.swing.table.TableModel;
@@ -79,6 +80,15 @@ public class TileTransferHandler extends TransferHandler {
 				sourceTile = (Tile) data.getTransferData(tileFlavor);
 				
 				if(sourceTile.getLetter().equals("?")){
+				
+						
+						String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
+								"letter needed ", JOptionPane.WARNING_MESSAGE);
+						if (letter.length() < 2) {
+							sourceTile.setLetter(letter);
+						}
+
+					
 					//TODO do stuff, and set sourceTile to the new letter
 					//With the same id
 				}

@@ -145,7 +145,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 
 				Tile[] letters = stashModel
-						.getPlayerTiles(account, currentGame);
+						.getPlayerTiles(account, currentGame,currentGame.getLastTurn());
 
 				selectSwap(letters);
 			}
@@ -433,9 +433,10 @@ public class MainController extends CoreController {
 		currGamePanel.setModel(boardModel);
 
 		updatelabels(selectedGame.getCurrentobserveturn());
-
+		if(currentGame.yourturn()){
 		selectedGame.setplayertilesfromdatabase(selectedGame
-				.getCurrentobserveturn());
+				.getLastTurn());
+		}
 
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();

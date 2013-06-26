@@ -237,18 +237,13 @@ public class BoardPanel extends CorePanel {
 		case Event.RESIGN:
 			observerView();
 			break;
-		/*case Event.MOVE:
-			boolean playerTurn = (boolean) evt.getNewValue();
-			if (playerTurn) {
-				playButton.setEnabled(true);
-				swapButton.setEnabled(true);
-				passButton.setEnabled(true);
-			} else {
-				playButton.setEnabled(false);
-				swapButton.setEnabled(false);
-				passButton.setEnabled(false);
-			}
-			break;*/
+		/*
+		 * case Event.MOVE: boolean playerTurn = (boolean) evt.getNewValue(); if
+		 * (playerTurn) { playButton.setEnabled(true);
+		 * swapButton.setEnabled(true); passButton.setEnabled(true); } else {
+		 * playButton.setEnabled(false); swapButton.setEnabled(false);
+		 * passButton.setEnabled(false); } break;
+		 */
 
 		}
 
@@ -319,26 +314,13 @@ public class BoardPanel extends CorePanel {
 		playBoard.setEnabled(true);
 	}
 
-
 	public void infoBox(String infoMessage, String title) {
 		JOptionPane.showMessageDialog(null, infoMessage,
 				"InfoBox: " + title, JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
-	public void ChooseLetter(Tile tile) {
-		// TODO dit moet worden aangeroepen als je een vraagteken neerlegd
-		String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
-				"letter needed ", JOptionPane.WARNING_MESSAGE);
-		if (letter.length() < 2) {
-			tile.setLetter(letter);
-		}
-
-	}
-
-	
-
-	public void enablePreviousButton(){
+	public void enablePreviousButton() {
 
 		this.prevButton.setEnabled(true);
 	}
