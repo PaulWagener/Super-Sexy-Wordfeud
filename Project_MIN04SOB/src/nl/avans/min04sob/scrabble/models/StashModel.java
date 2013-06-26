@@ -55,7 +55,7 @@ public class StashModel extends CoreModel {
 			if (game.yourturn()) {
 				worker = Db.run(new Query(Queries.CURRENT_TILES)
 						.set(user.getUsername()).set(gameId)
-						.set(currentbeurtid));
+						.set(currentbeurtid - 1));
 			} else {
 				worker = Db.run(new Query(Queries.CURRENT_TILES)
 						.set(user.getUsername()).set(gameId)
