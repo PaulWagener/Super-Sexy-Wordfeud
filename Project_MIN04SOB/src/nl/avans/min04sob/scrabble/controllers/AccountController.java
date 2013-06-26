@@ -243,6 +243,7 @@ public class AccountController extends CoreController {
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(false);
 			loginPanel.setPasswordMistake(false);
+			ps.playSound("loginfail.wav", false);
 		}
 		else {
 			frame.dispose();

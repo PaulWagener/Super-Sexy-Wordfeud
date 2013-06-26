@@ -332,13 +332,7 @@ public class BoardPanel extends CorePanel {
 
 	public void enablePreviousButton() {
 
-<<<<<<< HEAD
-	}
 
-	public void enablePreviousButton() {
-
-=======
->>>>>>> refs/remotes/origin/master
 		this.prevButton.setEnabled(true);
 	}
 
