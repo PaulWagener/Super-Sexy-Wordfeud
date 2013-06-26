@@ -69,7 +69,6 @@ public class GameModel extends CoreModel {
 	private final boolean observer;
 	private boolean hasTurn = false;
 	private boolean hasButtons = false;
-	
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
 			BoardPanel boardPanel, boolean observer) {
@@ -473,11 +472,11 @@ public class GameModel extends CoreModel {
 
 	@Override
 	public void update() {
-		if (!hasTurn) {
-			boolean oldHasTurn = hasTurn;
-			hasTurn = yourturn();
-			firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
-		}
+
+		boolean oldHasTurn = hasTurn;
+		hasTurn = yourturn();
+		firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
+
 		// TODO fire property change for new games and changed game states
 		// TODO also fire property change for a when the player needs to make a
 		// new move,
@@ -649,7 +648,8 @@ public class GameModel extends CoreModel {
 			int nextTurn = getNextTurnId();
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
-			System.out.println("score bitches u just got  : " + score + " points this turn" );
+			System.out.println("score bitches u just got  : " + score
+					+ " points this turn");
 
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
@@ -789,10 +789,11 @@ public class GameModel extends CoreModel {
 
 	public boolean isBoardEmpty() {
 		try {
-			ResultSet rs = Db.run(new Query(getWordMoveCount).set(letterSet)).get();
-			
+			ResultSet rs = Db.run(new Query(getWordMoveCount).set(gameId))
+					.get();
+
 			rs.next();
-			int wordMoveCount = rs.getInt(1); 
+			int wordMoveCount = rs.getInt(1);
 			return wordMoveCount == 0;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -828,9 +829,9 @@ public class GameModel extends CoreModel {
 								case BoardModel.TL:
 									wordscore = wordscore + (t.getValue() * 2);
 								case BoardModel.DW:
-									wordMultiplier = (wordMultiplier*2);
+									wordMultiplier = (wordMultiplier * 2);
 								case BoardModel.TW:
-									wordMultiplier = (wordMultiplier*3);
+									wordMultiplier = (wordMultiplier * 3);
 								}
 							}
 						}
@@ -938,7 +939,7 @@ public class GameModel extends CoreModel {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
-		if(letterPositions.length==1){
+		if (letterPositions.length == 1) {
 			return true;
 		}
 		if (holdX == (int) letterPositions[1].getX()) {
