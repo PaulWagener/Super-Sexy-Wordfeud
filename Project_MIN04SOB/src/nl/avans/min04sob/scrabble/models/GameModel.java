@@ -721,7 +721,8 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY][counterX - 1] != null
 								&& (!beenLeft)) {
 							counterX--;
-						} else if (newBoard[counterY][counterX + 1] != null
+						} else if (counterX < 14
+								&& newBoard[counterY][counterX + 1] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenLeft = true;
 							// als hij nog niet terug rechts is slaat hij de
@@ -742,7 +743,8 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY - 1][counterX] != null
 								&& (!beenTop)) {
 							counterY--;
-						} else if (newBoard[counterY + 1][counterX] != null
+						} else if (counterY < 14
+								&& newBoard[counterY + 1][counterX] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenTop = true;
 							verticalWord.add(newBoard[counterY][counterX]);
@@ -777,8 +779,8 @@ public class GameModel extends CoreModel {
 			if (comparableWords.size() == 0) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
-			} else if (comparableWords.get(0).size() > letterPositions.length) {
-			} else if (!isBoardEmpty()) {
+			} else if (!isBoardEmpty()
+					&& !(comparableWords.get(0).size() > letterPositions.length)) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
@@ -826,12 +828,17 @@ public class GameModel extends CoreModel {
 								switch (multiplier) {
 								case BoardModel.DL:
 									wordscore = wordscore + t.getValue();
+									break;
 								case BoardModel.TL:
 									wordscore = wordscore + (t.getValue() * 2);
+									break;
 								case BoardModel.DW:
 									wordMultiplier = (wordMultiplier * 2);
+									break;
 								case BoardModel.TW:
 									wordMultiplier = (wordMultiplier * 3);
+									break;
+
 								}
 							}
 						}
