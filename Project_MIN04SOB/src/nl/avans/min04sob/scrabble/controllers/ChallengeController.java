@@ -35,6 +35,7 @@ public class ChallengeController extends CoreController {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Uitdagingen Beheren");
 	}
 	
 	
