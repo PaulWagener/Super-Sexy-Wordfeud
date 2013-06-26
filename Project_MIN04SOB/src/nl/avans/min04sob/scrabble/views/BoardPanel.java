@@ -297,6 +297,7 @@ public class BoardPanel extends CorePanel {
 
 	}
 
+
 	public void infoBox(String infoMessage, String location) {
 		JOptionPane.showMessageDialog(null, infoMessage,
 				"InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
@@ -313,7 +314,10 @@ public class BoardPanel extends CorePanel {
 
 	}
 
-	public void enablePreviousButton() {
+	
+
+	public void enablePreviousButton(){
+
 		this.prevButton.setEnabled(true);
 	}
 
