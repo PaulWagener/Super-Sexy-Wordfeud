@@ -19,7 +19,7 @@ public class AcceptDeclineController extends CoreController {
 		modModel = new ModeratorModel();
 		this.addModel(modModel);
 		adView = new AcceptDeclineView();
-
+		
 		this.addView(adView);
 		fillWordList();
 		addListeners();

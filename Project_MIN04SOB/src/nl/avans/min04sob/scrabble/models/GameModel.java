@@ -655,7 +655,7 @@ public class GameModel extends CoreModel {
 			int nextTurn = getNextTurnId();
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
-			System.out.println("works " + score);
+			System.out.println("score bitches u just got  : " + score + " points this turn" );
 
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
@@ -727,7 +727,7 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY][counterX - 1] != null
 								&& (!beenLeft)) {
 							counterX--;
-						} else if (newBoard[counterY][counterX + 1] != null
+						} else if (counterX<14 && newBoard[counterY][counterX + 1] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenLeft = true;
 							// als hij nog niet terug rechts is slaat hij de
@@ -748,7 +748,7 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY - 1][counterX] != null
 								&& (!beenTop)) {
 							counterY--;
-						} else if (newBoard[counterY + 1][counterX] != null
+						} else if (counterY<14 && newBoard[counterY + 1][counterX] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenTop = true;
 							verticalWord.add(newBoard[counterY][counterX]);
@@ -783,8 +783,7 @@ public class GameModel extends CoreModel {
 			if (comparableWords.size() == 0) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
-			} else if (comparableWords.get(0).size() > letterPositions.length) {
-			} else if (!isBoardEmpty()) {
+			} else if (!isBoardEmpty() && !(comparableWords.get(0).size() > letterPositions.length)) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
@@ -795,7 +794,7 @@ public class GameModel extends CoreModel {
 
 	public boolean isBoardEmpty() {
 		try {
-			ResultSet rs = Db.run(new Query(getWordMoveCount).set(letterSet)).get();
+			ResultSet rs = Db.run(new Query(getWordMoveCount).set(gameId)).get();
 			
 			rs.next();
 			int wordMoveCount = rs.getInt(1); 
@@ -820,10 +819,7 @@ public class GameModel extends CoreModel {
 
 		for (ArrayList<Tile> word : words) {
 			int wordscore = 0;
-			boolean doubleword1 = false;
-			boolean doubleword2 = false;
-			boolean tripleword1 = false;
-			boolean tripleword2 = false;
+			int wordMultiplier = 1;
 			for (Tile t : word) {
 				wordscore = wordscore + t.getValue();
 				for (int vertical = 0; vertical < 15; vertical++) {
@@ -832,42 +828,25 @@ public class GameModel extends CoreModel {
 							if (playedLetters[vertical][horizontal].equals(t)) {
 								int multiplier = multipliers[vertical][horizontal];
 								switch (multiplier) {
-								case BoardModel.DL:
-									wordscore = wordscore + (t.getValue() * 2);
-								case BoardModel.TL:
-									wordscore = wordscore + (t.getValue() * 3);
-								case BoardModel.DW:
-									if (doubleword1 == false) {
-										doubleword1 = true;
-									} else {
-										doubleword2 = true;
-									}
-								case BoardModel.TW:
-									if (tripleword1 == false) {
-										tripleword1 = true;
-									} else {
-										tripleword2 = true;
-									}
+									case BoardModel.DL:
+										wordscore = wordscore + t.getValue();
+										break;
+									case BoardModel.TL:
+										wordscore = wordscore + (t.getValue() * 2);
+										break;
+									case BoardModel.DW:
+										wordMultiplier = (wordMultiplier*2);
+										break;
+									case BoardModel.TW:
+										wordMultiplier = (wordMultiplier*3);
+										break;
 								}
 							}
 						}
 					}
 				}
 			}
-			if (doubleword1) {
-				if (doubleword2) {
-					wordscore = wordscore * 4;
-				} else {
-					wordscore = wordscore * 2;
-				}
-			}
-			if (tripleword1) {
-				if (tripleword2) {
-					wordscore = wordscore * 9;
-				} else {
-					wordscore = wordscore * 3;
-				}
-			}
+			wordscore = (wordscore * wordMultiplier);
 			totalScore = totalScore + wordscore;
 		}
 		return totalScore;
