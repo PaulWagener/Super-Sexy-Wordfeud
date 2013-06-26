@@ -647,7 +647,7 @@ public class GameModel extends CoreModel {
 			int nextTurn = getNextTurnId();
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
-			System.out.println("works " + score);
+			System.out.println("score bitches u just got  : " + score + " points this turn" );
 
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
@@ -806,10 +806,7 @@ public class GameModel extends CoreModel {
 
 		for (ArrayList<Tile> word : words) {
 			int wordscore = 0;
-			boolean doubleword1 = false;
-			boolean doubleword2 = false;
-			boolean tripleword1 = false;
-			boolean tripleword2 = false;
+			int wordMultiplier = 1;
 			for (Tile t : word) {
 				wordscore = wordscore + t.getValue();
 				for (int vertical = 0; vertical < 15; vertical++) {
@@ -819,41 +816,20 @@ public class GameModel extends CoreModel {
 								int multiplier = multipliers[vertical][horizontal];
 								switch (multiplier) {
 								case BoardModel.DL:
-									wordscore = wordscore + (t.getValue() * 2);
+									wordscore = wordscore + t.getValue();
 								case BoardModel.TL:
-									wordscore = wordscore + (t.getValue() * 3);
+									wordscore = wordscore + (t.getValue() * 2);
 								case BoardModel.DW:
-									if (doubleword1 == false) {
-										doubleword1 = true;
-									} else {
-										doubleword2 = true;
-									}
+									wordMultiplier = (wordMultiplier*2);
 								case BoardModel.TW:
-									if (tripleword1 == false) {
-										tripleword1 = true;
-									} else {
-										tripleword2 = true;
-									}
+									wordMultiplier = (wordMultiplier*3);
 								}
 							}
 						}
 					}
 				}
 			}
-			if (doubleword1) {
-				if (doubleword2) {
-					wordscore = wordscore * 4;
-				} else {
-					wordscore = wordscore * 2;
-				}
-			}
-			if (tripleword1) {
-				if (tripleword2) {
-					wordscore = wordscore * 9;
-				} else {
-					wordscore = wordscore * 3;
-				}
-			}
+			wordscore = (wordscore * wordMultiplier);
 			totalScore = totalScore + wordscore;
 		}
 		return totalScore;
