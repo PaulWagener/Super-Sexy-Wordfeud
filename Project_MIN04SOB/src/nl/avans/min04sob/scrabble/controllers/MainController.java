@@ -27,6 +27,7 @@ import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
 import nl.avans.min04sob.scrabble.views.SelectSwapView;
+import nl.avans.min04sob.scrabble.views.StartPanel;
 
 public class MainController extends CoreController {
 
@@ -40,6 +41,7 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private CompetitionModel competitionModel;
+	private StartPanel startPanel;
 
 	private GameModel currentGame;
 
@@ -371,7 +373,9 @@ public class MainController extends CoreController {
 		accountcontroller.addView(menu);
 		accountcontroller.addView(chatPanel);
 		frame.setIconImage(menu.getImageForIcon());
-		
+		frame.getContentPane().add(startPanel, "cell 0 0 10 6,alignx left,aligny top");
+		frame.revalidate();
+		frame.repaint();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -382,6 +386,8 @@ public class MainController extends CoreController {
 		menu = new MenuView();
 		stashModel = new StashModel();
 
+		startPanel = new StartPanel();
+		
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
