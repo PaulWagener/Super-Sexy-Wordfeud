@@ -49,17 +49,17 @@ public class StashModel extends CoreModel {
 
 			}
 			if (currentbeurtid - 1 < 0) {
-				currentbeurtid = 1;
+				currentbeurtid = 0;
 			}
 			Future<ResultSet> worker;
 			if (game.yourturn()) {
 				worker = Db.run(new Query(Queries.CURRENT_TILES)
 						.set(user.getUsername()).set(gameId)
-						.set(currentbeurtid - 1));
+						.set(currentbeurtid - 2));
 			} else {
 				worker = Db.run(new Query(Queries.CURRENT_TILES)
 						.set(user.getUsername()).set(gameId)
-						.set(currentbeurtid));
+						.set(currentbeurtid-1));
 			}
 			System.out.println(user.getUsername()+gameId+currentbeurtid);
 
