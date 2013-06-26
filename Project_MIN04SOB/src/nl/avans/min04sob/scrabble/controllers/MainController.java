@@ -72,7 +72,7 @@ public class MainController extends CoreController {
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-	
+
 		startUp();
 	}
 
@@ -373,7 +373,8 @@ public class MainController extends CoreController {
 		accountcontroller.addView(menu);
 		accountcontroller.addView(chatPanel);
 		frame.setIconImage(menu.getImageForIcon());
-		frame.getContentPane().add(startPanel, "cell 0 0 10 6,alignx left,aligny top");
+		frame.getContentPane().add(startPanel,
+				"cell 0 0 10 6,alignx left,aligny top");
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -387,7 +388,7 @@ public class MainController extends CoreController {
 		stashModel = new StashModel();
 
 		startPanel = new StartPanel();
-		
+
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
@@ -398,9 +399,9 @@ public class MainController extends CoreController {
 		chatPanel = new ChatPanel();
 
 	}
-	
 
 	public void closePanels() {
+		frame.remove(startPanel);
 		frame.remove(currGamePanel);
 		frame.remove(chatPanel);
 		frame.repaint();
@@ -477,7 +478,7 @@ public class MainController extends CoreController {
 		currentGame = selectedGame;
 	}
 
-	public void setTurnLabel() {	
+	public void setTurnLabel() {
 		if (currentGame.isObserver()) {
 			currGamePanel.setLabelPlayerTurn(" van "
 					+ currentGame.getChallenger().getUsername());
@@ -490,7 +491,7 @@ public class MainController extends CoreController {
 						.getUsername());
 			}
 		}
-		
+
 	}
 
 	private void updatelabels(int toTurn) {
