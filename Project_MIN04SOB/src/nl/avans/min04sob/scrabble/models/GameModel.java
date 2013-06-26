@@ -584,28 +584,11 @@ public class GameModel extends CoreModel {
 	}
 
 	public boolean yourturn() {
-		try {
-			Future<ResultSet> worker = Db.run(new Query(yourTurnQuery)
-					.set(getGameId()));
-			ResultSet res = worker.get();
-
-			int turnCount = Query.getNumRows(res);
-
-			// If it is the first turn
-			if (turnCount == 0) {
-				// If the currentUser is the challenger return true else false
-				return iamchallenger;
-			}
-			res.next();
-			String lastturnplayername = res.getString("account_naam");
-
-			// A user has the move is he is not the last person who made a move
-			return !lastturnplayername.equals(currentUser.getUsername());
-
-		} catch (SQLException | InterruptedException | ExecutionException sql) {
-			sql.printStackTrace();
+		if(getNextTurnUsername().equals(currentUser.getUsername())){
+			return true;
+		}else{
+			return false;
 		}
-		return false;
 	}
 
 	public int getvalueforLetter(String letter) {
