@@ -171,6 +171,7 @@ public class BoardPanel extends CorePanel {
 		nextButton.setText("Volgende");
 
 		add(nextButton, "cell 4 6,grow");
+		observerView();
 
 	}
 
@@ -224,6 +225,15 @@ public class BoardPanel extends CorePanel {
 
 			}
 
+			break;
+
+		case Event.MOVE:
+			boolean hasTurn = (boolean) evt.getNewValue();
+			if (hasTurn) {
+				playerView();
+			} else {
+				observerView();
+			}
 			break;
 
 		/*
@@ -322,6 +332,13 @@ public class BoardPanel extends CorePanel {
 
 	public void enablePreviousButton() {
 
+<<<<<<< HEAD
+	}
+
+	public void enablePreviousButton() {
+
+=======
+>>>>>>> refs/remotes/origin/master
 		this.prevButton.setEnabled(true);
 	}
 
