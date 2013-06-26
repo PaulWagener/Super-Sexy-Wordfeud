@@ -197,8 +197,8 @@ public class GameModel extends CoreModel {
 
 		StashModel stash = new StashModel();
 
-		Tile[] letters = stash.getPlayerTiles(currentUser, this);
-
+		Tile[] letters = stash.getPlayerTiles(currentUser, this,this.getLastTurn());
+		System.out.println(letters.length);
 		Tile[] newletters = new Tile[7];
 
 		for (int counter = 0; counter < newletters.length; counter++) {
@@ -208,17 +208,20 @@ public class GameModel extends CoreModel {
 
 					newletters[counter] = stash.getRandomLetter(
 							this.getGameId(), turnid);
-					stash.addToPlankje(this.gameId,
-							newletters[counter].getTileId(), turnid);
+					
 
 				}
 			} else {
 
 				newletters[counter] = letters[counter];
 			}
+			
 
 		}
-
+		for(Tile tile : newletters){
+			stash.addToPlankje(this.gameId,
+					tile.getTileId(), turnid);
+		}
 		boardPanel.setPlayerTiles(newletters);
 	}
 
@@ -240,6 +243,9 @@ public class GameModel extends CoreModel {
 
 	public int getCurrentobserveturn() {
 		return currentobserveturn;
+	}
+	public int getLastTurn(){
+		return this.lastTurn;
 	}
 
 	public void setBoardModel(BoardModel model) {

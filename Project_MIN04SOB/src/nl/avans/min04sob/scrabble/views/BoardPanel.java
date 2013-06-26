@@ -330,18 +330,15 @@ public class BoardPanel extends CorePanel {
 
 	}
 
-	public void ChooseLetter(Tile tile) {
-		// TODO dit moet worden aangeroepen als je een vraagteken neerlegd
-		String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
-				"letter needed ", JOptionPane.WARNING_MESSAGE);
-		if (letter.length() < 2) {
-			tile.setLetter(letter);
-		}
+	public void enablePreviousButton() {
 
+<<<<<<< HEAD
 	}
 
 	public void enablePreviousButton() {
 
+=======
+>>>>>>> refs/remotes/origin/master
 		this.prevButton.setEnabled(true);
 	}
 

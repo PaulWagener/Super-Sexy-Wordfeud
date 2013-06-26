@@ -9,6 +9,6 @@ AND (
 `lb`.`Spel_ID` = `b`.`Spel_ID`
 ) )
 
-where b.Account_naam = ? and l.spel_ID = ?
+where b.Account_naam = ? and l.spel_ID = ? and lb.Beurt_ID = ?
 
 

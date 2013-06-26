@@ -37,9 +37,9 @@ public class AccountController extends CoreController {
 		accountModel = account;
 		registerPanel = new RegisterPanel();
 		changepassPanel = new ChangePassPanel();
-
+		frame.setTitle("Inloggen");
 		frame.add(loginPanel);
-
+		
 		addView(registerPanel);
 		addView(loginPanel);
 		addView(changepassPanel);
@@ -258,6 +258,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Gebruikers Beheren");
 	}
 
 	public void loginToRegister() {
@@ -268,6 +269,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Registreren");
 	}
 
 	public void registerToLogin() {
@@ -278,6 +280,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Inloggen");
 	}
 
 	public void setChangePassPanel() {
@@ -287,6 +290,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Wachtwoord Veranderen");
 	}
 
 	private void tryToRegister() {
