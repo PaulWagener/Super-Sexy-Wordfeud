@@ -166,7 +166,7 @@ public class MainController extends CoreController {
 
 					}
 					currentGame.playWord(newBoard);
-
+					currGamePanel.infoBox("Woord gelegd", "Woord gelegd");
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
 				}
@@ -435,7 +435,7 @@ public class MainController extends CoreController {
 		updatelabels(selectedGame.getCurrentobserveturn());
 		if(currentGame.yourturn()){
 		selectedGame.setplayertilesfromdatabase(selectedGame
-				.getLastTurn());
+				.getNumberOfTotalTurns());
 		}
 
 		selectedGame.getBoardFromDatabase();

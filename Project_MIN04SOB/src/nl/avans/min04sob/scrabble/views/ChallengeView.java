@@ -24,7 +24,7 @@ public class ChallengeView extends CorePanel {
 	public ChallengeView() {
 
 		setLayout(new MigLayout("", "[150px:150px:150px,grow][100px:100px:100px,grow]", "[14px][40px:40px:40px,grow][40px:40px:40px,grow][90.00][grow]"));
-		challengeLabel = new JLabel("Uitdagingen");
+		challengeLabel = new JLabel("CompetitieID, Speler");
 		add(challengeLabel, "cell 0 0 2 1,alignx left,aligny top");
 
 		scrollPane = new JScrollPane();
@@ -34,7 +34,6 @@ public class ChallengeView extends CorePanel {
 		scrollPane.setViewportView(challengeList);
 
 		acceptButton = new JButton("Accepteer");
- 
 		add(acceptButton, "cell 1 1,alignx center");
 
 		declineButton = new JButton("Weiger");
