@@ -777,8 +777,7 @@ public class GameModel extends CoreModel {
 			if (comparableWords.size() == 0) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
-			} else if (comparableWords.get(0).size() > letterPositions.length) {
-			} else if (!isBoardEmpty()) {
+			} else if (!isBoardEmpty() && !(comparableWords.get(0).size() > letterPositions.length)) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
@@ -789,7 +788,7 @@ public class GameModel extends CoreModel {
 
 	public boolean isBoardEmpty() {
 		try {
-			ResultSet rs = Db.run(new Query(getWordMoveCount).set(letterSet)).get();
+			ResultSet rs = Db.run(new Query(getWordMoveCount).set(gameId)).get();
 			
 			rs.next();
 			int wordMoveCount = rs.getInt(1); 
@@ -823,14 +822,18 @@ public class GameModel extends CoreModel {
 							if (playedLetters[vertical][horizontal].equals(t)) {
 								int multiplier = multipliers[vertical][horizontal];
 								switch (multiplier) {
-								case BoardModel.DL:
-									wordscore = wordscore + t.getValue();
-								case BoardModel.TL:
-									wordscore = wordscore + (t.getValue() * 2);
-								case BoardModel.DW:
-									wordMultiplier = (wordMultiplier*2);
-								case BoardModel.TW:
-									wordMultiplier = (wordMultiplier*3);
+									case BoardModel.DL:
+										wordscore = wordscore + t.getValue();
+										break;
+									case BoardModel.TL:
+										wordscore = wordscore + (t.getValue() * 2);
+										break;
+									case BoardModel.DW:
+										wordMultiplier = (wordMultiplier*2);
+										break;
+									case BoardModel.TW:
+										wordMultiplier = (wordMultiplier*3);
+										break;
 								}
 							}
 						}
