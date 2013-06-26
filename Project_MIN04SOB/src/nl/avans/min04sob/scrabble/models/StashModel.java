@@ -49,21 +49,36 @@ public class StashModel extends CoreModel {
 
 			}
 			if (currentbeurtid - 1 < 0) {
-				currentbeurtid = 1;
+				currentbeurtid = 0;
 			}
 			Future<ResultSet> worker;
 			if (game.yourturn()) {
 				worker = Db.run(new Query(Queries.CURRENT_TILES)
 						.set(user.getUsername()).set(gameId)
-						.set(currentbeurtid - 1));
+						.set(currentbeurtid - 2));
 			} else {
 				worker = Db.run(new Query(Queries.CURRENT_TILES)
 						.set(user.getUsername()).set(gameId)
-						.set(currentbeurtid));
+						.set(currentbeurtid-1));
+			}
+			boolean foundletters = false;
+			ResultSet res = null;
+			while(!foundletters){
+				
+				worker = Db.run(new Query(Queries.CURRENT_TILES)
+				.set(user.getUsername()).set(gameId)
+				.set(currentbeurtid));
+				res = worker.get();
+				if(res.next()|| currentbeurtid == 0){
+					foundletters = true;
+				}else{
+					currentbeurtid--;
+				}
+				
 			}
 			System.out.println(user.getUsername()+gameId+currentbeurtid);
 
-			ResultSet res = worker.get();
+			
 			numRows = Query.getNumRows(res);
 
 			Tile[] tiles = new Tile[numRows];

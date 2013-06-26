@@ -36,9 +36,9 @@ public class AccountController extends CoreController {
 	private PlaySound ps = new PlaySound();
 
 	public AccountController(AccountModel account) {
-		
-		maxpass_userLength = 11;
-		minpass_userLength = 5;
+
+		maxpass_userLength = 45;
+		minpass_userLength = 1;
 
 		frame = new JFrame();
 		frame.setAlwaysOnTop(true);

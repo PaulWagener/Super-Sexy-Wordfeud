@@ -314,9 +314,9 @@ public class BoardPanel extends CorePanel {
 		playBoard.setEnabled(true);
 	}
 
-	public void infoBox(String infoMessage, String location) {
+	public void infoBox(String infoMessage, String title) {
 		JOptionPane.showMessageDialog(null, infoMessage,
-				"InfoBox: " + location, JOptionPane.INFORMATION_MESSAGE);
+				"InfoBox: " + title, JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
