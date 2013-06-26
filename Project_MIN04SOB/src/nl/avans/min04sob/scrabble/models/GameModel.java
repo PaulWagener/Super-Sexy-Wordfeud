@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
+import nl.avans.min04sob.scrabble.core.db.Queries;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
@@ -565,11 +566,13 @@ public class GameModel extends CoreModel {
 
 	public String getNextTurnUsername() {
 		String nextuser = "";
+		String username;
 		try {
 			ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId))
 					.get();
-			rs.first();
-			String username = rs.getString(1);
+
+			rs.next();
+			username = rs.getString(1);
 
 			if (username.equals(opponent.getUsername())) {
 				nextuser = challenger.getUsername();
@@ -584,9 +587,9 @@ public class GameModel extends CoreModel {
 	}
 
 	public boolean yourturn() {
-		if(getNextTurnUsername().equals(currentUser.getUsername())){
+		if (getNextTurnUsername().equals(currentUser.getUsername())) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -865,7 +868,7 @@ public class GameModel extends CoreModel {
 		// First find out which letters where played
 		Tile[][] playedLetters = compareFields(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-
+		
 		if (thisTurnIsFirstTurn()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
@@ -951,7 +954,9 @@ public class GameModel extends CoreModel {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
-		;
+		if(letterPositions.length==1){
+			return true;
+		}
 		if (holdX == (int) letterPositions[1].getX()) {
 			for (Point p : letterPositions) {
 				if (p.getX() != holdX) {
