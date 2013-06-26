@@ -952,13 +952,13 @@ public class GameModel extends CoreModel {
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
 		;
-		if (holdX == (int) letterPositions[0].getX()) {
+		if (holdX == (int) letterPositions[1].getX()) {
 			for (Point p : letterPositions) {
 				if (p.getX() != holdX) {
 					return false;
 				}
 			}
-		} else if (holdY == (int) letterPositions[0].getY()) {
+		} else if (holdY == (int) letterPositions[1].getY()) {
 			for (Point p : letterPositions) {
 				if (p.getY() != holdY) {
 					return false;
