@@ -865,7 +865,7 @@ public class GameModel extends CoreModel {
 		// First find out which letters where played
 		Tile[][] playedLetters = compareFields(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-
+		
 		if (thisTurnIsFirstTurn()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
@@ -951,7 +951,9 @@ public class GameModel extends CoreModel {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
-		;
+		if(letterPositions.length==1){
+			return true;
+		}
 		if (holdX == (int) letterPositions[1].getX()) {
 			for (Point p : letterPositions) {
 				if (p.getX() != holdX) {
