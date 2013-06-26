@@ -61,6 +61,7 @@ public class GameModel extends CoreModel {
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
+	private String getWordMoveCount = "SELECT COUNT(*) FROM `beurt` WHERE `Aktie_Type` = 'word' AND `spel_id` = ?";
 	// private final String getnumberofturns =
 	// "SELECT max(beurt_ID) FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID ";
 
@@ -68,6 +69,7 @@ public class GameModel extends CoreModel {
 	private final boolean observer;
 	private boolean hasTurn = false;
 	private boolean hasButtons = false;
+	
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
 			BoardPanel boardPanel, boolean observer) {
@@ -776,7 +778,7 @@ public class GameModel extends CoreModel {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
 			} else if (comparableWords.get(0).size() > letterPositions.length) {
-			} else if (!thisTurnIsFirstTurn()) {
+			} else if (!isBoardEmpty()) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
@@ -785,12 +787,18 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public boolean thisTurnIsFirstTurn() {
-		if (getNextTurnId() == 3) {
-			return true;
-		} else {
-			return false;
+	public boolean isBoardEmpty() {
+		try {
+			ResultSet rs = Db.run(new Query(getWordMoveCount).set(letterSet)).get();
+			
+			rs.next();
+			int wordMoveCount = rs.getInt(1); 
+			return wordMoveCount == 0;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return false;
 	}
 
 	private int getScore(Tile[][] playedLetters,
@@ -869,7 +877,7 @@ public class GameModel extends CoreModel {
 		Tile[][] playedLetters = compareFields(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 
-		if (thisTurnIsFirstTurn()) {
+		if (isBoardEmpty()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
 
