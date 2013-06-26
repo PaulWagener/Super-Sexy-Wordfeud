@@ -131,8 +131,9 @@ public class StashModel extends CoreModel {
 
 		String addlettertoplankje = "INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
 		try {
+			System.out.println(spel_ID +" ,"+  letter_ID +" , "+ turnid);
 			Db.run(new Query(addlettertoplankje).set(spel_ID).set(letter_ID)
-					.set(turnid + 1));
+					.set(turnid));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

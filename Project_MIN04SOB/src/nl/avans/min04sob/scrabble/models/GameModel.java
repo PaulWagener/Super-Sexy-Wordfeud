@@ -219,6 +219,7 @@ public class GameModel extends CoreModel {
 
 		}
 		for(Tile tile : newletters){
+			System.out.println("teeest");
 			stash.addToPlankje(this.gameId,
 					tile.getTileId(), turnid);
 		}
