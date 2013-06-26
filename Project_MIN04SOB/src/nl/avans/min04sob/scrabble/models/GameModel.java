@@ -69,7 +69,6 @@ public class GameModel extends CoreModel {
 	private final boolean observer;
 	private boolean hasTurn = false;
 	private boolean hasButtons = false;
-	
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
 			BoardPanel boardPanel, boolean observer) {
@@ -479,11 +478,11 @@ public class GameModel extends CoreModel {
 
 	@Override
 	public void update() {
-		if (!hasTurn) {
-			boolean oldHasTurn = hasTurn;
-			hasTurn = yourturn();
-			firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
-		}
+		boolean oldHasTurn = hasTurn;
+		hasTurn = yourturn();
+
+		firePropertyChange(Event.MOVE, null, hasTurn);
+
 		// TODO fire property change for new games and changed game states
 		// TODO also fire property change for a when the player needs to make a
 		// new move,
@@ -655,7 +654,8 @@ public class GameModel extends CoreModel {
 			int nextTurn = getNextTurnId();
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
-			System.out.println("score bitches u just got  : " + score + " points this turn" );
+			System.out.println("score bitches u just got  : " + score
+					+ " points this turn");
 
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
@@ -727,7 +727,8 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY][counterX - 1] != null
 								&& (!beenLeft)) {
 							counterX--;
-						} else if (counterX<14 && newBoard[counterY][counterX + 1] != null
+						} else if (counterX < 14
+								&& newBoard[counterY][counterX + 1] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenLeft = true;
 							// als hij nog niet terug rechts is slaat hij de
@@ -748,7 +749,8 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY - 1][counterX] != null
 								&& (!beenTop)) {
 							counterY--;
-						} else if (counterY<14 && newBoard[counterY + 1][counterX] != null
+						} else if (counterY < 14
+								&& newBoard[counterY + 1][counterX] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenTop = true;
 							verticalWord.add(newBoard[counterY][counterX]);
@@ -783,7 +785,8 @@ public class GameModel extends CoreModel {
 			if (comparableWords.size() == 0) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
-			} else if (!isBoardEmpty() && !(comparableWords.get(0).size() > letterPositions.length)) {
+			} else if (!isBoardEmpty()
+					&& !(comparableWords.get(0).size() > letterPositions.length)) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
@@ -794,10 +797,11 @@ public class GameModel extends CoreModel {
 
 	public boolean isBoardEmpty() {
 		try {
-			ResultSet rs = Db.run(new Query(getWordMoveCount).set(gameId)).get();
-			
+			ResultSet rs = Db.run(new Query(getWordMoveCount).set(gameId))
+					.get();
+
 			rs.next();
-			int wordMoveCount = rs.getInt(1); 
+			int wordMoveCount = rs.getInt(1);
 			return wordMoveCount == 0;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -828,18 +832,19 @@ public class GameModel extends CoreModel {
 							if (playedLetters[vertical][horizontal].equals(t)) {
 								int multiplier = multipliers[vertical][horizontal];
 								switch (multiplier) {
-									case BoardModel.DL:
-										wordscore = wordscore + t.getValue();
-										break;
-									case BoardModel.TL:
-										wordscore = wordscore + (t.getValue() * 2);
-										break;
-									case BoardModel.DW:
-										wordMultiplier = (wordMultiplier*2);
-										break;
-									case BoardModel.TW:
-										wordMultiplier = (wordMultiplier*3);
-										break;
+								case BoardModel.DL:
+									wordscore = wordscore + t.getValue();
+									break;
+								case BoardModel.TL:
+									wordscore = wordscore + (t.getValue() * 2);
+									break;
+								case BoardModel.DW:
+									wordMultiplier = (wordMultiplier * 2);
+									break;
+								case BoardModel.TW:
+									wordMultiplier = (wordMultiplier * 3);
+									break;
+
 								}
 							}
 						}
@@ -947,7 +952,7 @@ public class GameModel extends CoreModel {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
-		if(letterPositions.length==1){
+		if (letterPositions.length == 1) {
 			return true;
 		}
 		if (holdX == (int) letterPositions[1].getX()) {

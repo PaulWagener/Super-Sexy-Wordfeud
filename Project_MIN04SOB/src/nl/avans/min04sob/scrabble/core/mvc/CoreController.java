@@ -32,8 +32,6 @@ public abstract class CoreController implements PropertyChangeListener,
 		stopTimer();
 		registeredModels.add(model);
 		model.addPropertyChangeListener(this);
-		System.out.println(this + " "
-				+ Arrays.deepToString(registeredModels.toArray()));
 		startTimer();
 	}
 
