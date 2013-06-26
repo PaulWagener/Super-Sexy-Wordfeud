@@ -433,10 +433,9 @@ public class MainController extends CoreController {
 		currGamePanel.setModel(boardModel);
 
 		updatelabels(selectedGame.getCurrentobserveturn());
-		if(currentGame.yourturn()){
-		selectedGame.setplayertilesfromdatabase(selectedGame
-				.getNumberOfTotalTurns());
-		}
+		
+		selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
+		
 
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
