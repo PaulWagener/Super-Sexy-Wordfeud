@@ -48,11 +48,13 @@ public class MainController extends CoreController {
 
 	private StashModel stashModel;
 
+	
+
 	public MainController() {
 
 		initialize();
 		addListeners();
-
+		
 		addView(menu);
 		addView(chatPanel);
 		addView(frame);
@@ -70,7 +72,7 @@ public class MainController extends CoreController {
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-
+		
 		startUp();
 	}
 
@@ -129,10 +131,12 @@ public class MainController extends CoreController {
 
 					}
 					updatelabels(currentGame.getCurrentobserveturn());
-				} else {
-					currGamePanel.disablePreviousButton();
-				}
+					}else{
+						currGamePanel.disablePreviousButton();
+					}
+					
 
+				
 			}
 
 		});
@@ -155,16 +159,14 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					BoardModel newBoard = new BoardModel();
-					for (int vertical = 0; vertical < 15; vertical++) {
-						for (int horizontal = 0; horizontal < 15; horizontal++) {
-							newBoard.setValueAt(
-									currGamePanel.getNewBoard()[vertical][horizontal],
-									vertical, horizontal);
+					for(int vertical = 0; vertical < 15 ; vertical++){
+						for(int horizontal = 0;horizontal < 15; horizontal++){
+							newBoard.setValueAt(currGamePanel.getNewBoard()[vertical][horizontal], vertical, horizontal);	
 						}
-
+						
 					}
 					currentGame.playWord(newBoard);
-
+					
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
 				}
@@ -380,7 +382,7 @@ public class MainController extends CoreController {
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		stashModel = new StashModel();
-
+		
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
@@ -389,7 +391,7 @@ public class MainController extends CoreController {
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
-
+		
 	}
 
 	public void closePanels() {
@@ -443,11 +445,9 @@ public class MainController extends CoreController {
 	}
 
 	public void openPanels() {
-		frame.getContentPane().add(currGamePanel,
-				"cell 4 0 6 6,growx,aligny top");
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
-		frame.getContentPane().add(chatPanel,
-				"cell 0 0 4 6,alignx left,aligny top");
+		frame.getContentPane().add(chatPanel, "cell 0 0 4 6,alignx left,aligny top");
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -469,10 +469,15 @@ public class MainController extends CoreController {
 		currentGame = selectedGame;
 	}
 
-	public void setTurnLabel() {	
+	public void setTurnLabel() {
 		if (currentGame.isObserver()) {
-			currGamePanel.setLabelPlayerTurn(" van "
-					+ currentGame.getChallenger().getUsername());
+			if (currentGame.whosturn()) {
+				currGamePanel.setLabelPlayerTurn(" van "
+						+ currentGame.getChallenger().getUsername());
+			} else {
+				currGamePanel.setLabelPlayerTurn(" van "
+						+ currentGame.getOpponent().getUsername());
+			}
 		} else {
 			if (currentGame.yourturn()) {
 				currGamePanel.setLabelPlayerTurn("aan jouw ("
@@ -482,7 +487,6 @@ public class MainController extends CoreController {
 						.getUsername());
 			}
 		}
-		
 	}
 
 	private void updatelabels(int toTurn) {
@@ -526,7 +530,7 @@ public class MainController extends CoreController {
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
 					// rij toevoegen aan beurt
 				}
-
+				
 				refresh();
 				currentGame.doTurn(currentGame.getGameId(),
 						account.getUsername(), 0, "Swap");
