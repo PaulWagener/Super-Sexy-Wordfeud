@@ -27,6 +27,7 @@ import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
 import nl.avans.min04sob.scrabble.views.SelectSwapView;
+import nl.avans.min04sob.scrabble.views.StartPanel;
 
 public class MainController extends CoreController {
 
@@ -40,6 +41,7 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private CompetitionModel competitionModel;
+	private StartPanel startPanel;
 
 	private GameModel currentGame;
 
@@ -143,7 +145,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 
 				Tile[] letters = stashModel
-						.getPlayerTiles(account, currentGame);
+						.getPlayerTiles(account, currentGame,currentGame.getLastTurn());
 
 				selectSwap(letters);
 			}
@@ -164,7 +166,7 @@ public class MainController extends CoreController {
 
 					}
 					currentGame.playWord(newBoard);
-
+					currGamePanel.infoBox("Woord gelegd", "Woord gelegd");
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
 				}
@@ -281,6 +283,10 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
 				closePanels();
+				frame.getContentPane().add(startPanel,
+						"cell 0 0 10 6,alignx left,aligny top");
+				frame.revalidate();
+				frame.repaint();
 				// addLoginListener();
 			}
 		});
@@ -370,7 +376,11 @@ public class MainController extends CoreController {
 		accountcontroller = new AccountController(account);
 		accountcontroller.addView(menu);
 		accountcontroller.addView(chatPanel);
-
+		frame.setIconImage(menu.getImageForIcon());
+		frame.getContentPane().add(startPanel,
+				"cell 0 0 10 6,alignx left,aligny top");
+		frame.revalidate();
+		frame.repaint();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -380,6 +390,8 @@ public class MainController extends CoreController {
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		stashModel = new StashModel();
+
+		startPanel = new StartPanel();
 
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
@@ -393,6 +405,7 @@ public class MainController extends CoreController {
 	}
 
 	public void closePanels() {
+		frame.remove(startPanel);
 		frame.remove(currGamePanel);
 		frame.remove(chatPanel);
 		frame.repaint();
@@ -420,9 +433,9 @@ public class MainController extends CoreController {
 		currGamePanel.setModel(boardModel);
 
 		updatelabels(selectedGame.getCurrentobserveturn());
-
-		selectedGame.setplayertilesfromdatabase(selectedGame
-				.getCurrentobserveturn());
+		
+		selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
+		
 
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
@@ -431,7 +444,7 @@ public class MainController extends CoreController {
 			addButtonListeners();
 			selectedGame.setButtons(true);
 		}
-
+		currGamePanel.observerView();
 		openPanels();
 
 		chatPanel.empty();
@@ -469,7 +482,7 @@ public class MainController extends CoreController {
 		currentGame = selectedGame;
 	}
 
-	public void setTurnLabel() {	
+	public void setTurnLabel() {
 		if (currentGame.isObserver()) {
 			currGamePanel.setLabelPlayerTurn(" van "
 					+ currentGame.getChallenger().getUsername());
@@ -482,7 +495,7 @@ public class MainController extends CoreController {
 						.getUsername());
 			}
 		}
-		
+
 	}
 
 	private void updatelabels(int toTurn) {

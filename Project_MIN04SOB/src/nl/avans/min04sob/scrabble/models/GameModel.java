@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
+import nl.avans.min04sob.scrabble.core.db.Queries;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
@@ -60,6 +61,7 @@ public class GameModel extends CoreModel {
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
+	private String getWordMoveCount = "SELECT COUNT(*) FROM `beurt` WHERE `Aktie_Type` = 'word' AND `spel_id` = ?";
 	// private final String getnumberofturns =
 	// "SELECT max(beurt_ID) FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID ";
 
@@ -195,8 +197,8 @@ public class GameModel extends CoreModel {
 
 		StashModel stash = new StashModel();
 
-		Tile[] letters = stash.getPlayerTiles(currentUser, this);
-
+		Tile[] letters = stash.getPlayerTiles(currentUser, this,this.getLastTurn());
+		System.out.println(letters.length);
 		Tile[] newletters = new Tile[7];
 
 		for (int counter = 0; counter < newletters.length; counter++) {
@@ -206,17 +208,21 @@ public class GameModel extends CoreModel {
 
 					newletters[counter] = stash.getRandomLetter(
 							this.getGameId(), turnid);
-					stash.addToPlankje(this.gameId,
-							newletters[counter].getTileId(), turnid);
+					
 
 				}
 			} else {
 
 				newletters[counter] = letters[counter];
 			}
+			
 
 		}
-
+		for(Tile tile : newletters){
+			System.out.println("teeest");
+			stash.addToPlankje(this.gameId,
+					tile.getTileId(), turnid);
+		}
 		boardPanel.setPlayerTiles(newletters);
 	}
 
@@ -238,6 +244,9 @@ public class GameModel extends CoreModel {
 
 	public int getCurrentobserveturn() {
 		return currentobserveturn;
+	}
+	public int getLastTurn(){
+		return this.lastTurn;
 	}
 
 	public void setBoardModel(BoardModel model) {
@@ -470,11 +479,11 @@ public class GameModel extends CoreModel {
 
 	@Override
 	public void update() {
-		if (!hasTurn) {
-			boolean oldHasTurn = hasTurn;
-			hasTurn = yourturn();
-			firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
-		}
+		boolean oldHasTurn = hasTurn;
+		hasTurn = yourturn();
+
+		firePropertyChange(Event.MOVE, null, hasTurn);
+
 		// TODO fire property change for new games and changed game states
 		// TODO also fire property change for a when the player needs to make a
 		// new move,
@@ -565,11 +574,13 @@ public class GameModel extends CoreModel {
 
 	public String getNextTurnUsername() {
 		String nextuser = "";
+		String username;
 		try {
 			ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId))
 					.get();
-			rs.first();
-			String username = rs.getString(1);
+
+			rs.next();
+			username = rs.getString(1);
 
 			if (username.equals(opponent.getUsername())) {
 				nextuser = challenger.getUsername();
@@ -584,28 +595,11 @@ public class GameModel extends CoreModel {
 	}
 
 	public boolean yourturn() {
-		try {
-			Future<ResultSet> worker = Db.run(new Query(yourTurnQuery)
-					.set(getGameId()));
-			ResultSet res = worker.get();
-
-			int turnCount = Query.getNumRows(res);
-
-			// If it is the first turn
-			if (turnCount == 0) {
-				// If the currentUser is the challenger return true else false
-				return iamchallenger;
-			}
-			res.next();
-			String lastturnplayername = res.getString("account_naam");
-
-			// A user has the move is he is not the last person who made a move
-			return !lastturnplayername.equals(currentUser.getUsername());
-
-		} catch (SQLException | InterruptedException | ExecutionException sql) {
-			sql.printStackTrace();
+		if (getNextTurnUsername().equals(currentUser.getUsername())) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	public int getvalueforLetter(String letter) {
@@ -661,7 +655,8 @@ public class GameModel extends CoreModel {
 			int nextTurn = getNextTurnId();
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
-			System.out.println("works " + score);
+			System.out.println("score bitches u just got  : " + score
+					+ " points this turn");
 
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
@@ -733,7 +728,8 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY][counterX - 1] != null
 								&& (!beenLeft)) {
 							counterX--;
-						} else if (newBoard[counterY][counterX + 1] != null
+						} else if (counterX < 14
+								&& newBoard[counterY][counterX + 1] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenLeft = true;
 							// als hij nog niet terug rechts is slaat hij de
@@ -754,7 +750,8 @@ public class GameModel extends CoreModel {
 								&& newBoard[counterY - 1][counterX] != null
 								&& (!beenTop)) {
 							counterY--;
-						} else if (newBoard[counterY + 1][counterX] != null
+						} else if (counterY < 14
+								&& newBoard[counterY + 1][counterX] != null
 								&& newBoard[counterY][counterX] != null) {
 							beenTop = true;
 							verticalWord.add(newBoard[counterY][counterX]);
@@ -789,8 +786,8 @@ public class GameModel extends CoreModel {
 			if (comparableWords.size() == 0) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
-			} else if (comparableWords.get(0).size() > letterPositions.length) {
-			} else if (!thisTurnIsFirstTurn()) {
+			} else if (!isBoardEmpty()
+					&& !(comparableWords.get(0).size() > letterPositions.length)) {
 				throw new InvalidMoveException(
 						InvalidMoveException.STATE_NOT_ATTACHED);
 			}
@@ -799,12 +796,19 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public boolean thisTurnIsFirstTurn() {
-		if (getNextTurnId() == 3) {
-			return true;
-		} else {
-			return false;
+	public boolean isBoardEmpty() {
+		try {
+			ResultSet rs = Db.run(new Query(getWordMoveCount).set(gameId))
+					.get();
+
+			rs.next();
+			int wordMoveCount = rs.getInt(1);
+			return wordMoveCount == 0;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return false;
 	}
 
 	private int getScore(Tile[][] playedLetters,
@@ -820,10 +824,7 @@ public class GameModel extends CoreModel {
 
 		for (ArrayList<Tile> word : words) {
 			int wordscore = 0;
-			boolean doubleword1 = false;
-			boolean doubleword2 = false;
-			boolean tripleword1 = false;
-			boolean tripleword2 = false;
+			int wordMultiplier = 1;
 			for (Tile t : word) {
 				wordscore = wordscore + t.getValue();
 				for (int vertical = 0; vertical < 15; vertical++) {
@@ -833,41 +834,25 @@ public class GameModel extends CoreModel {
 								int multiplier = multipliers[vertical][horizontal];
 								switch (multiplier) {
 								case BoardModel.DL:
-									wordscore = wordscore + (t.getValue() * 2);
+									wordscore = wordscore + t.getValue();
+									break;
 								case BoardModel.TL:
-									wordscore = wordscore + (t.getValue() * 3);
+									wordscore = wordscore + (t.getValue() * 2);
+									break;
 								case BoardModel.DW:
-									if (doubleword1 == false) {
-										doubleword1 = true;
-									} else {
-										doubleword2 = true;
-									}
+									wordMultiplier = (wordMultiplier * 2);
+									break;
 								case BoardModel.TW:
-									if (tripleword1 == false) {
-										tripleword1 = true;
-									} else {
-										tripleword2 = true;
-									}
+									wordMultiplier = (wordMultiplier * 3);
+									break;
+
 								}
 							}
 						}
 					}
 				}
 			}
-			if (doubleword1) {
-				if (doubleword2) {
-					wordscore = wordscore * 4;
-				} else {
-					wordscore = wordscore * 2;
-				}
-			}
-			if (tripleword1) {
-				if (tripleword2) {
-					wordscore = wordscore * 9;
-				} else {
-					wordscore = wordscore * 3;
-				}
-			}
+			wordscore = (wordscore * wordMultiplier);
 			totalScore = totalScore + wordscore;
 		}
 		return totalScore;
@@ -882,8 +867,8 @@ public class GameModel extends CoreModel {
 		// First find out which letters where played
 		Tile[][] playedLetters = compareFields(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+		if (isBoardEmpty()) {
 
-		if (thisTurnIsFirstTurn()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
 
@@ -968,14 +953,16 @@ public class GameModel extends CoreModel {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
-		;
-		if (holdX == (int) letterPositions[0].getX()) {
+		if (letterPositions.length == 1) {
+			return true;
+		}
+		if (holdX == (int) letterPositions[1].getX()) {
 			for (Point p : letterPositions) {
 				if (p.getX() != holdX) {
 					return false;
 				}
 			}
-		} else if (holdY == (int) letterPositions[0].getY()) {
+		} else if (holdY == (int) letterPositions[1].getY()) {
 			for (Point p : letterPositions) {
 				if (p.getY() != holdY) {
 					return false;

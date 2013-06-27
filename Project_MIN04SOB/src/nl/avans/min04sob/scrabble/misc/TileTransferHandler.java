@@ -6,6 +6,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
 import javax.swing.table.TableModel;
@@ -67,27 +68,44 @@ public class TileTransferHandler extends TransferHandler {
 
 	@Override
 	protected void exportDone(JComponent source, Transferable data, int action) {
-		if(data!=null){
-		Tile sourceTile;
-		try {
-			JTable table = (JTable) source;
-			int sourceRow = table.getSelectedRow();
-			int sourceCol = table.getSelectedColumn();
-			TableModel model = table.getModel();
+		if (data != null) {
+			Tile sourceTile;
 
-			sourceTile = (Tile) data.getTransferData(tileFlavor);
-			if (sourceTile != null && sourceTile.isMutatable()) {
-				model.setValueAt(null, sourceRow, sourceCol);
-			} else {
-				// Put the sourceTile Back
-				model.setValueAt(sourceTile, sourceRow, sourceCol);
+			try {
+				JTable table = (JTable) source;
+				int sourceRow = table.getSelectedRow();
+				int sourceCol = table.getSelectedColumn();
+				TableModel model = table.getModel();
+
+				sourceTile = (Tile) data.getTransferData(tileFlavor);
+				
+				if(sourceTile.getLetter().equals("?")){
+				
+						
+						String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
+								"letter needed ", JOptionPane.WARNING_MESSAGE);
+						if (letter.length() < 2) {
+							sourceTile.setLetter(letter);
+						}
+
+					
+					//TODO do stuff, and set sourceTile to the new letter
+					//With the same id
+				}
+				
+				
+				if (sourceTile != null && sourceTile.isMutatable()) {
+					model.setValueAt(null, sourceRow, sourceCol);
+				} else {
+					// Put the sourceTile Back
+					model.setValueAt(sourceTile, sourceRow, sourceCol);
+				}
+				table.clearSelection();
+
+			} catch (UnsupportedFlavorException | IOException e) {
+				// TODO Automatisch gegenereerd catch-blok
+				e.printStackTrace();
 			}
-			table.clearSelection();
-
-		} catch (UnsupportedFlavorException | IOException e) {
-			// TODO Automatisch gegenereerd catch-blok
-			e.printStackTrace();
-		}
 		}
 	}
 

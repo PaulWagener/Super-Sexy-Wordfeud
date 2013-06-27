@@ -4,12 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
+import nl.avans.min04sob.scrabble.misc.PlaySound;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanelAdministrator;
@@ -25,11 +33,12 @@ public class AccountController extends CoreController {
 	private JFrame frame;
 	private ChangePassPanelAdministrator changepassPaneladmin;
 	private final int maxpass_userLength, minpass_userLength;
+	private PlaySound ps = new PlaySound();
 
 	public AccountController(AccountModel account) {
 
-		maxpass_userLength = 11;
-		minpass_userLength = 5;
+		maxpass_userLength = 45;
+		minpass_userLength = 1;
 
 		frame = new JFrame();
 		frame.setAlwaysOnTop(true);
@@ -37,9 +46,9 @@ public class AccountController extends CoreController {
 		accountModel = account;
 		registerPanel = new RegisterPanel();
 		changepassPanel = new ChangePassPanel();
-
+		frame.setTitle("Inloggen");
 		frame.add(loginPanel);
-
+		
 		addView(registerPanel);
 		addView(loginPanel);
 		addView(changepassPanel);
@@ -234,13 +243,17 @@ public class AccountController extends CoreController {
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(false);
 			loginPanel.setPasswordMistake(false);
+			ps.playSound("loginfail.wav", false);
 		}
 		else {
 			frame.dispose();
 			frame = null;
+			
+			ps.playSound("login.wav", false);
 		}
 
 	}
+	
 
 	public ChangePassPanel getchangepasspanel() {
 		return changepassPanel;
@@ -258,6 +271,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Gebruikers Beheren");
 	}
 
 	public void loginToRegister() {
@@ -268,6 +282,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Registreren");
 	}
 
 	public void registerToLogin() {
@@ -278,6 +293,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Inloggen");
 	}
 
 	public void setChangePassPanel() {
@@ -287,6 +303,7 @@ public class AccountController extends CoreController {
 		frame.repaint();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setTitle("Wachtwoord Veranderen");
 	}
 
 	private void tryToRegister() {
