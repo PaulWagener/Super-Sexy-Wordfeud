@@ -11,10 +11,16 @@ import java.io.IOException;
 public class Queries {
 	public static final String CURRENT_TILES;
 	public static final String RANKING;
+	public static final String TILE;
+	public static final String LATEST_TURN;
+	public static final String TURN_TILES;
 
 	static {
-		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
-		RANKING = Queries.readFile("queries/ranking.sql");
+		CURRENT_TILES = Queries.readFile("Project_MIN04SOB/queries/currentTiles.sql");
+		RANKING = Queries.readFile("Project_MIN04SOB/queries/ranking.sql");
+		TILE =  Queries.readFile("Project_MIN04SOB/queries/tileQuery.sql");
+		LATEST_TURN =  Queries.readFile("Project_MIN04SOB/queries/latestTurnForPlayer.sql");
+		TURN_TILES =  Queries.readFile("Project_MIN04SOB/queries/tilesForTurns.sql");
 	}
 
 	private static String readFile(final String file) {

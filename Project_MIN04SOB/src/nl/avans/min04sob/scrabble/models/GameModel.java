@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -29,7 +30,7 @@ public class GameModel extends CoreModel {
 	private boolean iamchallenger;
 	private BoardPanel boardPanel;
 	private int currentobserveturn;
-	private StashModel stash;
+	private StashModel playerStash;
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
@@ -76,7 +77,6 @@ public class GameModel extends CoreModel {
 		this.boardModel = boardModel;
 		this.boardPanel = boardPanel;
 		currentUser = user;
-		stash = new StashModel();
 
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getGameQuery)
@@ -116,6 +116,8 @@ public class GameModel extends CoreModel {
 					iamchallenger = false;
 
 				}
+
+				playerStash = new StashModel(currentUser, this);
 
 			}
 
@@ -193,12 +195,14 @@ public class GameModel extends CoreModel {
 		return oldBoard;
 	}
 
+	@Deprecated
 	public void setplayertilesfromdatabase(int turnid) {
 
 		StashModel stash = new StashModel();
 
-		Tile[] letters = stash.getPlayerTiles(currentUser, this,this.getLastTurn());
-		System.out.println(letters.length);
+		Tile[] letters = stash.getPlayerTiles(currentUser, this,
+				this.getLastTurn());
+		System.out.println("num Letters:" + letters.length);
 		Tile[] newletters = new Tile[7];
 
 		for (int counter = 0; counter < newletters.length; counter++) {
@@ -208,22 +212,30 @@ public class GameModel extends CoreModel {
 
 					newletters[counter] = stash.getRandomLetter(
 							this.getGameId(), turnid);
-					
 
 				}
 			} else {
 
 				newletters[counter] = letters[counter];
 			}
-			
 
 		}
-		for(Tile tile : newletters){
+		for (Tile tile : newletters) {
 			System.out.println("teeest");
-			stash.addToPlankje(this.gameId,
-					tile.getTileId(), turnid);
+			stash.addToPlankje(this.gameId, tile.getTileId(), turnid);
 		}
 		boardPanel.setPlayerTiles(newletters);
+	}
+	
+	public void setPlayerTiles(){
+		int turnId = getLastTurn(currentUser);
+		setPlayerTiles(turnId);
+	}
+	
+	public void setPlayerTiles(int turnId){
+		playerStash.addRandomTiles();
+		Tile[] tiles = playerStash.getPlayerTiles(turnId);
+		boardPanel.setPlayerTiles(tiles);
 	}
 
 	public BoardModel getBoardModel() {
@@ -245,8 +257,29 @@ public class GameModel extends CoreModel {
 	public int getCurrentobserveturn() {
 		return currentobserveturn;
 	}
-	public int getLastTurn(){
+
+	
+	@Deprecated
+	public int getLastTurn() {
 		return this.lastTurn;
+	}
+
+	public int getLastTurn(AccountModel player) {
+		Future<ResultSet> worker;
+		try {
+			worker = Db.run(new Query(Queries.LATEST_TURN).set(gameId).set(
+					player.getUsername()));
+
+			ResultSet res = worker.get();
+			// Should always have a result
+			res.next();
+			return res.getInt(1);
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		//Should never happen
+		return 0;
 	}
 
 	public void setBoardModel(BoardModel model) {
@@ -354,9 +387,8 @@ public class GameModel extends CoreModel {
 		return state;
 	}
 
-	public Tile[] getTiles() {
-
-		return null;
+	public Tile[] getPlayerTiles() {
+		return playerStash.getPlayerTiles();
 	}
 
 	public boolean isFree(int x, int y) {
@@ -634,6 +666,7 @@ public class GameModel extends CoreModel {
 		}
 
 		try {
+			ArrayList<Tile> previousStash = new ArrayList<Tile>(Arrays.asList(playerStash.getPlayerTiles()));
 			Tile[][] newBoardData = newBoard.getTileData();
 			Tile[][] playedLetters = (Tile[][]) checkValidMove(
 					getBoardFromDatabase(), newBoard);
@@ -658,21 +691,42 @@ public class GameModel extends CoreModel {
 			System.out.println("score bitches u just got  : " + score
 					+ " points this turn");
 
+			ArrayList<Tile> playedTiles = new ArrayList<Tile>();
+
+
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 15; x++) {
 					if (playedLetters[y][x] != null) {
-						stash.RemoveTileFromHand(gameId, playedLetters[y][x]);
+					
+						Tile tile = (Tile) playedLetters[y][x];
+						int tileId = tile.getTileId();
+						
+						//Add the tile to the array, 
+						//These will be removed from the players stash
+						playedTiles.add(tile);
+						
 						Db.run(new Query(
 								"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
 										+ "VALUES (?, ?, ?, ?, ?, ?, ?);")
-								.set(((Tile) playedLetters[y][x]).getTileId())
+								.set(tileId)
 								.set(gameId).set(nextTurn).set(x + 1)
 								.set(y + 1).set("Standard").set(""));
+						
+						
 					}
 				}
 			}
-		} catch (SQLException e) {
+			
+			
+			if(!previousStash.removeAll(playedTiles)){
+				throw new Exception("Old letters wern't removed");
+			}
+			for (Tile t : previousStash) {
+				playerStash.addTile(t);
+			}
+			playerStash.addRandomTiles();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

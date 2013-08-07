@@ -104,6 +104,7 @@ public class ChallengeModel extends CoreModel {
 			Future<ResultSet> workerId = Db.run(new Query(getSpelId));
 			ResultSet spelId = workerId.get();
 			spelId.next();
+			int gameId = spelId.getInt(1);
 
 			Future<ResultSet> worker = Db.run(new Query(getSortOfLetter_Amount)
 					.set("NL"));
@@ -113,22 +114,31 @@ public class ChallengeModel extends CoreModel {
 			while (res.next()) {
 
 				for (int counter = 0; counter < res.getInt(2); counter++) {
-					Db.run(new Query(insertLetters).set(idCounter)
-							.set(spelId.getInt(1)).set("NL")
-							.set(res.getString(1)));
+					Db.run(new Query(insertLetters).set(idCounter).set(gameId)
+							.set("NL").set(res.getString(1)));
 					idCounter++;
 				}
 			}
-			String addTurn = "INSERT INTO beurt(ID, spel_id, account_naam, score, aktie_type) VALUES(?, ?, ?, ?, ?)";
-			Db.run(new Query(addTurn).set(1).set(spelId.getInt(1))
-					.set(challenger).set(0).set("Begin"));
-			Db.run(new Query(addTurn).set(2).set(spelId.getInt(1))
-					.set(opponent).set(0).set("Begin"));
 
+			initPlayerTiles(gameId, challenger, opponent);
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
+
+	}
+
+	private void initPlayerTiles(int gameId, String challenger, String opponent) {
+		String addTurn = "INSERT INTO beurt(ID, spel_id, account_naam, score, aktie_type) VALUES(?, ?, ?, ?, ?)";
+		try {
+			Db.run(new Query(addTurn).set(1).set(gameId).set(challenger).set(0)
+					.set("Begin"));
+
+			Db.run(new Query(addTurn).set(2).set(gameId).set(opponent).set(0)
+					.set("Begin"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void respondChallenge(String[] compIdAccountName, boolean accepted)

@@ -48,8 +48,6 @@ public class MainController extends CoreController {
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
 
-	private StashModel stashModel;
-
 	public MainController() {
 
 		initialize();
@@ -144,9 +142,7 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Tile[] letters = stashModel
-						.getPlayerTiles(account, currentGame,currentGame.getLastTurn());
-
+				Tile[] letters = currentGame.getPlayerTiles();
 				selectSwap(letters);
 			}
 		});
@@ -166,6 +162,7 @@ public class MainController extends CoreController {
 
 					}
 					currentGame.playWord(newBoard);
+					currentGame.setPlayerTiles();
 					currGamePanel.infoBox("Woord gelegd", "Woord gelegd");
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
@@ -383,13 +380,11 @@ public class MainController extends CoreController {
 		frame.repaint();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void initialize() {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
-		stashModel = new StashModel();
 
 		startPanel = new StartPanel();
 
@@ -420,24 +415,24 @@ public class MainController extends CoreController {
 		addModel(chatModel);
 		removeModel(boardModel);
 
-		chatPanel.getChatFieldSend().setEnabled(true);
-
 		closePanels();
 
 		currGamePanel = selectedGame.getBoardPanel();
-		boardModel = selectedGame.getBoardModel();
+		//boardModel = selectedGame.getBoardModel();
+		boardModel = selectedGame.getBoardFromDatabase();
 		addModel(boardModel);
 		addView(currGamePanel);
-		currentGame.setBoardModel(currentGame.getBoardFromDatabase());
+		currentGame.setBoardModel(boardModel);
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
 		updatelabels(selectedGame.getCurrentobserveturn());
 		
-		selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
+		//selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
+		selectedGame.setPlayerTiles();
 		
 
-		selectedGame.getBoardFromDatabase();
+		//selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 		if (!(selectedGame.hasButtons())) {
 
@@ -447,6 +442,11 @@ public class MainController extends CoreController {
 		currGamePanel.observerView();
 		openPanels();
 
+		initChat();
+	}
+	
+	private void initChat() {
+		chatPanel.getChatFieldSend().setEnabled(true);
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
