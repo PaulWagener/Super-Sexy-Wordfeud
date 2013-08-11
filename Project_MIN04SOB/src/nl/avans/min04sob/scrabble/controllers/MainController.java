@@ -17,7 +17,6 @@ import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
-import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
@@ -59,7 +58,6 @@ public class MainController extends CoreController {
 		addModel(boardModel);
 		addModel(competitionModel);
 		addModel(account);
-		addModel(new ChallengeModel(account));
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {

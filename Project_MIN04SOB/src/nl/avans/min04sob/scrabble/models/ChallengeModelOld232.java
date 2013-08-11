@@ -13,7 +13,7 @@ import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 
-public class ChallengeModel extends CoreModel {
+public class ChallengeModelOld232 extends CoreModel {
 
 	public static final String STATE_ACCEPTED = "Accepted";
 	public static final String STATE_REJECTED = "Rejected";
@@ -29,7 +29,7 @@ public class ChallengeModel extends CoreModel {
 	private AccountModel accountModel;
 	private boolean isDuplication = false;
 
-	public ChallengeModel(AccountModel user) {
+	public ChallengeModelOld232(AccountModel user) {
 		accountModel = user;
 		// competitionController = new CompetitionController(user);
 		yourname = accountModel.getUsername();
@@ -120,14 +120,14 @@ public class ChallengeModel extends CoreModel {
 				}
 			}
 
-			initPlayerTiles(gameId, challenger, opponent);
+			initPlayerTurns(gameId, challenger, opponent);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	private void initPlayerTiles(int gameId, String challenger, String opponent) {
+	private void initPlayerTurns(int gameId, String challenger, String opponent) {
 		String addTurn = "INSERT INTO beurt(ID, spel_id, account_naam, score, aktie_type) VALUES(?, ?, ?, ?, ?)";
 		try {
 			Db.run(new Query(addTurn).set(1).set(gameId).set(challenger).set(0)
@@ -141,7 +141,7 @@ public class ChallengeModel extends CoreModel {
 		
 	}
 
-	public void respondChallenge(String[] compIdAccountName, boolean accepted)
+	public void respondChallenge(ChallengeModel challenge, boolean accepted)
 			throws SQLException // uitgedaagde
 
 	{

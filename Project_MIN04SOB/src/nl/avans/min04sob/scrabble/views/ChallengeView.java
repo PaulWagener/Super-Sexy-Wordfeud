@@ -9,6 +9,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.controllers.ChallengeModel;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 @SuppressWarnings("serial")
@@ -18,19 +19,21 @@ public class ChallengeView extends CorePanel {
 	private JButton declineButton;
 	private JButton backButton;
 	private JLabel challengeLabel;
-	private JList<String> challengeList;
+	private JList<ChallengeModel> challengeList;
 	private JScrollPane scrollPane;
 
 	public ChallengeView() {
 
-		setLayout(new MigLayout("", "[150px:150px:150px,grow][100px:100px:100px,grow]", "[14px][40px:40px:40px,grow][40px:40px:40px,grow][90.00][grow]"));
+		setLayout(new MigLayout("",
+				"[150px:150px:150px,grow][100px:100px:100px,grow]",
+				"[14px][40px:40px:40px,grow][40px:40px:40px,grow][90.00][grow]"));
 		challengeLabel = new JLabel("CompetitieID, Speler");
 		add(challengeLabel, "cell 0 0 2 1,alignx left,aligny top");
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 1 3,grow");
 
-		challengeList = new JList<String>();
+		challengeList = new JList<ChallengeModel>();
 		scrollPane.setViewportView(challengeList);
 
 		acceptButton = new JButton("Accepteer");
@@ -38,7 +41,6 @@ public class ChallengeView extends CorePanel {
 
 		declineButton = new JButton("Weiger");
 		add(declineButton, "cell 1 2,alignx center");
- 
 
 		backButton = new JButton("Ga terug");
 		add(backButton, "cell 0 4");
@@ -57,17 +59,14 @@ public class ChallengeView extends CorePanel {
 		declineButton.addActionListener(listener);
 	}
 
-	public void fillChallengeList(String[] challenges) {
+	public void fillChallengeList(ChallengeModel[] challengeModels) {
 
-		challengeList.setListData(challenges);
-		if(challengeList.getModel().getSize() > 0)
-		{
-		acceptButton .setEnabled(true);
-		declineButton.setEnabled(true);
-		}
-		else
-		{
-			acceptButton .setEnabled(false);
+		challengeList.setListData(challengeModels);
+		if (challengeList.getModel().getSize() > 0) {
+			acceptButton.setEnabled(true);
+			declineButton.setEnabled(true);
+		} else {
+			acceptButton.setEnabled(false);
 			declineButton.setEnabled(false);
 		}
 	}
@@ -75,28 +74,25 @@ public class ChallengeView extends CorePanel {
 	public void clearChallengeList() {
 		challengeList.removeAll();
 	}
-	
-	public String[] getSelectedChallenge() {
-		String[] splits = challengeList.getSelectedValue().split(" ");
-		return splits;
+
+	public ChallengeModel getSelectedChallenge() {
+		return challengeList.getSelectedValue();
 	}
 
-	public JList<String> getList(){
+	public JList<ChallengeModel> getList() {
 		return challengeList;
 	}
 
-	public void removeIndex(int index){
+	public void removeIndex(int index) {
 		challengeList.remove(index);
 	}
 
-	public int getIndex(){
+	public int getIndex() {
 		return challengeList.getSelectedIndex();
 	}
 
-
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
 
 	}
 }

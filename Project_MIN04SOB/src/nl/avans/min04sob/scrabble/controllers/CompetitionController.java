@@ -10,7 +10,6 @@ import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
 import nl.avans.min04sob.scrabble.models.AccountModel;
-import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.views.CompetitionScoreView;
 import nl.avans.min04sob.scrabble.views.CompetitionView;
@@ -24,7 +23,6 @@ public class CompetitionController extends CoreController {
 	private CoreWindow window1;
 	private CoreWindow window2;
 	private AccountModel accountModel;
-	private ChallengeModel challengeModel;
 	private CompetitionScoreView competitionScoreView;
 	private int index; // competitie id meegeven
 	private CreateCompetitionView createCompetitionView;
@@ -34,7 +32,6 @@ public class CompetitionController extends CoreController {
 		accountModel = user;
 		competitionModel = comp;
 		competitionView = new CompetitionView();
-		challengeModel = new ChallengeModel(accountModel);
 		competitionScoreView = new CompetitionScoreView();
 		createCompetitionView = new CreateCompetitionView();
 
@@ -77,10 +74,11 @@ public class CompetitionController extends CoreController {
 				.getUsersFromCompetition(competition_id,
 						accountModel.getUsername()));
 	}
-
-	public void getChallengeAbleUsers(int competition_id) {
-		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(
-				competition_id, accountModel.getUsername()));
+	
+	public void showCompetionPlayers(CompetitionModel comp){
+		AccountModel[] players = comp.getChallengeAblePlayers(accountModel);
+		competitionView.clearPlayerList();
+		competitionView.fillPlayerList(players);
 	}
 
 	@Override
@@ -142,11 +140,11 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int id = competitionView.getSelectedCompetition().getCompId();
-				challengeModel.check(accountModel.getUsername(),
-						competitionView.getSelectedPlayer().getUsername(), id);
-				competitionView.clearPlayerList();
-				getChallengeAbleUsers(id);
+				AccountModel opponent = competitionView.getSelectedPlayer();
+				CompetitionModel comp = competitionView.getSelectedCompetition();
+				ChallengeModel.create(accountModel, opponent, comp);
+
+				showCompetionPlayers(comp);
 			}
 		});
 
@@ -154,9 +152,8 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					int id = competitionView.getSelectedCompetition()
-							.getCompId();
-					getChallengeAbleUsers(id);
+					CompetitionModel comp = competitionView.getSelectedCompetition();
+					showCompetionPlayers(comp);
 				}
 			}
 		});

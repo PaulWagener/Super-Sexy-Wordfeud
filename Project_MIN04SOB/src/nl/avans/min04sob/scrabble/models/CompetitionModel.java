@@ -15,6 +15,7 @@ import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
+import nl.avans.min04sob.scrabble.controllers.ChallengeModel;
 
 public class CompetitionModel extends CoreModel {
 
@@ -231,7 +232,7 @@ public class CompetitionModel extends CoreModel {
 
 	@Override
 	public String toString() {
-		return desc + " : " + owner;
+		return desc + " (" + owner + ")";
 	}
 
 	@Override
@@ -264,5 +265,27 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return data;
+	}
+
+	public AccountModel[] getChallengeAblePlayers(AccountModel currentUser) {
+		AccountModel[] accounts = new AccountModel[0];
+		String username = currentUser.getUsername();
+		int x = 0;
+		try {
+			Future<ResultSet> worker = Db
+					.run(new Query(
+							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` <> ? AND `account_naam` NOT IN (SELECT `account_naam_tegenstander` FROM `spel` WHERE `account_naam_uitdager` = ? AND `competitie_id` = ? AND `toestand_type` <> ?)")
+							.set(compId).set(username).set(username)
+							.set(compId).set(ChallengeModel.FINISHED));
+			ResultSet res = worker.get();
+			accounts = new AccountModel[Query.getNumRows(res)];
+			while (res.next() && x < accounts.length) {
+				accounts[x] = new AccountModel(res.getString("account_naam"));
+				x++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+		return accounts;
 	}
 }

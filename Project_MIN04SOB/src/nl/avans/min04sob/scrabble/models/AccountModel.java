@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import nl.avans.min04sob.scrabble.controllers.ChallengeModel;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.db.Db;
@@ -297,19 +298,19 @@ public class AccountModel extends CoreModel {
 		return competitions.toArray(new CompetitionModel[competitions.size()]);
 	}
 
-	public String[] getChallenges() {
-		String[] challenges = new String[0];
+	public ChallengeModel[] getChallenges() {
+		ChallengeModel[] challenges = new ChallengeModel[0];
 		int i = 0;
 		try {
 			Future<ResultSet> worker = Db
 					.run(new Query(
-							"SELECT `account_naam_uitdager`, `competitie_id` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?")
-							.set(username).set(ChallengeModel.STATE_REQUEST)
-							.set(ChallengeModel.STATE_UNKNOWN));
-			ResultSet dbResult = worker.get();
-			challenges = new String[Query.getNumRows(dbResult)];
-			while (dbResult.next()) {
-				challenges[i] = dbResult.getInt("competitie_id") + " " +  dbResult.getString("account_naam_uitdager");
+							"SELECT `ID` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?")
+							.set(username).set(ChallengeModel.REQUEST)
+							.set(ChallengeModel.OPEN));
+			ResultSet res = worker.get();
+			challenges = new ChallengeModel[Query.getNumRows(res)];
+			while (res.next()) {
+				challenges[i] = new ChallengeModel(res.getInt("ID"));
 				i++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {

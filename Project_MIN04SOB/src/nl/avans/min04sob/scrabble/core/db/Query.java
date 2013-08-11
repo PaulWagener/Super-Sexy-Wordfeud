@@ -11,6 +11,8 @@ import java.util.concurrent.Callable;
 
 import nl.avans.min04sob.scrabble.core.Role;
 
+import com.mysql.jdbc.Statement;
+
 public class Query implements Callable<ResultSet> {
 
 	public static int getNumRows(ResultSet res) {
@@ -28,15 +30,16 @@ public class Query implements Callable<ResultSet> {
 	private PreparedStatement statement;
 	private int index;
 	private DatabasePool pool;
-
 	private Connection conn;
+	private boolean isBatch;
 
 	public Query(String q) throws SQLException {
 		pool = DatabasePool.getInstance();
 		conn = pool.checkOut();
 		index = 1;
+		isBatch = false;
 
-		statement = conn.prepareStatement(q);
+		statement = conn.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
 	}
 
 	public Query set(Blob value) throws SQLException {
@@ -91,14 +94,24 @@ public class Query implements Callable<ResultSet> {
 		return this;
 	}
 
+	public void addBatch() throws SQLException {
+		index = 1;
+		isBatch = true;
+		statement.addBatch();
+	}
+
 	@Override
 	public ResultSet call() throws Exception {
-		// Returns true on select
-		if (statement.execute()) {
+
+		if (isBatch) {
+			statement.executeBatch();
+			
+		} else if (statement.execute()) {
 			pool.checkIn(conn);
 			return statement.getResultSet();
 		}
-		pool.checkIn(conn); // Release the connection back to the pool
-		return null;
+		
+		pool.checkIn(conn);
+		return statement.getGeneratedKeys();
 	}
 }
