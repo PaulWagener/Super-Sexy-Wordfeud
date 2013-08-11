@@ -685,14 +685,16 @@ public class GameModel extends CoreModel {
 			int score = getScore(playedLetters, letterMatrix, newBoard);
 
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
-			int nextTurn = getNextTurnId();
-			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
+			int turnId = getNextTurnId();
+			
+			Db.run(new Query(createTurn).set((turnId)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
-			System.out.println("score bitches u just got  : " + score
-					+ " points this turn");
+
 
 			ArrayList<Tile> playedTiles = new ArrayList<Tile>();
 
+			Query insertLetterQuery = new Query("INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam)"
+							+ "VALUES (?, ?, ?, ?, ?, ?);");
 
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
@@ -706,17 +708,12 @@ public class GameModel extends CoreModel {
 						//These will be removed from the players stash
 						playedTiles.add(tile);
 						
-						Db.run(new Query(
-								"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
-										+ "VALUES (?, ?, ?, ?, ?, ?, ?);")
-								.set(tileId)
-								.set(gameId).set(nextTurn).set(x + 1)
-								.set(y + 1).set("Standard").set(""));
-						
-						
+						insertLetterQuery.set(tileId).set(gameId).set(turnId).set(x + 1).set(y + 1).set("standard");
+						insertLetterQuery.addBatch();
 					}
 				}
 			}
+			Db.run(insertLetterQuery);
 			
 			previousStash.removeAll(playedTiles);
 			for (Tile t : previousStash) {
