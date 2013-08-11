@@ -164,6 +164,7 @@ public class MainController extends CoreController {
 					currentGame.playWord(newBoard);
 					currentGame.setPlayerTiles();
 					currGamePanel.infoBox("Woord gelegd", "Woord gelegd");
+					openGame(currentGame);
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
 				}

@@ -718,15 +718,13 @@ public class GameModel extends CoreModel {
 				}
 			}
 			
-			
-			if(!previousStash.removeAll(playedTiles)){
-				throw new Exception("Old letters wern't removed");
-			}
+			previousStash.removeAll(playedTiles);
 			for (Tile t : previousStash) {
 				playerStash.addTile(t);
 			}
+			
 			playerStash.addRandomTiles();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
