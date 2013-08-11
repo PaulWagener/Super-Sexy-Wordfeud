@@ -68,7 +68,7 @@ public class GameModel extends CoreModel {
 
 	private final String getnumberofturns = "SELECT max(ID) FROM beurt   WHERE Spel_ID = ?";
 	private final boolean observer;
-	private boolean hasTurn = false;
+	private boolean hasTurn = true;
 	private boolean hasButtons = false;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
@@ -195,38 +195,6 @@ public class GameModel extends CoreModel {
 		return oldBoard;
 	}
 
-	@Deprecated
-	public void setplayertilesfromdatabase(int turnid) {
-
-		StashModel stash = new StashModel();
-
-		Tile[] letters = stash.getPlayerTiles(currentUser, this,
-				this.getLastTurn());
-		System.out.println("num Letters:" + letters.length);
-		Tile[] newletters = new Tile[7];
-
-		for (int counter = 0; counter < newletters.length; counter++) {
-			if (!(letters.length > counter)) {
-
-				if (stash.letterleft(this.getGameId())) {
-
-					newletters[counter] = stash.getRandomLetter(
-							this.getGameId(), turnid);
-
-				}
-			} else {
-
-				newletters[counter] = letters[counter];
-			}
-
-		}
-		for (Tile tile : newletters) {
-			System.out.println("teeest");
-			stash.addToPlankje(this.gameId, tile.getTileId(), turnid);
-		}
-		boardPanel.setPlayerTiles(newletters);
-	}
-	
 	public void setPlayerTiles(){
 		int turnId = getLastTurn(currentUser);
 		setPlayerTiles(turnId);
@@ -304,7 +272,7 @@ public class GameModel extends CoreModel {
 		return gameId;
 	}
 
-	public void getlastrunFromDatabase() {
+	/*public void getlastrunFromDatabase() {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getTurnQuery).set(
 					gameId).set(lastTurn));
@@ -323,7 +291,7 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
-	}
+	}*/
 
 	public String getLetterSet() {
 		return letterSet;
@@ -514,7 +482,7 @@ public class GameModel extends CoreModel {
 		boolean oldHasTurn = hasTurn;
 		hasTurn = yourturn();
 
-		firePropertyChange(Event.MOVE, null, hasTurn);
+		firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
 
 		// TODO fire property change for new games and changed game states
 		// TODO also fire property change for a when the player needs to make a
@@ -597,7 +565,6 @@ public class GameModel extends CoreModel {
 			rs.first();
 			nextTurn = rs.getInt(2) + 1;
 		} catch (InterruptedException | ExecutionException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -627,11 +594,7 @@ public class GameModel extends CoreModel {
 	}
 
 	public boolean yourturn() {
-		if (getNextTurnUsername().equals(currentUser.getUsername())) {
-			return true;
-		} else {
-			return false;
-		}
+		return getNextTurnUsername().equals(currentUser.getUsername());
 	}
 
 	public int getvalueforLetter(String letter) {

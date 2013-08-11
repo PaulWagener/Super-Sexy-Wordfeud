@@ -532,7 +532,7 @@ public class MainController extends CoreController {
 				System.out.println(selectedTiles.get(0).getLetter());
 				for (Tile tile : selectedTiles) {
 
-					stashModel.RemoveTileFromHand(currentGame.getGameId(), tile);
+					//stashModel.RemoveTileFromHand(currentGame.getGameId(), tile);
 
 					// elke tile uit hand verwijderen en aan de pot toevoegen
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen

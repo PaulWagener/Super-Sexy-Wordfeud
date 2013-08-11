@@ -307,8 +307,6 @@ public class BoardPanel extends CorePanel {
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
 		playButton.setEnabled(false);
-		refreshButton.setEnabled(false);
-
 		playerTilesField.setEnabled(false);
 		playBoard.setEnabled(false);
 
@@ -319,7 +317,6 @@ public class BoardPanel extends CorePanel {
 		resignButton.setEnabled(true);
 		swapButton.setEnabled(true);
 		playButton.setEnabled(true);
-		refreshButton.setEnabled(true);
 		playerTilesField.setEnabled(true);
 		playBoard.setEnabled(true);
 	}
