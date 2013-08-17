@@ -102,10 +102,13 @@ public class Query implements Callable<ResultSet> {
 
 	@Override
 	public ResultSet call() throws Exception {
-
+		
 		if (isBatch) {
-			statement.executeBatch();
 			
+			//run the batch as a single transaction
+			conn.setAutoCommit(false);
+			statement.executeBatch();
+			conn.setAutoCommit(true);			
 		} else if (statement.execute()) {
 			pool.checkIn(conn);
 			return statement.getResultSet();
