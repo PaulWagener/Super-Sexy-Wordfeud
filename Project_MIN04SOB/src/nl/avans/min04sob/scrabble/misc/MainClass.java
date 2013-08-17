@@ -1,4 +1,4 @@
-package testmains;
+package nl.avans.min04sob.scrabble.misc;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,32 +8,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import nl.avans.min04sob.scrabble.controllers.MainController;
 
-public class TestMain implements Runnable {
+public class MainClass implements Runnable {
 
 	
 	public static final ExecutorService executor = Executors.newFixedThreadPool(10);
-	
-	/**
-	 * @param args
-	 */
-	
+
 	public static void main(String[] args) {
 		try {
 			// Set System L&F
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (UnsupportedLookAndFeelException e) {
-			// handle exception
-		} catch (ClassNotFoundException e) {
-			// handle exception
-		} catch (InstantiationException e) {
-			// handle exception
-		} catch (IllegalAccessException e) {
-			// handle exception
+		} catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 		}
 		
 		executor.submit(new MainController());
-		//new Thread(new MainController()).start();
-	
 	}
 
 	@Override
