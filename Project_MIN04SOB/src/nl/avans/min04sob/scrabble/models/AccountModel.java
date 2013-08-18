@@ -153,7 +153,7 @@ public class AccountModel extends CoreModel {
 		String query = "SELECT DISTINCT `spel_id` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE NOT `spel`.`toestand_type` = ?";
 		try {
 			Future<ResultSet> worker = Db.run(new Query(query)
-					.set(GameModel.STATE_REQUEST));
+					.set(State.REQUEST));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
 				games.add(new GameModel(dbResult.getInt(1), this,
@@ -172,7 +172,7 @@ public class AccountModel extends CoreModel {
 		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
 		try {
 			Future<ResultSet> worker = Db.run(new Query(query).set(username)
-					.set(username).set(GameModel.STATE_PLAYING));
+					.set(username).set(State.PLAY));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
 				games.add(new GameModel(dbResult.getInt(1), this,

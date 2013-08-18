@@ -59,11 +59,6 @@ public class MainController extends CoreController {
 		addModel(competitionModel);
 		addModel(account);
 
-		// Add the old messages first.
-		// for (String message : chatModel.getMessages()) {
-		// chatPanel.addToChatField(message);
-		// }
-
 		frame.setJMenuBar(menu);
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
@@ -534,19 +529,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
-				System.out.println(selectedTiles.get(0).getLetter());
-				for (Tile tile : selectedTiles) {
-
-					//stashModel.RemoveTileFromHand(currentGame.getGameId(), tile);
-
-					// elke tile uit hand verwijderen en aan de pot toevoegen
-					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
-					// rij toevoegen aan beurt
-				}
-
-				refresh();
-				currentGame.doTurn(currentGame.getGameId(),
-						account.getUsername(), 0, "Swap");
+				currentGame.swap((ArrayList<Tile>) selectedTiles);
 				swapWindow.dispose();
 			}
 		});

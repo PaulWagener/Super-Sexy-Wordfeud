@@ -139,7 +139,7 @@ public class StashModel extends CoreModel {
 
 	public void addTile(Tile t) {
 		int turnId = game.getLastTurn(owner);
-		String q = "INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
+		String q = "INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`) VALUES (?, ?, ?)";
 		try {
 			Db.run(new Query(q).set(game.getGameId()).set(t.getTileId())
 					.set(turnId));

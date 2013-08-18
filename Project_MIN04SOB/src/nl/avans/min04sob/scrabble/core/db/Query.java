@@ -10,6 +10,8 @@ import java.sql.Time;
 import java.util.concurrent.Callable;
 
 import nl.avans.min04sob.scrabble.core.Role;
+import nl.avans.min04sob.scrabble.misc.Turn;
+import nl.avans.min04sob.scrabble.models.State;
 
 import com.mysql.jdbc.Statement;
 
@@ -80,6 +82,14 @@ public class Query implements Callable<ResultSet> {
 
 	public Query set(Role role) throws SQLException {
 		return set(role.toString());
+	}
+	
+	public Query set(State state) throws SQLException {
+		return set(state.toString());
+	}
+	
+	public Query set(Turn turn) throws SQLException {
+		return set(turn.toString());
 	}
 
 	public Query set(String value) throws SQLException {

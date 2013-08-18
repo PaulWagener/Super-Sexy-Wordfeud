@@ -16,6 +16,8 @@ import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
 import nl.avans.min04sob.scrabble.misc.MatrixUtils;
+import nl.avans.min04sob.scrabble.misc.Turn;
+import nl.avans.min04sob.scrabble.misc.Error;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class GameModel extends CoreModel {
@@ -40,14 +42,6 @@ public class GameModel extends CoreModel {
 	private String[][] boardData;
 
 	private int lastTurn;
-	public static final String STATE_FINISHED = "Finished";
-	public static final String STATE_PLAYING = "Playing";
-	public static final String STATE_REQUEST = "Request";
-
-	public static final String STATE_RESIGNED = "Resigned";
-	public static final String STATE_DENIED = "woord is geweigerd";
-	public static final String STATE_PENDING = "woord is al voorgesteld";
-	public static final String STATE_SETPENDING = "woord wordt voorgesteld";
 
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
@@ -135,6 +129,7 @@ public class GameModel extends CoreModel {
 		this.hasButtons = hasbuttons;
 	}
 
+	@Deprecated
 	public void doTurn(int game_id, String accountname, int score, String action) {
 		int x = 0;
 		String s = "SELECT Max( id ) FROM beurt WHERE `Spel_ID` =?";
@@ -156,6 +151,37 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void createTurn(Turn action, int score) throws SQLException,
+			InterruptedException, ExecutionException {
+		int newTurnId = getNextTurnId();
+		String username = currentUser.getUsername();
+		Query turn = new Query(
+				"INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, ?)");
+
+		switch (action) {
+		case BEGIN:
+		case END:
+		case WORD:
+			turn.set((newTurnId)).set(gameId).set(username).set(score)
+					.set(action);
+			break;
+
+		// No score
+		case PASS:
+		case RESIGN:
+		case SWAP:
+			turn.set((newTurnId)).set(gameId).set(username).set(0).set(action);
+			break;
+
+		default:
+			throw new IllegalArgumentException("Invalid Turn action");
+		}
+
+		// Notify the views that we no longer have the current turn
+		firePropertyChange(Event.MOVE, true, false);
+		Db.run(turn);
 	}
 
 	public BoardModel getBoardFromDatabase() {
@@ -196,12 +222,12 @@ public class GameModel extends CoreModel {
 		return oldBoard;
 	}
 
-	public void setPlayerTiles(){
+	public void setPlayerTiles() {
 		int turnId = getLastTurn(currentUser);
 		setPlayerTiles(turnId);
 	}
-	
-	public void setPlayerTiles(int turnId){
+
+	public void setPlayerTiles(int turnId) {
 		playerStash.addRandomTiles();
 		Tile[] tiles = playerStash.getPlayerTiles(turnId);
 		boardPanel.setPlayerTiles(tiles);
@@ -227,7 +253,6 @@ public class GameModel extends CoreModel {
 		return currentobserveturn;
 	}
 
-	
 	@Deprecated
 	public int getLastTurn() {
 		return this.lastTurn;
@@ -246,8 +271,8 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		
-		//Should never happen
+
+		// Should never happen
 		return 0;
 	}
 
@@ -273,26 +298,17 @@ public class GameModel extends CoreModel {
 		return gameId;
 	}
 
-	/*public void getlastrunFromDatabase() {
-		try {
-			Future<ResultSet> worker = Db.run(new Query(getTurnQuery).set(
-					gameId).set(lastTurn));
-			ResultSet rs = worker.get();
-			while (rs.next()) {
-				int x = rs.getInt(2) - 1;// x
-				int y = rs.getInt(3) - 1;// y
-				lastTurn = rs.getInt(5);
-				if (rs.getString(1).equals("?")) {
-					boardData[y][x] = rs.getString(4);
-				} else {
-					boardData[y][x] = rs.getString(1);
-				}
-			}
-
-		} catch (SQLException | InterruptedException | ExecutionException sql) {
-			sql.printStackTrace();
-		}
-	}*/
+	/*
+	 * public void getlastrunFromDatabase() { try { Future<ResultSet> worker =
+	 * Db.run(new Query(getTurnQuery).set( gameId).set(lastTurn)); ResultSet rs
+	 * = worker.get(); while (rs.next()) { int x = rs.getInt(2) - 1;// x int y =
+	 * rs.getInt(3) - 1;// y lastTurn = rs.getInt(5); if
+	 * (rs.getString(1).equals("?")) { boardData[y][x] = rs.getString(4); } else
+	 * { boardData[y][x] = rs.getString(1); } }
+	 * 
+	 * } catch (SQLException | InterruptedException | ExecutionException sql) {
+	 * sql.printStackTrace(); } }
+	 */
 
 	public String getLetterSet() {
 		return letterSet;
@@ -393,14 +409,62 @@ public class GameModel extends CoreModel {
 		}
 	}
 
+	/**
+	 * Method to resign the game
+	 * 
+	 */
 	public void resign() {
+		int penalty = getStashPenalty();
 		try {
-			Db.run(new Query(resignQuery).set(STATE_RESIGNED).set(
-					this.getGameId()));
-			firePropertyChange(Event.RESIGN, null, Event.RESIGN);
-		} catch (SQLException sql) {
+			createTurn(Turn.RESIGN, penalty);
+			updateGameState(State.RESIGN);
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
+	}
+
+	/**
+	 * Method to end the game
+	 * 
+	 */
+	public void end() {
+		int penalty = getStashPenalty();
+		try {
+			createTurn(Turn.END, penalty);
+			updateGameState(State.FINISH);
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+	}
+
+	/**
+	 * Get the number of negative number of points which are left on a player's
+	 * stash
+	 * 
+	 * @return the number of points that should be penaltilized for left over
+	 *         Tiles
+	 */
+	private int getStashPenalty() {
+		int penalty = 0;
+		Tile[] remainingTiles = playerStash.getPlayerTiles();
+		for (Tile tile : remainingTiles) {
+			penalty += tile.getValue();
+		}
+
+		// Make the penalty negative
+		penalty *= -1;
+
+		return penalty;
+	}
+
+	private void updateGameState(State newState) throws SQLException {
+		if (newState == State.RESIGN) {
+			firePropertyChange(Event.RESIGN, null, Event.RESIGN);
+		}
+		Query q = new Query(
+				"UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?");
+		q.set(newState).set(gameId);
+		Db.run(q);
 	}
 
 	public String score(int toTurn) {
@@ -426,18 +490,14 @@ public class GameModel extends CoreModel {
 
 	}
 
-	private int scorecounter(ResultSet s, int toTurn) {
+	private int scorecounter(ResultSet s, int toTurn) throws SQLException {
 		int counter = 0;
-		try {
-			while (s.next()) {
-				if (s.getInt(1) < toTurn + 1) {
 
-					counter += s.getInt(2);
-				}
+		while (s.next()) {
+			if (s.getInt(1) < toTurn + 1) {
+
+				counter += s.getInt(2);
 			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return counter;
 	}
@@ -484,11 +544,6 @@ public class GameModel extends CoreModel {
 		hasTurn = yourturn();
 
 		firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
-
-		// TODO fire property change for new games and changed game states
-		// TODO also fire property change for a when the player needs to make a
-		// new move,
-		// and only update the board when the opponent actually plays a word.
 	}
 
 	public void updateboardfromdatabasetoturn(int turn_id) {
@@ -558,16 +613,18 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public int getNextTurnId() {
+	private int getNextTurnId() throws InterruptedException,
+			ExecutionException, SQLException {
+		return getCurrentTurnId() + 1;
+	}
+
+	private int getCurrentTurnId() throws InterruptedException,
+			ExecutionException, SQLException {
 		int nextTurn = 0;
-		try {
-			ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId))
-					.get();
-			rs.first();
-			nextTurn = rs.getInt(2) + 1;
-		} catch (InterruptedException | ExecutionException | SQLException e) {
-			e.printStackTrace();
-		}
+
+		ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId)).get();
+		rs.first();
+		nextTurn = rs.getInt(2);
 
 		return nextTurn;
 	}
@@ -625,12 +682,12 @@ public class GameModel extends CoreModel {
 	// legwoord methodes //
 	public void playWord(BoardModel newBoard) throws InvalidMoveException {
 		if (!yourturn()) {
-			throw new InvalidMoveException(
-					InvalidMoveException.STATE_NOTYOURTURN);
+			throw new InvalidMoveException(Error.NOTYOURTURN);
 		}
 
 		try {
-			ArrayList<Tile> currentStash = new ArrayList<Tile>(Arrays.asList(playerStash.getPlayerTiles()));
+			ArrayList<Tile> currentStash = new ArrayList<Tile>(
+					Arrays.asList(playerStash.getPlayerTiles()));
 			Tile[][] newBoardData = newBoard.getTileData();
 			Tile[][] playedLetters = (Tile[][]) checkValidMove(
 					getBoardFromDatabase(), newBoard);
@@ -648,90 +705,103 @@ public class GameModel extends CoreModel {
 
 			int score = getScore(playedLetters, letterMatrix, newBoard);
 
-			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
-			int turnId = getNextTurnId();
-			
-			Db.run(new Query(createTurn).set((turnId)).set(gameId)
-					.set(getNextTurnUsername()).set(score));
-
-
 			ArrayList<Tile> playedTiles = new ArrayList<Tile>();
 
-			Query insertLetterQuery = new Query("INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam)"
+			Query insertLetterQuery = new Query(
+					"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam)"
 							+ "VALUES (?, ?, ?, ?, ?, ?);");
+
+			int turnId = getNextTurnId();
 
 			// Insert word in to database
 			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 15; x++) {
 					if (playedLetters[y][x] != null) {
-					
+
 						Tile tile = (Tile) playedLetters[y][x];
 						int tileId = tile.getTileId();
-						
-						//Add the tile to the array, 
-						//These will be removed from the players stash
+
+						// Add the tile to the array,
+						// These will be removed from the players stash
 						playedTiles.add(tile);
-						
-						insertLetterQuery.set(tileId).set(gameId).set(turnId).set(x + 1).set(y + 1).set("standard");
+
+						insertLetterQuery.set(tileId).set(gameId).set(turnId)
+								.set(x + 1).set(y + 1).set("standard");
 						insertLetterQuery.addBatch();
 					}
 				}
 			}
-			//Notify the views that we no longer have the current turn
-			firePropertyChange(Event.MOVE, true, false);
-			
+			createTurn(Turn.WORD, score);
 			Db.run(insertLetterQuery);
-			
+
 			updatePlayerStash(currentStash, playedTiles);
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	public void swap(List<Tile> nominees){
+
+	/**
+	 * Make a swap turn
+	 * 
+	 * @param nominees
+	 *            ArrayList with Tiles to remove
+	 */
+	public void swap(ArrayList<Tile> nominees) {
 		ArrayList<Tile> currentStash = getCurrentStash();
+
+		try {
+			createTurn(Turn.SWAP, 0);
+			updatePlayerStash(currentStash, nominees);
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	private void updatePlayerStash(ArrayList<Tile> currentStash, ArrayList<Tile> oldTiles){
+
+	/**
+	 * Removes oldTiles from the currentStash, then refill the stash with random
+	 * Tiles (if possible) It is important that the turn already has been
+	 * created, else the random letters will be set for the current turn.
+	 * 
+	 * @param currentStash
+	 * @param oldTiles
+	 */
+	private void updatePlayerStash(ArrayList<Tile> currentStash,
+			ArrayList<Tile> oldTiles) {
+
 		currentStash.removeAll(oldTiles);
 		for (Tile t : currentStash) {
 			playerStash.addTile(t);
 		}
-		
+
 		playerStash.addRandomTiles();
 	}
-	
-	
-	private ArrayList<Tile> getCurrentStash(){
+
+	private ArrayList<Tile> getCurrentStash() {
 		return new ArrayList<Tile>(Arrays.asList(playerStash.getPlayerTiles()));
 	}
 
 	private void checkWordsInDatabase(ArrayList<String> words)
-			throws InvalidMoveException {
+			throws InvalidMoveException, InterruptedException,
+			ExecutionException, SQLException {
 		for (String s : words) {
 			String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
 			String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
-			try {
-				ResultSet wordresult = Db.run(
-						new Query(getWordFromDatabase).set(s)).get();
-				if (Query.getNumRows(wordresult) == 0) {
-					Db.run(new Query(query).set(s));
-					throw new InvalidMoveException(
-							InvalidMoveException.STATE_SETPENDING);
-				} else if (wordresult.next()) {
-					String statusString = wordresult.getString("status");
-					if (statusString.equals("Denied")) {
-						throw new InvalidMoveException(
-								InvalidMoveException.STATE_DENIED);
-					} else if (statusString.equals("Pending")) {
-						throw new InvalidMoveException(
-								InvalidMoveException.STATE_PENDING);
-					}
+
+			ResultSet wordresult = Db
+					.run(new Query(getWordFromDatabase).set(s)).get();
+			if (Query.getNumRows(wordresult) == 0) {
+				Db.run(new Query(query).set(s));
+				throw new InvalidMoveException(Error.PENDING);
+			} else if (wordresult.next()) {
+				String statusString = wordresult.getString("status");
+				if (statusString.equals("Denied")) {
+					throw new InvalidMoveException(Error.DENIED);
+				} else if (statusString.equals("Pending")) {
+					throw new InvalidMoveException(Error.ALREADY_PENDING);
 				}
-			} catch (SQLException | InterruptedException | ExecutionException e) {
-				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -813,12 +883,10 @@ public class GameModel extends CoreModel {
 		if (comparableWords.size() < 2) {
 			Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 			if (comparableWords.size() == 0) {
-				throw new InvalidMoveException(
-						InvalidMoveException.STATE_TOSHORT_NOTATTACHED);
+				throw new InvalidMoveException(Error.TOSHORT);
 			} else if (!isBoardEmpty()
 					&& !(comparableWords.get(0).size() > letterPositions.length)) {
-				throw new InvalidMoveException(
-						InvalidMoveException.STATE_NOT_ATTACHED);
+				throw new InvalidMoveException(Error.NOT_ATTACHED);
 			}
 		}
 		return comparableWords;
@@ -912,20 +980,20 @@ public class GameModel extends CoreModel {
 
 			if (!onStar) {
 				throw new InvalidMoveException(
-						InvalidMoveException.NOT_ON_START);
+						Error.NOT_ON_START);
 			}
 		}
 
 		if (MatrixUtils.isEmpty(playedLetters)) {
-			throw new InvalidMoveException(InvalidMoveException.NO_LETTERS_PUT);
+			throw new InvalidMoveException(Error.NO_LETTERS_PUT);
 		}
 
 		if (!wordIsAlligned(playedLetters)) {
-			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
+			throw new InvalidMoveException(Error.NOT_ALIGNED);
 		}
 
 		if (!lettersAreConnected(playedLetters, newBoard)) {
-			throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
+			throw new InvalidMoveException(Error.NOT_CONNECTED);
 		}
 
 		return playedLetters;

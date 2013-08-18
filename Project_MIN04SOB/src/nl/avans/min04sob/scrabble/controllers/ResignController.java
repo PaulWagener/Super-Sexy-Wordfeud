@@ -47,20 +47,19 @@ public class ResignController extends CoreController {
 		resignPanel.addNoResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cancelResign();
+				closeFrame();
 			}
 		});
 	}
 	
-	private void cancelResign() {
+	private void closeFrame() {
 		frame.dispose();
 		frame = null;
 	}
 	
 	private void doResign() {
 		gameModel.resign();
-		frame.dispose();
-		frame = null;
+		closeFrame();
 	}
 
 	public String getLabelName() {
