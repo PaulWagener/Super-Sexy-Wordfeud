@@ -311,7 +311,6 @@ public class MainController extends CoreController {
 				GameModel clickedGame = (GameModel) source
 						.getClientProperty("game");
 
-				// TODO open game as observer
 				openGame(clickedGame);
 				currGamePanel.observerView();
 				chatPanel.observerView();
