@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.concurrent.Callable;
 
-import nl.avans.min04sob.scrabble.core.Role;
+import nl.avans.min04sob.scrabble.misc.Role;
+import nl.avans.min04sob.scrabble.misc.State;
 import nl.avans.min04sob.scrabble.misc.Turn;
-import nl.avans.min04sob.scrabble.models.State;
 
 import com.mysql.jdbc.Statement;
 

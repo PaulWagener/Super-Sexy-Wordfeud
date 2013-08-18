@@ -16,6 +16,7 @@ import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 import nl.avans.min04sob.scrabble.misc.Error;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
 import nl.avans.min04sob.scrabble.misc.MatrixUtils;
+import nl.avans.min04sob.scrabble.misc.State;
 import nl.avans.min04sob.scrabble.misc.Turn;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 

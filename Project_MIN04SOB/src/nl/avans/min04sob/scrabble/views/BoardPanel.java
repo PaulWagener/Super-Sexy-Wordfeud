@@ -20,8 +20,8 @@ import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.Event;
-import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
+import nl.avans.min04sob.scrabble.misc.Role;
 import nl.avans.min04sob.scrabble.misc.TileTable;
 import nl.avans.min04sob.scrabble.misc.TileTransferHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;

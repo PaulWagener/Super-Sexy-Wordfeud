@@ -8,10 +8,11 @@ import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.controllers.ChallengeModel;
 import nl.avans.min04sob.scrabble.core.Event;
-import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
+import nl.avans.min04sob.scrabble.misc.Role;
+import nl.avans.min04sob.scrabble.misc.State;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class AccountModel extends CoreModel {

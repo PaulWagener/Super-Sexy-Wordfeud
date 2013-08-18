@@ -13,8 +13,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import nl.avans.min04sob.scrabble.core.Event;
-import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CoreView;
+import nl.avans.min04sob.scrabble.misc.Role;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 
