@@ -2,7 +2,6 @@ package nl.avans.min04sob.scrabble.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -242,26 +241,6 @@ public class StashModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	@Deprecated
-	public void RemoveTileFromHand(int game_id, Tile tile) {
-		int turn_id = 0;
-		String getTurn_id = "SELECT  MAX(`id`) AS `id` FROM `beurt` WHERE `spel_id` = ?";
-		String removeTileFromHand = "DELETE FROM `letterbakjeletter` WHERE `letterbakjeletter`.`Spel_ID` = ? AND `letterbakjeletter`.`Letter_ID` = ? ";
-		try {
-			Future<ResultSet> worker1 = Db.run(new Query(getTurn_id)
-					.set(game_id));
-			ResultSet res = worker1.get();
-			if (res.next()) {
-				turn_id = res.getInt("id");
-			}
-			Db.run(new Query(removeTileFromHand).set(game_id).set(
-					tile.getTileId()));
-		} catch (SQLException | InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	@Override

@@ -34,14 +34,7 @@ public class GameModel extends CoreModel {
 	private BoardPanel boardPanel;
 	private int currentobserveturn;
 	private StashModel playerStash;
-
-	// private BoardController boardcontroller;
 	private BoardModel boardModel;
-
-	@Deprecated
-	private String[][] boardData;
-
-	private int lastTurn;
 
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
@@ -122,30 +115,6 @@ public class GameModel extends CoreModel {
 
 	public void setButtons(boolean hasbuttons) {
 		this.hasButtons = hasbuttons;
-	}
-
-	@Deprecated
-	public void doTurn(int game_id, String accountname, int score, String action) {
-		int x = 0;
-		String s = "SELECT Max( id ) FROM beurt WHERE `Spel_ID` =?";
-
-		try {
-			Future<ResultSet> worker = Db.run(new Query(s).set(gameId));
-			ResultSet rs = worker.get();
-			rs.next();
-			x = rs.getInt(1) + 1;
-			String q1 = "INSERT INTO `beurt` (`ID`, `Spel_ID`, `Account_naam`, `score`, `Aktie_type`) VALUES('"
-					+ x
-					+ "', '"
-					+ game_id
-					+ "', '"
-					+ accountname
-					+ "', '"
-					+ score + "', '" + action + "')";
-			Db.run(new Query(q1));
-		} catch (SQLException | InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void createTurn(Turn action, int score) throws SQLException,
@@ -246,11 +215,6 @@ public class GameModel extends CoreModel {
 
 	public int getCurrentobserveturn() {
 		return currentobserveturn;
-	}
-
-	@Deprecated
-	public int getLastTurn() {
-		return this.lastTurn;
 	}
 
 	public int getLastTurn(AccountModel player) {
@@ -501,7 +465,7 @@ public class GameModel extends CoreModel {
 			while (rs.next()) {
 				int x = rs.getInt("Tegel_X") - 1;// x
 				int y = rs.getInt("Tegel_Y") - 1;// y
-				lastTurn = rs.getInt("beurt_ID");
+		
 				if (rs.getString("LetterType_karakter").equals("?")) {
 					boardModel.setValueAt(
 							new Tile(rs.getString("BlancoLetterKarakter"), 0,

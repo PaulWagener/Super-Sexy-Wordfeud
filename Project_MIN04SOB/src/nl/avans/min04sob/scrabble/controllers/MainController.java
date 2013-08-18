@@ -20,7 +20,6 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
@@ -382,11 +381,9 @@ public class MainController extends CoreController {
 
 		startPanel = new StartPanel();
 
-		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
 		currGamePanel = new BoardPanel();
-		competitionModel = new CompetitionModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
