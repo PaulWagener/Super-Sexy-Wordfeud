@@ -27,9 +27,6 @@ private BoardModel bpm;
 	}
 	@Override
 	public void addListeners() {
-		
-		// TODO Auto-generated method stub
-		
 	}
 
 	public BoardModel getBpm() {

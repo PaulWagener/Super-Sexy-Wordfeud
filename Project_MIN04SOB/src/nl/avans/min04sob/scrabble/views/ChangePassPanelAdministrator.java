@@ -89,8 +89,6 @@ public class ChangePassPanelAdministrator extends CorePanel{
 	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

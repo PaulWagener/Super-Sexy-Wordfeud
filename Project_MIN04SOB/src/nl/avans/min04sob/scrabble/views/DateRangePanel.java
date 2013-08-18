@@ -154,8 +154,6 @@ public class DateRangePanel extends CorePanel {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Automatisch gegenereerde methodestub
-
 	}
 
 }

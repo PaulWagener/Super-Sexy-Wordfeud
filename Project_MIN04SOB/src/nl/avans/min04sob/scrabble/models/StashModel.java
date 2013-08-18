@@ -122,20 +122,6 @@ public class StashModel extends CoreModel {
 		return null;
 	}
 
-	@Deprecated
-	public void addToPlankje(int spel_ID, int letter_ID, int turnid) {
-
-		String addlettertoplankje = "INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
-		try {
-			System.out.println(spel_ID + " ," + letter_ID + " , " + turnid);
-			Db.run(new Query(addlettertoplankje).set(spel_ID).set(letter_ID)
-					.set(turnid));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public void addTile(Tile t) {
 		int turnId = game.getLastTurn(owner);
 		String q = "INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`) VALUES (?, ?, ?)";
@@ -237,7 +223,6 @@ public class StashModel extends CoreModel {
 				return true;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
@@ -245,7 +230,5 @@ public class StashModel extends CoreModel {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
 	}
 }

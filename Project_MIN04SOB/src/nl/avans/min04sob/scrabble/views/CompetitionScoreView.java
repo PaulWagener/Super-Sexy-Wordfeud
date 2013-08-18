@@ -82,8 +82,6 @@ public class CompetitionScoreView extends CorePanel {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public CompetitionModel selectedCompetition() {

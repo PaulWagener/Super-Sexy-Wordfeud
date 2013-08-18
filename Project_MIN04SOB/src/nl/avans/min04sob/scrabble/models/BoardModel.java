@@ -134,7 +134,6 @@ public class BoardModel extends CoreTableModel {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 	}
 	
 	public void removeMutatable(){		

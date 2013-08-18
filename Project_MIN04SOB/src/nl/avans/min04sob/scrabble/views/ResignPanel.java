@@ -48,9 +48,7 @@ public class ResignPanel extends CorePanel {
 	}
 	
 	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
+	public void modelPropertyChange(PropertyChangeEvent evt) {		
 	}
 	
 	public void setResignLabelName(String labelname) {

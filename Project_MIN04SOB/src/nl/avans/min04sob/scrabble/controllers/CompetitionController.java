@@ -44,7 +44,6 @@ public class CompetitionController extends CoreController {
 
 	@Override
 	public void addListeners() {
-		// TODO Auto-generated method stub
 	}
 
 	public void getAllCompetitions() {
@@ -83,7 +82,6 @@ public class CompetitionController extends CoreController {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
 	}
 
 	public void openCompetitionScores() {

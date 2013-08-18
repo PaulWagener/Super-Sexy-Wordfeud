@@ -256,7 +256,6 @@ public class GameModel extends CoreModel {
 			dbResultamountofturns.next();
 			return dbResultamountofturns.getInt(1);
 		} catch (SQLException | InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
@@ -515,7 +514,6 @@ public class GameModel extends CoreModel {
 			}
 
 		} catch (SQLException | InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -575,7 +573,6 @@ public class GameModel extends CoreModel {
 			tileValue.next();
 			return tileValue.getInt(1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
@@ -812,7 +809,6 @@ public class GameModel extends CoreModel {
 			int wordMoveCount = rs.getInt(1);
 			return wordMoveCount == 0;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;

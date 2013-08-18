@@ -85,8 +85,6 @@ public class AcceptDeclineController extends CoreController {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

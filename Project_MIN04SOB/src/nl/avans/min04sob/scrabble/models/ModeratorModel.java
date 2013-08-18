@@ -23,7 +23,6 @@ public class ModeratorModel extends CoreModel{
 		try {
 			Db.run(new Query(acceptWord).set(word));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -32,7 +31,6 @@ public class ModeratorModel extends CoreModel{
 		try {
 			Db.run(new Query(deniedWord).set(word));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -199,8 +199,6 @@ public class AccountController extends CoreController {
 
 	@Override
 	public void addListeners() {
-		// TODO Automatisch gegenereerde methodestub
-
 	}
 
 	public void changePass() {
@@ -254,8 +252,6 @@ public class AccountController extends CoreController {
 
 	@Override
 	public void initialize() {
-		// TODO Automatisch gegenereerde methodestub
-
 	}
 	
 	public void adminChangePass(){
@@ -318,8 +314,7 @@ public class AccountController extends CoreController {
 			return -1;
 		} else if (length > maxpass_userLength) {
 			return 1;
-		} else {// TODO Automatisch gegenereerde methodestub
-			
+		} else {
 			return 0;
 		}
 	}

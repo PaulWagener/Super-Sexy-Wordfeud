@@ -87,10 +87,6 @@ public class TileTransferHandler extends TransferHandler {
 						if (letter.length() < 2) {
 							sourceTile.setLetter(letter);
 						}
-
-					
-					//TODO do stuff, and set sourceTile to the new letter
-					//With the same id
 				}
 				
 				
@@ -103,7 +99,6 @@ public class TileTransferHandler extends TransferHandler {
 				table.clearSelection();
 
 			} catch (UnsupportedFlavorException | IOException e) {
-				// TODO Automatisch gegenereerd catch-blok
 				e.printStackTrace();
 			}
 		}
