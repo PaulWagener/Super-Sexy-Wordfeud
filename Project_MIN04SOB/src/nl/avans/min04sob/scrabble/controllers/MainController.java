@@ -438,7 +438,12 @@ public class MainController extends CoreController {
 			addButtonListeners();
 			selectedGame.setButtons(true);
 		}
-		currGamePanel.observerView();
+		
+		if(selectedGame.yourturn()){
+			currGamePanel.playerView();
+		} else {
+			currGamePanel.observerView();	
+		}
 		openPanels();
 
 		initChat();

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -629,7 +630,7 @@ public class GameModel extends CoreModel {
 		}
 
 		try {
-			ArrayList<Tile> previousStash = new ArrayList<Tile>(Arrays.asList(playerStash.getPlayerTiles()));
+			ArrayList<Tile> currentStash = new ArrayList<Tile>(Arrays.asList(playerStash.getPlayerTiles()));
 			Tile[][] newBoardData = newBoard.getTileData();
 			Tile[][] playedLetters = (Tile[][]) checkValidMove(
 					getBoardFromDatabase(), newBoard);
@@ -676,18 +677,34 @@ public class GameModel extends CoreModel {
 					}
 				}
 			}
+			//Notify the views that we no longer have the current turn
+			firePropertyChange(Event.MOVE, true, false);
+			
 			Db.run(insertLetterQuery);
 			
-			previousStash.removeAll(playedTiles);
-			for (Tile t : previousStash) {
-				playerStash.addTile(t);
-			}
-			
-			playerStash.addRandomTiles();
+			updatePlayerStash(currentStash, playedTiles);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void swap(List<Tile> nominees){
+		ArrayList<Tile> currentStash = getCurrentStash();
+	}
+	
+	private void updatePlayerStash(ArrayList<Tile> currentStash, ArrayList<Tile> oldTiles){
+		currentStash.removeAll(oldTiles);
+		for (Tile t : currentStash) {
+			playerStash.addTile(t);
+		}
+		
+		playerStash.addRandomTiles();
+	}
+	
+	
+	private ArrayList<Tile> getCurrentStash(){
+		return new ArrayList<Tile>(Arrays.asList(playerStash.getPlayerTiles()));
 	}
 
 	private void checkWordsInDatabase(ArrayList<String> words)

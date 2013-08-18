@@ -122,7 +122,6 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setTransferHandler(new TileTransferHandler());
 
 		playButton = new JButton();
-
 		playButton.setEnabled(true);
 
 		playButton.addActionListener(new ActionListener() {
@@ -219,42 +218,22 @@ public class BoardPanel extends CorePanel {
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-		case Event.LOGIN:
-			AccountModel account = (AccountModel) evt.getNewValue();
-			if (account.isRole(Role.OBSERVER)) {
-
-			}
-
-			break;
-
-		case Event.MOVE:
+			case Event.MOVE:
+			
 			boolean hasTurn = (boolean) evt.getNewValue();
 			if (hasTurn) {
 				playerView();
 			} else {
 				observerView();
 			}
+			
+			//refresh the board
+			playBoard.repaint();
 			break;
-
-		/*
-		 * case Event.MOVE: boolean playerTurn = (boolean) evt.getNewValue(); if
-		 * (playerTurn) { playButton.setEnabled(true);
-		 * swapButton.setEnabled(true); passButton.setEnabled(true); } else {
-		 * playButton.setEnabled(false); swapButton.setEnabled(false);
-		 * passButton.setEnabled(false); } break;
-		 */
 
 		case Event.RESIGN:
 			observerView();
 			break;
-		/*
-		 * case Event.MOVE: boolean playerTurn = (boolean) evt.getNewValue(); if
-		 * (playerTurn) { playButton.setEnabled(true);
-		 * swapButton.setEnabled(true); passButton.setEnabled(true); } else {
-		 * playButton.setEnabled(false); swapButton.setEnabled(false);
-		 * passButton.setEnabled(false); } break;
-		 */
-
 		}
 
 	}
@@ -322,13 +301,12 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void infoBox(String infoMessage, String title) {
-		JOptionPane.showMessageDialog(null, infoMessage,
-				"InfoBox: " + title, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + title,
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
 	public void enablePreviousButton() {
-
 
 		this.prevButton.setEnabled(true);
 	}
