@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -14,10 +13,10 @@ import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Queries;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
+import nl.avans.min04sob.scrabble.misc.Error;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
 import nl.avans.min04sob.scrabble.misc.MatrixUtils;
 import nl.avans.min04sob.scrabble.misc.Turn;
-import nl.avans.min04sob.scrabble.misc.Error;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class GameModel extends CoreModel {
@@ -51,15 +50,10 @@ public class GameModel extends CoreModel {
 
 	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter`,`l`.`ID` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
-	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`beurt`.`id`) AS `last_turn`, `account_naam_uitdager` AS `challenger` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE `beurt`.`spel_id` = ? GROUP BY `spel_id` ORDER BY `beurt`.`id`";
 	private final String whosTurnAtTurn = "SELECT account_naam, ID FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
-
-	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 	private String getWordMoveCount = "SELECT COUNT(*) FROM `beurt` WHERE `Aktie_Type` = 'word' AND `spel_id` = ?";
-	// private final String getnumberofturns =
-	// "SELECT max(beurt_ID) FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID ";
 
 	private final String getnumberofturns = "SELECT max(ID) FROM beurt   WHERE Spel_ID = ?";
 	private final boolean observer;
@@ -280,35 +274,9 @@ public class GameModel extends CoreModel {
 		boardModel = model;
 	}
 
-	public int getCurrentValueForThisTurn() {
-
-		// Tile[][] oldData = (Tile[][]) boardModel.getData();
-		// Tile[][] newData = (Tile[][]) getBoardFromDatabase();
-
-		// First find out which letters where played
-		// Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData,
-		// newData);
-		// Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-		// TODO deze methode maken
-		// kan pas als woordleggen werkt
-		return 0;
-	}
-
 	public int getGameId() {
 		return gameId;
 	}
-
-	/*
-	 * public void getlastrunFromDatabase() { try { Future<ResultSet> worker =
-	 * Db.run(new Query(getTurnQuery).set( gameId).set(lastTurn)); ResultSet rs
-	 * = worker.get(); while (rs.next()) { int x = rs.getInt(2) - 1;// x int y =
-	 * rs.getInt(3) - 1;// y lastTurn = rs.getInt(5); if
-	 * (rs.getString(1).equals("?")) { boardData[y][x] = rs.getString(4); } else
-	 * { boardData[y][x] = rs.getString(1); } }
-	 * 
-	 * } catch (SQLException | InterruptedException | ExecutionException sql) {
-	 * sql.printStackTrace(); } }
-	 */
 
 	public String getLetterSet() {
 		return letterSet;
@@ -507,29 +475,6 @@ public class GameModel extends CoreModel {
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	/*
-	 * public void setPlayerLetterFromDatabase() { try { Future<ResultSet>
-	 * worker = Db.run(new Query(getPlayerTiles).set(
-	 * getGameId()).set(currentUser.getUsername())); ResultSet res =
-	 * worker.get(); String[] letters; if (!(Query.getNumRows(res) == 0)) {
-	 * res.next();
-	 * 
-	 * letters = res.getString(2).split(","); for (int x = 0; letters.length >
-	 * x; x++) {
-	 * 
-	 * Future<ResultSet> worker1 = Db.run(new Query(getTileValue)
-	 * .set(letters[x]).set(letterSet)); ResultSet tilewaarde = worker1.get();
-	 * tilewaarde.next();
-	 * 
-	 * 
-	 * boardModel.setPlayetTile(x, new Tile(letters[x], tilewaarde.getInt(1),
-	 * Tile.MUTATABLE));
-	 * 
-	 * } }
-	 * 
-	 * } catch (SQLException | InterruptedException | ExecutionException sql) {
-	 * sql.printStackTrace(); } }
-	 */
 
 	@Override
 	public String toString() {

@@ -412,7 +412,7 @@ public class MainController extends CoreController {
 		closePanels();
 
 		currGamePanel = selectedGame.getBoardPanel();
-		//boardModel = selectedGame.getBoardModel();
+
 		boardModel = selectedGame.getBoardFromDatabase();
 		addModel(boardModel);
 		addView(currGamePanel);
@@ -421,8 +421,7 @@ public class MainController extends CoreController {
 		currGamePanel.setModel(boardModel);
 
 		updatelabels(selectedGame.getCurrentobserveturn());
-		
-		//selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
+
 		selectedGame.setPlayerTiles();
 		
 

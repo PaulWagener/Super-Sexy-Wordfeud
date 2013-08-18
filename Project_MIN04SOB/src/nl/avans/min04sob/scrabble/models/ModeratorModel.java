@@ -18,8 +18,6 @@ public class ModeratorModel extends CoreModel{
 	private final String deniedWord = "UPDATE woordenboek set status = 'Denied' WHERE woord = ?";
 	private int wordsCount;
 	
-	
-	
 	public void acceptWord(String word){
 		
 		try {
