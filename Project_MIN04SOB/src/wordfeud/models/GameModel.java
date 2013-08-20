@@ -594,75 +594,55 @@ public class GameModel extends CoreModel {
 			ArrayList<Tile> currentStash = new ArrayList<Tile>(
 					Arrays.asList(playerStash.getPlayerTiles()));
 			Tile[][] newBoardData = newBoard.getTileData();
-			if (!checkIfWordIsNotNull(getBoardFromDatabase(), newBoard)) {
-				Tile[][] playedLetters = (Tile[][]) checkValidMove(
-						getBoardFromDatabase(), newBoard);
-				ArrayList<String> playedWords = new ArrayList<String>();
-				ArrayList<ArrayList<Tile>> letterMatrix = checkValidWord(
-						playedLetters, newBoardData);
-				for (ArrayList<Tile> word : letterMatrix) {
-					String tmpWord = "";
-					for (Tile t : word) {
-						tmpWord += t.getLetter();
-					}
-					playedWords.add(tmpWord);
+			Tile[][] playedLetters = (Tile[][]) checkValidMove(
+					getBoardFromDatabase(), newBoard);
+			ArrayList<String> playedWords = new ArrayList<String>();
+			ArrayList<ArrayList<Tile>> letterMatrix = checkValidWord(
+					playedLetters, newBoardData);
+			for (ArrayList<Tile> word : letterMatrix) {
+				String tmpWord = "";
+				for (Tile t : word) {
+					tmpWord += t.getLetter();
 				}
-				checkWordsInDatabase(playedWords);
-
-				int score = getScore(playedLetters, letterMatrix, newBoard);
-
-				ArrayList<Tile> playedTiles = new ArrayList<Tile>();
-
-				Query insertLetterQuery = new Query(
-						"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam)"
-								+ "VALUES (?, ?, ?, ?, ?, ?);");
-
-				int turnId = getNextTurnId();
-
-				// Insert word in to database
-				for (int y = 0; y < 15; y++) {
-					for (int x = 0; x < 15; x++) {
-						if (playedLetters[y][x] != null) {
-
-							Tile tile = (Tile) playedLetters[y][x];
-							int tileId = tile.getTileId();
-
-							// Add the tile to the array,
-							// These will be removed from the players stash
-							playedTiles.add(tile);
-
-							insertLetterQuery.set(tileId).set(gameId)
-									.set(turnId).set(x + 1).set(y + 1)
-									.set("standard");
-							insertLetterQuery.addBatch();
-						}
-					}
-				}
-				createTurn(Turn.WORD, score);
-				Db.run(insertLetterQuery);
-
-				updatePlayerStash(currentStash, playedTiles);
-			} else {
-				throw new InvalidMoveException(Error.NO_LETTERS_PUT);
+				playedWords.add(tmpWord);
 			}
+			checkWordsInDatabase(playedWords);
+
+			int score = getScore(playedLetters, letterMatrix, newBoard);
+
+			ArrayList<Tile> playedTiles = new ArrayList<Tile>();
+
+			Query insertLetterQuery = new Query(
+					"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam)"
+							+ "VALUES (?, ?, ?, ?, ?, ?);");
+
+			int turnId = getNextTurnId();
+
+			// Insert word in to database
+			for (int y = 0; y < 15; y++) {
+				for (int x = 0; x < 15; x++) {
+					if (playedLetters[y][x] != null) {
+
+						Tile tile = (Tile) playedLetters[y][x];
+						int tileId = tile.getTileId();
+						// Add the tile to the array,
+						// These will be removed from the players stash
+						playedTiles.add(tile);
+
+						insertLetterQuery.set(tileId).set(gameId).set(turnId)
+								.set(x + 1).set(y + 1).set("standard");
+						insertLetterQuery.addBatch();
+					}
+				}
+			}
+			createTurn(Turn.WORD, score);
+			Db.run(insertLetterQuery);
+
+			updatePlayerStash(currentStash, playedTiles);
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 
-	}
-
-	private boolean checkIfWordIsNotNull(BoardModel oldBoard,
-			BoardModel newBoard) {
-		Tile[][] oldData = oldBoard.getTileData();
-		Tile[][] newData = newBoard.getTileData();
-
-		// First find out which letters where played
-		Tile[][] playedLetters = compareFields(oldData, newData);
-		if (playedLetters == null) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	/**
@@ -727,15 +707,14 @@ public class GameModel extends CoreModel {
 				} else if (statusString.equals("Pending")) {
 					alreadyPendingCounter++;
 				}
-				if (refusedWordsCounter > 0) {
-					throw new InvalidMoveException(Error.DENIED);
-				} else if (addedWordsCounter > 0) {
-					throw new InvalidMoveException(Error.PENDING);
-				} else if (alreadyPendingCounter > 0) {
-					throw new InvalidMoveException(Error.ALREADY_PENDING);
-				}
 			}
-
+		}
+		if (refusedWordsCounter > 0) {
+			throw new InvalidMoveException(Error.DENIED);
+		} else if (addedWordsCounter > 0) {
+			throw new InvalidMoveException(Error.PENDING);
+		} else if (alreadyPendingCounter > 0) {
+			throw new InvalidMoveException(Error.ALREADY_PENDING);
 		}
 	}
 
