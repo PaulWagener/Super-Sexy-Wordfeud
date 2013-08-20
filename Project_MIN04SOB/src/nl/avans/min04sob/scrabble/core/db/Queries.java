@@ -16,11 +16,11 @@ public class Queries {
 	public static final String TURN_TILES;
 
 	static {
-		CURRENT_TILES = Queries.readFile("Project_MIN04SOB/queries/currentTiles.sql");
-		RANKING = Queries.readFile("Project_MIN04SOB/queries/ranking.sql");
-		TILE =  Queries.readFile("Project_MIN04SOB/queries/tileQuery.sql");
-		LATEST_TURN =  Queries.readFile("Project_MIN04SOB/queries/latestTurnForPlayer.sql");
-		TURN_TILES =  Queries.readFile("Project_MIN04SOB/queries/tilesForTurns.sql");
+		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
+		RANKING = Queries.readFile("queries/ranking.sql");
+		TILE =  Queries.readFile("queries/tileQuery.sql");
+		LATEST_TURN =  Queries.readFile("queries/latestTurnForPlayer.sql");
+		TURN_TILES =  Queries.readFile("queries/tilesForTurns.sql");
 	}
 
 	private static String readFile(final String file) {
