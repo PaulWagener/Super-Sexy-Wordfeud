@@ -467,40 +467,32 @@ public class GameModel extends CoreModel {
 		Db.run(q);
 	}
 
-	public String score(int toTurn) {
-		String score = "";
-
+	public int getScoreChallenger(int toTurn){
+		int score = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(scoreQuery)
-					.set(challenger.getUsername()));
-			int ch = scorecounter(worker.get(), toTurn);
-
-			Future<ResultSet> worker1 = Db.run(new Query(scoreQuery)
-					.set(opponent.getUsername()));
-			int op = scorecounter(worker1.get(), toTurn);
-
-			score = ": " + Integer.toString(ch) + " points";
-
-			score += " , : " + Integer.toString(op) + " points";
-
+			Future<ResultSet> databaseTotalScore = Db.run(new Query("SELECT SUM(score) from beurt where spel_id = ? and account_naam=? and ID <= ?;").set(this.gameId).set(this.challenger.getUsername()).set(toTurn));
+			ResultSet res = databaseTotalScore.get();
+			res.first();
+			score = res.getInt(1);
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return score;
-
 	}
-
-	private int scorecounter(ResultSet s, int toTurn) throws SQLException {
-		int counter = 0;
-
-		while (s.next()) {
-			if (s.getInt(1) < toTurn + 1) {
-
-				counter += s.getInt(2);
-			}
+	
+	public int getScoreOpponent(int toTurn){
+		int score = 0;
+		try {
+			Future<ResultSet> databaseTotalScore = Db.run(new Query("SELECT SUM(score) from beurt where spel_id = ? and account_naam=? and ID <= ?;").set(this.gameId).set(this.opponent.getUsername()).set(toTurn));
+			ResultSet res = databaseTotalScore.get();
+			res.first();
+			score = res.getInt(1);
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
 		}
-		return counter;
+		return score;
 	}
+	
 
 	public void setCurrentobserveturn(int currentobserveturn) {
 		System.out.println(currentobserveturn);
