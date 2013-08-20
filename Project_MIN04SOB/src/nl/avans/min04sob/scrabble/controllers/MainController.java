@@ -14,13 +14,13 @@ import javax.swing.JMenuItem;
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
+import nl.avans.min04sob.scrabble.misc.PlaySound;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
@@ -47,6 +47,8 @@ public class MainController extends CoreController {
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
 
+	private PlaySound ps = new PlaySound();
+	
 	public MainController() {
 
 		initialize();
@@ -475,14 +477,15 @@ public class MainController extends CoreController {
 
 			// Empty the chat message box
 			chatPanel.setChatFieldSendText("");
+			ps.playSound("send.wav", false);
 		}
 	}
 
 	private void setCurrentGame(GameModel selectedGame) {
 		currentGame = selectedGame;
 	}
-
-	public void setTurnLabel() {
+	
+	private void setTurnLabel() {
 		if (currentGame.isObserver()) {
 			currGamePanel.setLabelPlayerTurn(" van "
 					+ currentGame.getChallenger().getUsername());

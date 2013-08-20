@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.controllers;
+package nl.avans.min04sob.scrabble.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +8,6 @@ import java.util.concurrent.Future;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
-import nl.avans.min04sob.scrabble.models.AccountModel;
-import nl.avans.min04sob.scrabble.models.CompetitionModel;
 
 /**
  * Describes one challenge, all accepted challenges are considered a game and
