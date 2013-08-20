@@ -17,7 +17,6 @@ import wordfeud.views.ChangePassPanelAdministrator;
 import wordfeud.views.LoginPanel;
 import wordfeud.views.RegisterPanel;
 
-
 public class AccountController extends CoreController {
 
 	private LoginPanel loginPanel;
@@ -42,7 +41,7 @@ public class AccountController extends CoreController {
 		changepassPanel = new ChangePassPanel();
 		frame.setTitle("Inloggen");
 		frame.add(loginPanel);
-		
+
 		addView(registerPanel);
 		addView(loginPanel);
 		addView(changepassPanel);
@@ -50,7 +49,7 @@ public class AccountController extends CoreController {
 		changepassPaneladmin = new ChangePassPanelAdministrator();
 		addView(changepassPaneladmin);
 		changepassPaneladmin.fillPlayerList(accountModel.getPlayers());
-		
+
 		changepassPaneladmin.BackaddActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -61,18 +60,19 @@ public class AccountController extends CoreController {
 		changepassPaneladmin.ChangeaddActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 if(changepassPaneladmin.getSelectedNewPass().length()>4){
-				 accountModel.changeAnotherPlayerPass(changepassPaneladmin.getSelectedNewPass(),changepassPaneladmin.getSelectedPlayer());
-				 frame.dispose();
-				 }
-	
-				 else
-				 {
-					 changepassPaneladmin.setText("Wachtwoord te kort");
-				 }
+				if (changepassPaneladmin.getSelectedNewPass().length() > 4) {
+					accountModel.changeAnotherPlayerPass(
+							changepassPaneladmin.getSelectedNewPass(),
+							changepassPaneladmin.getSelectedPlayer());
+					frame.dispose();
+				}
+
+				else {
+					changepassPaneladmin.setText("Wachtwoord te kort");
+				}
 			}
 		});
-		
+
 		loginPanel.addActionListenerLogin(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -95,7 +95,7 @@ public class AccountController extends CoreController {
 				}
 			}
 		});
-		
+
 		loginPanel.addKeyListenerUsername(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -122,7 +122,7 @@ public class AccountController extends CoreController {
 				}
 			}
 		});
-		
+
 		registerPanel.addKeyListenerPassword1(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -131,16 +131,15 @@ public class AccountController extends CoreController {
 				}
 			}
 		});
-		
-		
+
 		registerPanel.addActionListenerCancel(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(accountModel.isLoggedIn()){
+				if (accountModel.isLoggedIn()) {
 					frame.dispose();
-				}else{		
+				} else {
 					registerToLogin();
-				}				
+				}
 			}
 		});
 
@@ -157,7 +156,7 @@ public class AccountController extends CoreController {
 				frame.dispose();
 			}
 		});
-		
+
 		changepassPanel.addKeyListenerOldPass(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -166,7 +165,7 @@ public class AccountController extends CoreController {
 				}
 			}
 		});
-		
+
 		changepassPanel.addKeyListenerNewPass1(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -175,7 +174,7 @@ public class AccountController extends CoreController {
 				}
 			}
 		});
-		
+
 		changepassPanel.addKeyListenerNewPass2(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -231,19 +230,17 @@ public class AccountController extends CoreController {
 
 	private void checkLogin() {
 		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
-		 
+
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(false);
 			loginPanel.setPasswordMistake(false);
 			ps.playSound("loginfail.wav", false);
-		}
-		else {
+		} else {
 			frame.dispose();
 			frame = null;
 		}
 
 	}
-	
 
 	public ChangePassPanel getchangepasspanel() {
 		return changepassPanel;
@@ -252,8 +249,8 @@ public class AccountController extends CoreController {
 	@Override
 	public void initialize() {
 	}
-	
-	public void adminChangePass(){
+
+	public void adminChangePass() {
 		frame.remove(loginPanel);
 		frame.add(changepassPaneladmin);
 		frame.repaint();
@@ -299,9 +296,9 @@ public class AccountController extends CoreController {
 		if (validateUsername() && validatePassword1() && validatePassword2()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
 					registerPanel.getPassword1(), registerPanel.getRoles());
-			if(accountModel.isLoggedIn()){
+			if (accountModel.isLoggedIn()) {
 				frame.dispose();
-			}else{
+			} else {
 				registerToLogin();
 			}
 		}
@@ -344,7 +341,8 @@ public class AccountController extends CoreController {
 				registerPanel.setPassword2Mistake(true, "");
 				return true;
 			} else {
-				registerPanel.setPassword2Mistake(false, "Wachtwoorden komen niet overeen");
+				registerPanel.setPassword2Mistake(false,
+						"Wachtwoorden komen niet overeen");
 				return false;
 			}
 		}

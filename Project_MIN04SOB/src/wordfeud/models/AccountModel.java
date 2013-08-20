@@ -269,8 +269,8 @@ public class AccountModel extends CoreModel {
 	@Override
 	public void update() {
 		// Check new games
-		
-		if(getOpenGames().size() != gameCount){
+
+		if (getOpenGames().size() != gameCount) {
 			gameCount = getOpenGames().size();
 			firePropertyChange(Event.NEWGAME, null, getOpenGames());
 		}

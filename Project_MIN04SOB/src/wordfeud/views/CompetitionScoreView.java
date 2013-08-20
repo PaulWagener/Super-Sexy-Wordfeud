@@ -32,7 +32,8 @@ public class CompetitionScoreView extends CorePanel {
 	private DefaultTableModel tableModel;
 
 	public CompetitionScoreView() {
-		setLayout(new MigLayout("", "[250px:n:350px,grow][700px:n]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
+		setLayout(new MigLayout("", "[250px:n:350px,grow][700px:n]",
+				"[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
 		competitionLabel = new JLabel("Competities");
 		add(competitionLabel, "cell 0 0,alignx left");

@@ -14,7 +14,6 @@ import wordfeud.core.database.Db;
 import wordfeud.core.database.Queries;
 import wordfeud.core.database.Query;
 
-
 public class Tile implements Transferable {
 	private String letter;
 	private int value;
@@ -32,32 +31,27 @@ public class Tile implements Transferable {
 		mutatable = true;
 		tileId = 0;
 	}
-	
+
 	@Override
 	public int hashCode() {
-        return new HashCodeBuilder(17, 31).      
-            append(letter).
-            append(value).
-            append(tileId).
-            toHashCode();
-    }
+		return new HashCodeBuilder(17, 31).append(letter).append(value)
+				.append(tileId).toHashCode();
+	}
 
 	@Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (obj == this)
-            return true;
-        if (!(obj instanceof Tile))
-            return false;
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		if (!(obj instanceof Tile))
+			return false;
 
-        Tile guest = (Tile) obj;
-        return new EqualsBuilder().
-            append(letter, guest.letter).
-            append(value, guest.value).
-            append(tileId, guest.tileId).
-            isEquals();
-    }
+		Tile guest = (Tile) obj;
+		return new EqualsBuilder().append(letter, guest.letter)
+				.append(value, guest.value).append(tileId, guest.tileId)
+				.isEquals();
+	}
 
 	public Tile(int gameId, int letterId) {
 
@@ -66,7 +60,7 @@ public class Tile implements Transferable {
 		try {
 			worker = Db.run(new Query(Queries.TILE).set(gameId).set(letterId));
 			res = worker.get();
-			if(res.next()){
+			if (res.next()) {
 				letter = res.getString("karakter");
 				value = res.getInt("waarde");
 				mutatable = Tile.MUTATABLE;
@@ -149,8 +143,8 @@ public class Tile implements Transferable {
 		}
 		return false;
 	}
-	
-	public boolean isBlanc(){
+
+	public boolean isBlanc() {
 		return letter.equals("?");
 	}
 

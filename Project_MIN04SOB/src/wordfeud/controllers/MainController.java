@@ -28,7 +28,6 @@ import wordfeud.views.MenuView;
 import wordfeud.views.SelectSwapView;
 import wordfeud.views.StartPanel;
 
-
 public class MainController extends CoreController {
 
 	private CoreWindow frame;
@@ -49,12 +48,12 @@ public class MainController extends CoreController {
 	private SelectSwapView swapView;
 
 	private PlaySound ps;
-	
+
 	public MainController() {
 
 		initialize();
 		addListeners();
-		
+
 		addView(menu);
 		addView(chatPanel);
 		addView(frame);
@@ -420,33 +419,33 @@ public class MainController extends CoreController {
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
-		currGamePanel.setNameChallenger(currentGame.getChallenger().getUsername());
+		currGamePanel.setNameChallenger(currentGame.getChallenger()
+				.getUsername());
 		currGamePanel.setNameOpponent(currentGame.getOpponent().getUsername());
-		updatelabels(8/*selectedGame.getCurrentobserveturn()*/);
-		
-		//selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
+		updatelabels(8/* selectedGame.getCurrentobserveturn() */);
+
+		// selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
 
 		selectedGame.setPlayerTiles();
-		
 
-		//selectedGame.getBoardFromDatabase();
+		// selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 		if (!(selectedGame.hasButtons())) {
 
 			addButtonListeners();
 			selectedGame.setButtons(true);
 		}
-		
-		if(selectedGame.yourturn()){
+
+		if (selectedGame.yourturn()) {
 			currGamePanel.playerView();
 		} else {
-			currGamePanel.observerView();	
+			currGamePanel.observerView();
 		}
 		openPanels();
 
 		initChat();
 	}
-	
+
 	private void initChat() {
 		chatPanel.getChatFieldSend().setEnabled(true);
 		chatPanel.empty();
@@ -485,7 +484,7 @@ public class MainController extends CoreController {
 	private void setCurrentGame(GameModel selectedGame) {
 		currentGame = selectedGame;
 	}
-	
+
 	private void setTurnLabel() {
 		if (currentGame.isObserver()) {
 			currGamePanel.setLabelPlayerTurn(" van "
@@ -503,7 +502,8 @@ public class MainController extends CoreController {
 	}
 
 	private void updatelabels(int toTurn) {
-		currGamePanel.setScoreChallenger(currentGame.getScoreChallenger(toTurn));
+		currGamePanel
+				.setScoreChallenger(currentGame.getScoreChallenger(toTurn));
 		currGamePanel.setScoreOpponent(currentGame.getScoreOpponent(toTurn));
 		setTurnLabel();
 	}

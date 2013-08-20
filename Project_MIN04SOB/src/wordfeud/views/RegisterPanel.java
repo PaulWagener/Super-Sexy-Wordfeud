@@ -39,8 +39,9 @@ public class RegisterPanel extends CorePanel {
 
 	public RegisterPanel() {
 		setPreferredSize(new Dimension(584, 266));
-		setLayout(new MigLayout("", "[][1px][165.00px][20px:50px][115px][]", "[][19px][19px][19px][][][][24px][25px]"));
-		
+		setLayout(new MigLayout("", "[][1px][165.00px][20px:50px][115px][]",
+				"[][19px][19px][19px][][][][24px][25px]"));
+
 		errorLabel = new JLabel();
 		add(errorLabel, "cell 2 0");
 		usernameLabel = new JLabel("Gebruikers naam");

@@ -18,9 +18,9 @@ public class Queries {
 	static {
 		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
 		RANKING = Queries.readFile("queries/ranking.sql");
-		TILE =  Queries.readFile("queries/tileQuery.sql");
-		LATEST_TURN =  Queries.readFile("queries/latestTurnForPlayer.sql");
-		TURN_TILES =  Queries.readFile("queries/tilesForTurns.sql");
+		TILE = Queries.readFile("queries/tileQuery.sql");
+		LATEST_TURN = Queries.readFile("queries/latestTurnForPlayer.sql");
+		TURN_TILES = Queries.readFile("queries/tilesForTurns.sql");
 	}
 
 	private static String readFile(final String file) {

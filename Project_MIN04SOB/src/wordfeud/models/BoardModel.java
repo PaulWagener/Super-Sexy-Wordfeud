@@ -12,7 +12,6 @@ import wordfeud.core.database.Query;
 import wordfeud.core.mvc.CoreTableModel;
 import wordfeud.misc.Column;
 
-
 public class BoardModel extends CoreTableModel {
 	private HashMap<Point, String> tilesHM = new HashMap<Point, String>();
 
@@ -76,13 +75,13 @@ public class BoardModel extends CoreTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		try{
+		try {
 			return data[rowIndex][columnIndex];
-		} catch (ArrayIndexOutOfBoundsException e){
-			//Ugly, I know. Working with a deadline you known?
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// Ugly, I know. Working with a deadline you known?
 		}
 		return null;
-		
+
 	}
 
 	@Override
@@ -93,7 +92,8 @@ public class BoardModel extends CoreTableModel {
 		// }
 		// return tile.isMutatable();
 	}
-	public void setBoardToDefault(){
+
+	public void setBoardToDefault() {
 		int boardX = 0;
 		int boardY = 0;
 		String query = "SELECT * FROM  `tegel` WHERE  `Bord_naam` =  'Standard'";
@@ -104,8 +104,7 @@ public class BoardModel extends CoreTableModel {
 			while (rs.next()) {
 				int x = rs.getInt("X") - 1;
 				int y = rs.getInt("Y") - 1;
-				tilesHM.put(new Point(x, y),
-						rs.getString("TegelType_soort"));
+				tilesHM.put(new Point(x, y), rs.getString("TegelType_soort"));
 
 				if (x > boardX) {
 					boardX = x;
@@ -136,31 +135,31 @@ public class BoardModel extends CoreTableModel {
 	@Override
 	public void update() {
 	}
-	
-	public void removeMutatable(){		
+
+	public void removeMutatable() {
 		for (int x = 0; x < getColumnCount(); x++) {
 			for (int y = 0; y < getRowCount(); y++) {
 				Tile tile = (Tile) getValueAt(y, x);
-				if(tile != null && tile.isMutatable()){
+				if (tile != null && tile.isMutatable()) {
 					setValueAt(null, y, x);
 				}
 			}
 		}
 	}
-	
-	public static BoardModel newInstance(BoardModel model){
-		BoardModel returnModel =  new BoardModel();
+
+	public static BoardModel newInstance(BoardModel model) {
+		BoardModel returnModel = new BoardModel();
 		returnModel.data = model.data;
 		returnModel.tilesHM = model.tilesHM;
 		return returnModel;
 	}
 
-	public Tile[][] getTileData(){
-		Tile[][] array =  new Tile[15][15];
+	public Tile[][] getTileData() {
+		Tile[][] array = new Tile[15][15];
 		for (int i = 0; i < data[0].length; i++) {
 			for (int j = 0; j < data.length; j++) {
-				if(data[i][j] != null){
-					array[i][j] =  (Tile) data[i][j];
+				if (data[i][j] != null) {
+					array[i][j] = (Tile) data[i][j];
 				} else
 					array[i][j] = null;
 			}

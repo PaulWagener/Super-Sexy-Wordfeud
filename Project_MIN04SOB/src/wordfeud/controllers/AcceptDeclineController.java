@@ -11,16 +11,16 @@ import wordfeud.core.mvc.CoreController;
 import wordfeud.models.ModeratorModel;
 import wordfeud.views.AcceptDeclineView;
 
-
 public class AcceptDeclineController extends CoreController {
- 
+
 	private AcceptDeclineView adView;
 	private ModeratorModel modModel;
+
 	public AcceptDeclineController() {
 		modModel = new ModeratorModel();
 		this.addModel(modModel);
 		adView = new AcceptDeclineView();
-		
+
 		this.addView(adView);
 		fillWordList();
 		addListeners();
@@ -54,18 +54,18 @@ public class AcceptDeclineController extends CoreController {
 				adView.removeWindow();
 			}
 		});
-		
+
 		adView.addListSelectionListener(new ListSelectionListener() {
-			
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				JList<String> list = (JList<String>) e.getSource();
-				 if(list.getSelectedValue() == null){
-					 adView.setButtonsEnabled(false);
-				 } else {
-					 adView.setButtonsEnabled(true);
-				 }
+				if (list.getSelectedValue() == null) {
+					adView.setButtonsEnabled(false);
+				} else {
+					adView.setButtonsEnabled(true);
+				}
 			}
 		});
 	}

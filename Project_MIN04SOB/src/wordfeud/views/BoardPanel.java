@@ -216,16 +216,16 @@ public class BoardPanel extends CorePanel {
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-			case Event.MOVE:
-			
+		case Event.MOVE:
+
 			boolean hasTurn = (boolean) evt.getNewValue();
 			if (hasTurn) {
 				playerView();
 			} else {
 				observerView();
 			}
-			
-			//refresh the board
+
+			// refresh the board
 			playBoard.revalidate();
 			playBoard.repaint();
 			setTurnLabel(hasTurn);
@@ -240,12 +240,12 @@ public class BoardPanel extends CorePanel {
 
 	private void setTurnLabel(boolean hasTurn) {
 		String name;
-		if(hasTurn){
+		if (hasTurn) {
 			name = playerNameLabel.getText();
 		} else {
 			name = opponentNameLabel.getText();
 		}
-		
+
 		turnLabel.setText(name);
 	}
 
@@ -253,20 +253,22 @@ public class BoardPanel extends CorePanel {
 		this.turnLabel.setText(currTurnPlayerName);
 	}
 
-	public void setNameChallenger(String name){
+	public void setNameChallenger(String name) {
 		this.playerNameLabel.setText(name);
 	}
-	 
-	public void setNameOpponent(String name){
+
+	public void setNameOpponent(String name) {
 		this.opponentNameLabel.setText(name);
 	}
-	
+
 	public void setScoreChallenger(int playerScore) {
-		this.playerScoreLabel.setText(Integer.toString(playerScore) + " points");
+		this.playerScoreLabel
+				.setText(Integer.toString(playerScore) + " points");
 	}
-	
-	public void setScoreOpponent(int OpponentScore){
-		this.opponentScoreLabel.setText(Integer.toString(OpponentScore) + " points");
+
+	public void setScoreOpponent(int OpponentScore) {
+		this.opponentScoreLabel.setText(Integer.toString(OpponentScore)
+				+ " points");
 	}
 
 	public void setModel(BoardModel bpm) {

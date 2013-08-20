@@ -11,16 +11,15 @@ import wordfeud.core.database.Db;
 import wordfeud.core.database.Query;
 import wordfeud.core.mvc.CoreModel;
 
+public class ModeratorModel extends CoreModel {
 
-public class ModeratorModel extends CoreModel{
-	
 	private final String requestWord = "SELECT woord FROM woordenboek WHERE status = 'Pending' ORDER BY woord ASC";
 	private final String acceptWord = "UPDATE woordenboek set status = 'Accepted' WHERE woord = ?";
 	private final String deniedWord = "UPDATE woordenboek set status = 'Denied' WHERE woord = ?";
 	private int wordsCount;
-	
-	public void acceptWord(String word){
-		
+
+	public void acceptWord(String word) {
+
 		try {
 			Db.run(new Query(acceptWord).set(word));
 		} catch (SQLException e) {
@@ -28,19 +27,20 @@ public class ModeratorModel extends CoreModel{
 		}
 	}
 
-	public void denyWord(String word){
+	public void denyWord(String word) {
 		try {
 			Db.run(new Query(deniedWord).set(word));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	public String[] getRequestedWordList(){
+
+	public String[] getRequestedWordList() {
 		ArrayList<String> words = new ArrayList<String>();
 		try {
 			Future<ResultSet> worker = Db.run(new Query(requestWord));
 			ResultSet wordlist = worker.get();
-			while(wordlist.next()){
+			while (wordlist.next()) {
 				words.add(wordlist.getString(1));
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {

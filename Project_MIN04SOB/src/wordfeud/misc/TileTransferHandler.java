@@ -13,7 +13,6 @@ import javax.swing.table.TableModel;
 
 import wordfeud.models.Tile;
 
-
 public class TileTransferHandler extends TransferHandler {
 
 	/**
@@ -79,18 +78,17 @@ public class TileTransferHandler extends TransferHandler {
 				TableModel model = table.getModel();
 
 				sourceTile = (Tile) data.getTransferData(tileFlavor);
-				
-				
-				if(sourceTile.isBlanc()){
-						
-						String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
-								"letter needed ", JOptionPane.WARNING_MESSAGE);
-						if (letter.length() < 2) {
-							sourceTile.setLetter(letter);
-						}
+
+				if (sourceTile.isBlanc()) {
+
+					String letter = JOptionPane.showInputDialog(null,
+							"Enter your letter ", "letter needed ",
+							JOptionPane.WARNING_MESSAGE);
+					if (letter.length() < 2) {
+						sourceTile.setLetter(letter);
+					}
 				}
-				
-				
+
 				if (sourceTile != null && sourceTile.isMutatable()) {
 					model.setValueAt(null, sourceRow, sourceCol);
 				} else {

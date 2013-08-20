@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
-
 import org.apache.commons.lang3.ArrayUtils;
 
 import wordfeud.models.Tile;
@@ -42,7 +41,7 @@ public class MatrixUtils {
 	 * @return Point[] a list of not null coordinates in the matrix
 	 */
 	public static Point[] getCoordinates(Object[][] matrix) {
-		//System.out.println(Arrays.deepToString(matrix));
+		// System.out.println(Arrays.deepToString(matrix));
 		// matrix = crop(matrix);
 		ArrayList<Point> coords = new ArrayList<Point>();
 		for (int col = 0; col < matrix[0].length; col++) {
@@ -109,10 +108,8 @@ public class MatrixUtils {
 					if (row < oldData.length && row < newData.length) {
 
 						// Col index exists in both matrices
-						if (col < oldData[0].length
-								&& col < newData[0].length) {
-							if (!oldData[row][col]
-									.equals(newData[row][col])) {
+						if (col < oldData[0].length && col < newData[0].length) {
+							if (!oldData[row][col].equals(newData[row][col])) {
 								field = newData[row][col];
 							}
 

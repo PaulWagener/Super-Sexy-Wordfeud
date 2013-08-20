@@ -14,7 +14,6 @@ import wordfeud.core.database.Db;
 import wordfeud.core.database.Query;
 import wordfeud.core.mvc.CoreModel;
 
-
 public class ChatModel extends CoreModel {
 	private final int gameId;
 	private String timeLastMessage;
@@ -26,7 +25,7 @@ public class ChatModel extends CoreModel {
 	public ChatModel(GameModel game, AccountModel user) {
 		messages = new ArrayList<String>();
 		gameId = game.getGameId();
-		
+
 		account = user;
 		timeLastMessage = "2000-1-1 00:00:00";
 		getNewMessages();
@@ -40,8 +39,8 @@ public class ChatModel extends CoreModel {
 	private ArrayList<String> getNewMessages() {
 
 		try {
-			Future<ResultSet> worker = Db.run(new Query(selectQuery).set(gameId)
-					.set(timeLastMessage));
+			Future<ResultSet> worker = Db.run(new Query(selectQuery)
+					.set(gameId).set(timeLastMessage));
 			ResultSet rs = worker.get();
 			while (rs.next()) {
 				String senderName = rs.getString(1);
@@ -52,7 +51,8 @@ public class ChatModel extends CoreModel {
 				}
 				timeLastMessage = rs.getString(2);
 			}
-		} catch (SQLException | NullPointerException | InterruptedException | ExecutionException e) {
+		} catch (SQLException | NullPointerException | InterruptedException
+				| ExecutionException e) {
 			e.printStackTrace();
 		}
 		return messages;
@@ -63,8 +63,8 @@ public class ChatModel extends CoreModel {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			String currentdate = dateFormat.format(date);
-			Db.run(new Query(insertQuery).set(account.getUsername()).set(gameId)
-					.set(currentdate).set(newMessage));
+			Db.run(new Query(insertQuery).set(account.getUsername())
+					.set(gameId).set(currentdate).set(newMessage));
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -73,12 +73,12 @@ public class ChatModel extends CoreModel {
 	@Override
 	public void update() {
 		@SuppressWarnings("unchecked")
-		 ArrayList<String> oldMessages = (ArrayList<String>) messages.clone();
-	     ArrayList<String> newMessages = getNewMessages();
-	 
-	    // Only keep the new messages
+		ArrayList<String> oldMessages = (ArrayList<String>) messages.clone();
+		ArrayList<String> newMessages = getNewMessages();
+
+		// Only keep the new messages
 		newMessages.removeAll(oldMessages);
-		
+
 		if (newMessages.size() > 0) {
 			firePropertyChange(Event.CHATUPDATE, null, newMessages);
 		}

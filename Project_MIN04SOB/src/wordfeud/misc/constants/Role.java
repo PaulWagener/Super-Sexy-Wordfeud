@@ -1,10 +1,8 @@
 package wordfeud.misc.constants;
 
 public enum Role {
-	OBSERVER("observer"), 
-	PLAYER("player"), 
-	ADMINISTRATOR("administrator"), 
-	MODERATOR("moderator");
+	OBSERVER("observer"), PLAYER("player"), ADMINISTRATOR("administrator"), MODERATOR(
+			"moderator");
 
 	private String role;
 

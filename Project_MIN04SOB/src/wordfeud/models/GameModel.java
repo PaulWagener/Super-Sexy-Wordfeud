@@ -20,7 +20,6 @@ import wordfeud.misc.constants.State;
 import wordfeud.misc.constants.Turn;
 import wordfeud.views.BoardPanel;
 
-
 public class GameModel extends CoreModel {
 
 	private CompetitionModel competition;
@@ -400,10 +399,14 @@ public class GameModel extends CoreModel {
 		Db.run(q);
 	}
 
-	public int getScoreChallenger(int toTurn){
+	public int getScoreChallenger(int toTurn) {
 		int score = 0;
 		try {
-			Future<ResultSet> databaseTotalScore = Db.run(new Query("SELECT SUM(score) from beurt where spel_id = ? and account_naam=? and ID <= ?;").set(this.gameId).set(this.challenger.getUsername()).set(toTurn));
+			Future<ResultSet> databaseTotalScore = Db
+					.run(new Query(
+							"SELECT SUM(score) from beurt where spel_id = ? and account_naam=? and ID <= ?;")
+							.set(this.gameId)
+							.set(this.challenger.getUsername()).set(toTurn));
 			ResultSet res = databaseTotalScore.get();
 			res.first();
 			score = res.getInt(1);
@@ -412,11 +415,15 @@ public class GameModel extends CoreModel {
 		}
 		return score;
 	}
-	
-	public int getScoreOpponent(int toTurn){
+
+	public int getScoreOpponent(int toTurn) {
 		int score = 0;
 		try {
-			Future<ResultSet> databaseTotalScore = Db.run(new Query("SELECT SUM(score) from beurt where spel_id = ? and account_naam=? and ID <= ?;").set(this.gameId).set(this.opponent.getUsername()).set(toTurn));
+			Future<ResultSet> databaseTotalScore = Db
+					.run(new Query(
+							"SELECT SUM(score) from beurt where spel_id = ? and account_naam=? and ID <= ?;")
+							.set(this.gameId).set(this.opponent.getUsername())
+							.set(toTurn));
 			ResultSet res = databaseTotalScore.get();
 			res.first();
 			score = res.getInt(1);
@@ -425,13 +432,11 @@ public class GameModel extends CoreModel {
 		}
 		return score;
 	}
-	
 
 	public void setCurrentobserveturn(int currentobserveturn) {
 		System.out.println(currentobserveturn);
 		this.currentobserveturn = currentobserveturn;
 	}
-
 
 	@Override
 	public String toString() {
@@ -457,7 +462,7 @@ public class GameModel extends CoreModel {
 			while (rs.next()) {
 				int x = rs.getInt("Tegel_X") - 1;// x
 				int y = rs.getInt("Tegel_Y") - 1;// y
-		
+
 				if (rs.getString("LetterType_karakter").equals("?")) {
 					boardModel.setValueAt(
 							new Tile(rs.getString("BlancoLetterKarakter"), 0,
@@ -589,7 +594,7 @@ public class GameModel extends CoreModel {
 			ArrayList<Tile> currentStash = new ArrayList<Tile>(
 					Arrays.asList(playerStash.getPlayerTiles()));
 			Tile[][] newBoardData = newBoard.getTileData();
-			if(!checkIfWordIsNotNull(getBoardFromDatabase(), newBoard)) {
+			if (!checkIfWordIsNotNull(getBoardFromDatabase(), newBoard)) {
 				Tile[][] playedLetters = (Tile[][]) checkValidMove(
 						getBoardFromDatabase(), newBoard);
 				ArrayList<String> playedWords = new ArrayList<String>();
@@ -603,41 +608,41 @@ public class GameModel extends CoreModel {
 					playedWords.add(tmpWord);
 				}
 				checkWordsInDatabase(playedWords);
-	
+
 				int score = getScore(playedLetters, letterMatrix, newBoard);
-	
+
 				ArrayList<Tile> playedTiles = new ArrayList<Tile>();
-	
+
 				Query insertLetterQuery = new Query(
 						"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam)"
 								+ "VALUES (?, ?, ?, ?, ?, ?);");
-	
+
 				int turnId = getNextTurnId();
-	
+
 				// Insert word in to database
 				for (int y = 0; y < 15; y++) {
 					for (int x = 0; x < 15; x++) {
 						if (playedLetters[y][x] != null) {
-	
+
 							Tile tile = (Tile) playedLetters[y][x];
 							int tileId = tile.getTileId();
-	
+
 							// Add the tile to the array,
 							// These will be removed from the players stash
 							playedTiles.add(tile);
-	
-							insertLetterQuery.set(tileId).set(gameId).set(turnId)
-									.set(x + 1).set(y + 1).set("standard");
+
+							insertLetterQuery.set(tileId).set(gameId)
+									.set(turnId).set(x + 1).set(y + 1)
+									.set("standard");
 							insertLetterQuery.addBatch();
 						}
 					}
 				}
 				createTurn(Turn.WORD, score);
 				Db.run(insertLetterQuery);
-	
+
 				updatePlayerStash(currentStash, playedTiles);
-			}
-			else {
+			} else {
 				throw new InvalidMoveException(Error.NO_LETTERS_PUT);
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
@@ -655,8 +660,7 @@ public class GameModel extends CoreModel {
 		Tile[][] playedLetters = compareFields(oldData, newData);
 		if (playedLetters == null) {
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
 	}
@@ -704,9 +708,9 @@ public class GameModel extends CoreModel {
 	private void checkWordsInDatabase(ArrayList<String> words)
 			throws InvalidMoveException, InterruptedException,
 			ExecutionException, SQLException {
-		int addedWordsCounter=0;
-		int refusedWordsCounter=0;
-		int alreadyPendingCounter=0;
+		int addedWordsCounter = 0;
+		int refusedWordsCounter = 0;
+		int alreadyPendingCounter = 0;
 		for (String s : words) {
 			String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
 			String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
@@ -721,13 +725,13 @@ public class GameModel extends CoreModel {
 				if (statusString.equals("Denied")) {
 					refusedWordsCounter++;
 				} else if (statusString.equals("Pending")) {
-					alreadyPendingCounter++;	
+					alreadyPendingCounter++;
 				}
-				if(refusedWordsCounter>0){
+				if (refusedWordsCounter > 0) {
 					throw new InvalidMoveException(Error.DENIED);
-				}else if(addedWordsCounter>0){
+				} else if (addedWordsCounter > 0) {
 					throw new InvalidMoveException(Error.PENDING);
-				}else if(alreadyPendingCounter>0){
+				} else if (alreadyPendingCounter > 0) {
 					throw new InvalidMoveException(Error.ALREADY_PENDING);
 				}
 			}
@@ -908,8 +912,7 @@ public class GameModel extends CoreModel {
 			}
 
 			if (!onStar) {
-				throw new InvalidMoveException(
-						Error.NOT_ON_START);
+				throw new InvalidMoveException(Error.NOT_ON_START);
 			}
 		}
 

@@ -73,7 +73,8 @@ public class CompetitionModel extends CoreModel {
 						.set(user.getUsername()));
 				ResultSet dbResult = worker.get();
 				if (dbResult.next()) {
-					CompetitionModel comp = new CompetitionModel(dbResult.getInt("id"));
+					CompetitionModel comp = new CompetitionModel(
+							dbResult.getInt("id"));
 					comp.addPlayer(user.getUsername());
 					firePropertyChange(Event.NEWCOMPETITION, null, this);
 				}

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import wordfeud.core.mvc.CorePool;
 
-
 public class DatabasePool extends CorePool<Connection> {
 
 	private static final String DSN = "jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2";
@@ -56,7 +55,7 @@ public class DatabasePool extends CorePool<Connection> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public synchronized boolean validate(Connection o) {
 		try {
