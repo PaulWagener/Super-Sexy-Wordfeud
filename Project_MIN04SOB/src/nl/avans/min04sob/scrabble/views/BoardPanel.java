@@ -20,11 +20,9 @@ import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.Event;
-import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 import nl.avans.min04sob.scrabble.misc.TileTable;
 import nl.avans.min04sob.scrabble.misc.TileTransferHandler;
-import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
@@ -228,7 +226,9 @@ public class BoardPanel extends CorePanel {
 			}
 			
 			//refresh the board
+			playBoard.revalidate();
 			playBoard.repaint();
+			setTurnLabel(hasTurn);
 			break;
 
 		case Event.RESIGN:
@@ -236,6 +236,17 @@ public class BoardPanel extends CorePanel {
 			break;
 		}
 
+	}
+
+	private void setTurnLabel(boolean hasTurn) {
+		String name;
+		if(hasTurn){
+			name = playerNameLabel.getText();
+		} else {
+			name = opponentNameLabel.getText();
+		}
+		
+		turnLabel.setText(name);
 	}
 
 	public void setLabelPlayerTurn(String currTurnPlayerName) {
