@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.controllers.ChallengeModel;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.db.Db;

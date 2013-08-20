@@ -15,7 +15,6 @@ import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
-import nl.avans.min04sob.scrabble.controllers.ChallengeModel;
 
 public class CompetitionModel extends CoreModel {
 
