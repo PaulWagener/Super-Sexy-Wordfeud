@@ -704,6 +704,9 @@ public class GameModel extends CoreModel {
 	private void checkWordsInDatabase(ArrayList<String> words)
 			throws InvalidMoveException, InterruptedException,
 			ExecutionException, SQLException {
+		int addedWordsCounter=0;
+		int refusedWordsCounter=0;
+		int alreadyPendingCounter=0;
 		for (String s : words) {
 			String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
 			String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
@@ -712,12 +715,19 @@ public class GameModel extends CoreModel {
 					.run(new Query(getWordFromDatabase).set(s)).get();
 			if (Query.getNumRows(wordresult) == 0) {
 				Db.run(new Query(query).set(s));
-				throw new InvalidMoveException(Error.PENDING);
+				addedWordsCounter++;
 			} else if (wordresult.next()) {
 				String statusString = wordresult.getString("status");
 				if (statusString.equals("Denied")) {
-					throw new InvalidMoveException(Error.DENIED);
+					refusedWordsCounter++;
 				} else if (statusString.equals("Pending")) {
+					alreadyPendingCounter++;	
+				}
+				if(refusedWordsCounter>0){
+					throw new InvalidMoveException(Error.DENIED);
+				}else if(addedWordsCounter>0){
+					throw new InvalidMoveException(Error.PENDING);
+				}else if(alreadyPendingCounter>0){
 					throw new InvalidMoveException(Error.ALREADY_PENDING);
 				}
 			}
