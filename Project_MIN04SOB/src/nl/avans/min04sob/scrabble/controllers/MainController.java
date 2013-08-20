@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
+import nl.avans.min04sob.scrabble.misc.PlaySound;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -47,6 +48,8 @@ public class MainController extends CoreController {
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
 
+	private PlaySound ps = new PlaySound();
+	
 	public MainController() {
 
 		initialize();
@@ -474,6 +477,7 @@ public class MainController extends CoreController {
 
 			// Empty the chat message box
 			chatPanel.setChatFieldSendText("");
+			ps.playSound("send.wav", false);
 		}
 	}
 
