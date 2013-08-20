@@ -47,13 +47,13 @@ public class MainController extends CoreController {
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
 
-	private PlaySound ps = new PlaySound();
+	private PlaySound ps;
 	
 	public MainController() {
 
 		initialize();
 		addListeners();
-
+		
 		addView(menu);
 		addView(chatPanel);
 		addView(frame);
@@ -477,6 +477,7 @@ public class MainController extends CoreController {
 
 			// Empty the chat message box
 			chatPanel.setChatFieldSendText("");
+			ps = new PlaySound();
 			ps.playSound("send.wav", false);
 		}
 	}
