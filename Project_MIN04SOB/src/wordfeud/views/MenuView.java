@@ -18,7 +18,6 @@ import wordfeud.misc.constants.Role;
 import wordfeud.models.AccountModel;
 import wordfeud.models.GameModel;
 
-
 @SuppressWarnings("serial")
 public class MenuView extends JMenuBar implements CoreView {
 
@@ -50,7 +49,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	private ActionListener viewGameListener;
 	private JMenuItem createCompetitionItem;
 	private JMenuItem viewPlayers;
-	
+
 	private ImageIcon icon;
 
 	public MenuView() {
@@ -59,9 +58,9 @@ public class MenuView extends JMenuBar implements CoreView {
 		createChallengeMenu();
 		createModeratorMenu();
 		createCompetitionMenu();
-		
+
 		icon = new ImageIcon(this.getClass().getResource("/images/W.png"));
-		
+
 		setLoggedOutState();
 	}
 
@@ -263,7 +262,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			addGamesToMenu(gameMenuView, user.getObserverAbleGames());
 			addMenuItemListeners(gameMenuOpen, openGameListener);
 			addMenuItemListeners(gameMenuView, viewGameListener);
-			
+
 			break;
 		case Event.LOGOUT:
 			setLoggedOutState();
@@ -273,11 +272,12 @@ public class MenuView extends JMenuBar implements CoreView {
 			int numChallenge = (int) evt.getNewValue();
 			setChallengeCount(numChallenge);
 			break;
-			
+
 		case Event.NEWGAME:
-			ArrayList<GameModel> games = (ArrayList<GameModel>) evt.getNewValue();
+			ArrayList<GameModel> games = (ArrayList<GameModel>) evt
+					.getNewValue();
 			addGamesToMenu(gameMenuOpen, games);
-			if(games.size() > 0){
+			if (games.size() > 0) {
 				gameMenuOpen.setEnabled(true);
 				gameMenu.setEnabled(true);
 			}

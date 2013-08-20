@@ -126,12 +126,13 @@ public class ChallengeModel extends CoreModel {
 		String challengerName = challenger.getUsername();
 		String opponentName = opponent.getUsername();
 		int gameId;
-		
+
 		try {
-			gameId = createGame(compId, challengerName, opponentName, board, letterSet);
+			gameId = createGame(compId, challengerName, opponentName, board,
+					letterSet);
 			createLetters(gameId, letterSet);
 			createTurns(gameId, challengerName, opponentName);
-			
+
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
@@ -154,8 +155,9 @@ public class ChallengeModel extends CoreModel {
 
 		String create = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,NOW() ,?,?,?)";
 		// Create Query
-		Future<ResultSet> worker1 =  Db.run(new Query(create).set(compId).set(REQUEST).set(challengerName)
-				.set(opponentName).set(OPEN).set(board).set(letterSet));
+		Future<ResultSet> worker1 = Db.run(new Query(create).set(compId)
+				.set(REQUEST).set(challengerName).set(opponentName).set(OPEN)
+				.set(board).set(letterSet));
 		ResultSet rs = worker1.get();
 		rs.next();
 		int lastCreatedId = rs.getInt(1);

@@ -20,9 +20,9 @@ public abstract class CoreController implements PropertyChangeListener,
 		registeredModels = new ArrayList<CoreModel>();
 		startTimer();
 	}
-	
+
 	// Add the listeners for the button etc..
-	abstract public void addListeners(); 
+	abstract public void addListeners();
 
 	public void addModel(CoreModel model) {
 		if (model == null) {
@@ -82,8 +82,8 @@ public abstract class CoreController implements PropertyChangeListener,
 		exec = Executors.newSingleThreadScheduledExecutor();
 		exec.scheduleAtFixedRate(this, 0, INTERVAL, TimeUnit.SECONDS);
 	}
-	
-	private void stopTimer(){
+
+	private void stopTimer() {
 		exec.shutdown();
 	}
 

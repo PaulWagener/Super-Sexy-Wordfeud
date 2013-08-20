@@ -10,7 +10,6 @@ import wordfeud.core.database.Queries;
 import wordfeud.core.database.Query;
 import wordfeud.core.mvc.CoreModel;
 
-
 public class StashModel extends CoreModel {
 	private final String letterfrompot = "SELECT L.Spel_ID AS Spel_ID, L.ID AS Letter_ID, L.LetterType_karakter AS Karakter FROM Letter L WHERE L.ID NOT IN (  SELECT Letter_ID  FROM gelegdeletter GL WHERE GL.Spel_ID = L.Spel_ID )AND L.ID NOT IN( SELECT Letter_ID   FROM letterbakjeletter LB WHERE LB.Spel_ID = L.Spel_ID AND LB.Beurt_ID IN  (SELECT MAX(Beurt_ID)  FROM `letterbakjeletter` LX JOIN `beurt` BX ON LX.`Beurt_ID` = BX.`ID` WHERE LX.`Spel_ID` = L.Spel_ID GROUP BY BX.`Account_naam`  ))and L.Spel_ID = ? ORDER BY L.Spel_ID, L.ID ";
 
@@ -147,7 +146,7 @@ public class StashModel extends CoreModel {
 
 	private int getStashSize() {
 		int turnId = game.getLastTurn(owner);
-		
+
 		String q = "SELECT COUNT(*) FROM `letterbakjeletter` WHERE `Spel_ID` = ? AND `Beurt_ID` = ?";
 		try {
 			Future<ResultSet> worker = Db.run(new Query(q)
@@ -162,7 +161,7 @@ public class StashModel extends CoreModel {
 			e.printStackTrace();
 		}
 
-		//On error, return the max size
+		// On error, return the max size
 		return STASH_SIZE;
 	}
 

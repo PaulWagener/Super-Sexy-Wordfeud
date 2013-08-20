@@ -6,14 +6,14 @@ import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public abstract class CorePanel extends JPanel implements CoreView {
-	
+
 	public CorePanel() {
 		setVisible(true);
 		setLayout(new MigLayout());
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return this.getClass().getName();
 	}
 }

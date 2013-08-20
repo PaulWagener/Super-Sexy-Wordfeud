@@ -24,7 +24,7 @@ public abstract class CorePool<T> {
 		T t;
 		if (unlocked.size() > 0) {
 			Enumeration<T> e = unlocked.keys();
-			
+
 			while (e.hasMoreElements()) {
 				t = e.nextElement();
 				if ((now - unlocked.get(t)) > expirationTime) {

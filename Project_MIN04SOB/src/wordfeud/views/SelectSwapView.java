@@ -16,7 +16,7 @@ import wordfeud.models.Tile;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectSwapView extends CorePanel {
-	
+
 	/**
 	 * 
 	 */
@@ -24,46 +24,42 @@ public class SelectSwapView extends CorePanel {
 	private Tile[] lettersArray;
 	private JButton swapButton;
 	private JList<Tile> list;
-		
+
 	public SelectSwapView(Tile[] tl) {
 		setLayout(new MigLayout("", "[200.00]", "[30px][150.00px][]"));
-		
+
 		lettersArray = tl;
-			
-		JLabel lblSelecteerDeLetters = new JLabel("Selecteer de letters die je wilt wisselen");
+
+		JLabel lblSelecteerDeLetters = new JLabel(
+				"Selecteer de letters die je wilt wisselen");
 		add(lblSelecteerDeLetters, "cell 0 0");
-		
+
 		list = new JList<Tile>();
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		list.setListData(lettersArray);
 		add(list, "cell 0 1,grow");
-		
+
 		swapButton = new JButton("Wisselen");
 		add(swapButton, "cell 0 2,alignx right");
-		
-		
-		}
 
-	
-	public void addListListener(MouseAdapter listener){
+	}
+
+	public void addListListener(MouseAdapter listener) {
 		list.addMouseListener(listener);
 	}
-	
-	public void addButtonListener(ActionListener listener){
+
+	public void addButtonListener(ActionListener listener) {
 		swapButton.addActionListener(listener);
 	}
-	
-	public void getSelectedIndexes(){
+
+	public void getSelectedIndexes() {
 		list.getSelectedIndices();
 	}
-	
-	public List<Tile> getSelectedTiles(){
+
+	public List<Tile> getSelectedTiles() {
 		return list.getSelectedValuesList();
 
-		
 	}
-	
-
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {

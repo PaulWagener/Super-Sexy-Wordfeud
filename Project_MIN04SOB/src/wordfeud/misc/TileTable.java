@@ -9,7 +9,6 @@ import javax.swing.table.TableModel;
 import wordfeud.models.BoardModel;
 import wordfeud.models.Tile;
 
-
 public class TileTable extends JTable {
 	/**
 	 * 
@@ -19,7 +18,7 @@ public class TileTable extends JTable {
 
 	@Override
 	public String getToolTipText(MouseEvent event) {
-		toolTip =  new StringBuilder();
+		toolTip = new StringBuilder();
 		Point p = event.getPoint();
 		// Locate the renderer under the event location
 		int colIndex = columnAtPoint(p);
@@ -28,8 +27,9 @@ public class TileTable extends JTable {
 		TableModel model = getModel();
 		Tile tile = (Tile) model.getValueAt(rowIndex, colIndex);
 
-		if(model instanceof BoardModel){
-			int multiplier = ((BoardModel) model).getMultiplier(new Point(rowIndex, colIndex));
+		if (model instanceof BoardModel) {
+			int multiplier = ((BoardModel) model).getMultiplier(new Point(
+					rowIndex, colIndex));
 			switch (multiplier) {
 			case BoardModel.DL:
 				toolTip.append("(DL) ");
@@ -45,16 +45,15 @@ public class TileTable extends JTable {
 				break;
 			}
 		}
-		
 
 		if (tile != null) {
 			toolTip.append("Waarde:" + tile.getValue());
 		}
 
-		if(toolTip.length() == 0){
+		if (toolTip.length() == 0) {
 			return null;
 		}
-		
+
 		return toolTip.toString();
 
 	}

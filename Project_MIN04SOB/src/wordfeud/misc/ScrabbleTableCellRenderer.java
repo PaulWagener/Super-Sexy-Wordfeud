@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import wordfeud.models.BoardModel;
 import wordfeud.models.Tile;
 
-
 public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 	/**
@@ -20,7 +19,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = -2880196576871631753L;
 
 	private BoardModel boardModel;
-	
+
 	private Color red;
 	private Color lightRed;
 	private Color blue;
@@ -28,7 +27,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private Color beige;
 	private Color green;
 	private Color lightGreen;
-	
+
 	private static final double BLEND_RATIO = 0.6;
 
 	public ScrabbleTableCellRenderer(BoardModel model) {
@@ -92,17 +91,16 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			break;
 		}
 
-		
 		if (tile != null && !tile.isMutatable()) {
-			//Tiles can't be moved, give them a beige color
+			// Tiles can't be moved, give them a beige color
 			tileForeground = Color.BLACK;
 			tileBackground = beige;
 		} else if (tile == null) {
-			//No tile is present, keep it the primairy color
+			// No tile is present, keep it the primairy color
 			tileForeground = multiplierForeground;
 			tileBackground = multiplierBackground;
 		} else {
-			//Tile is currently being put
+			// Tile is currently being put
 			tileForeground = green;
 			tileBackground = lightGreen;
 		}
@@ -115,7 +113,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		c.setForeground(foreground);
 		c.setBackground(background);
 		return c;
-		
+
 	}
 
 	/**

@@ -13,7 +13,6 @@ import wordfeud.misc.constants.Role;
 import wordfeud.misc.constants.State;
 import wordfeud.misc.constants.Turn;
 
-
 import com.mysql.jdbc.Statement;
 
 public class Query implements Callable<ResultSet> {
@@ -84,11 +83,11 @@ public class Query implements Callable<ResultSet> {
 	public Query set(Role role) throws SQLException {
 		return set(role.toString());
 	}
-	
+
 	public Query set(State state) throws SQLException {
 		return set(state.toString());
 	}
-	
+
 	public Query set(Turn turn) throws SQLException {
 		return set(turn.toString());
 	}
@@ -113,10 +112,10 @@ public class Query implements Callable<ResultSet> {
 
 	@Override
 	public ResultSet call() throws Exception {
-		
+
 		if (isBatch) {
 
-			//run the batch as a single transaction
+			// run the batch as a single transaction
 			conn.setAutoCommit(false);
 			statement.executeBatch();
 			conn.setAutoCommit(true);
@@ -124,7 +123,7 @@ public class Query implements Callable<ResultSet> {
 			pool.checkIn(conn);
 			return statement.getResultSet();
 		}
-		
+
 		pool.checkIn(conn);
 		return statement.getGeneratedKeys();
 	}

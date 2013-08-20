@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 
 import wordfeud.core.mvc.CorePanel;
 
-
 @SuppressWarnings("serial")
 public class StartPanel extends CorePanel {
 

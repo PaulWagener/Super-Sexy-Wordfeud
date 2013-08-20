@@ -7,7 +7,6 @@ import javax.swing.table.TableModel;
 
 import wordfeud.misc.Column;
 
-
 public abstract class CoreTableModel extends CoreModel implements TableModel {
 
 	protected Object[][] data;
@@ -57,7 +56,7 @@ public abstract class CoreTableModel extends CoreModel implements TableModel {
 	public Object[][] getData() {
 		int numRows = getRowCount();
 		int numCols = getColumnCount();
-		
+
 		Object[][] tableData = new Object[numRows][numCols];
 		for (int i = 0; i < numRows; i++)
 			for (int j = 0; j < numCols; j++)

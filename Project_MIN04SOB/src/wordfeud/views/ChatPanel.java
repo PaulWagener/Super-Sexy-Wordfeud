@@ -29,14 +29,17 @@ public class ChatPanel extends CorePanel {
 	private JScrollPane chatScroll;
 
 	public ChatPanel() {
-		
-		setLayout(new MigLayout("", "[::300px][300px][100px][100px]", "[::300px][400px][100px:150px:200px][30px]"));
+
+		setLayout(new MigLayout("", "[::300px][300px][100px][100px]",
+				"[::300px][400px][100px:150px:200px][30px]"));
 		chatField = new JTextArea();
 		chatField.setEnabled(false);
 		chatField.setWrapStyleWord(true);
 		chatField.setLineWrap(true);
 		chatField.setDisabledTextColor(Color.BLACK);
-		chatScroll = new JScrollPane(chatField, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		chatScroll = new JScrollPane(chatField,
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		chatSendButton = new JButton();
 		chatSendButton.setText("Verstuur");
@@ -46,7 +49,6 @@ public class ChatPanel extends CorePanel {
 		add(chatSendButton, "cell 3 3,grow");
 		chatFieldSend.setEnabled(false);
 	}
-
 
 	public void addListenerChatField(KeyListener key) {
 		chatFieldSend.addKeyListener(key);
@@ -60,12 +62,12 @@ public class ChatPanel extends CorePanel {
 		chatField.append(message);
 		chatField.setCaretPosition(chatField.getDocument().getLength());
 	}
-	
+
 	public void observerView() {
 		chatSendButton.setEnabled(false);
 		chatFieldSend.setEnabled(false);
 	}
-	
+
 	public void playerView() {
 		chatSendButton.setEnabled(true);
 		chatFieldSend.setEnabled(true);
@@ -94,7 +96,7 @@ public class ChatPanel extends CorePanel {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		
+
 		switch (evt.getPropertyName()) {
 		case Event.CHATUPDATE:
 			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
@@ -104,7 +106,7 @@ public class ChatPanel extends CorePanel {
 			break;
 		case Event.LOGIN:
 			chatFieldSend.setEnabled(true);
-			
+
 			break;
 		case Event.LOGOUT:
 			chatFieldSend.setEnabled(false);
@@ -125,7 +127,6 @@ public class ChatPanel extends CorePanel {
 	public void setChatFieldSendText(String message) {
 		chatFieldSend.setText(message);
 	}
-
 
 	public void setChatFieldText(String text) {
 		chatField.setText(text);

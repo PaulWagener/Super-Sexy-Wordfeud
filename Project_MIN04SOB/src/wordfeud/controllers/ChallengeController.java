@@ -10,7 +10,6 @@ import wordfeud.core.mvc.CoreController;
 import wordfeud.models.AccountModel;
 import wordfeud.views.ChallengeView;
 
-
 public class ChallengeController extends CoreController {
 
 	private ChallengeView challengeView;

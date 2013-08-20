@@ -24,7 +24,7 @@ public abstract class CoreModel {
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		propertyChangeSupport.removePropertyChangeListener(listener);
 	}
-	
+
 	abstract public void update();
 
 }

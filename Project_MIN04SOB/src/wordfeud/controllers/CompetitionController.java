@@ -69,11 +69,12 @@ public class CompetitionController extends CoreController {
 	}
 
 	public void getParticipants(CompetitionModel comp) {
-		AccountModel[] participants = comp.getUsersFromCompetition(accountModel.getUsername());
+		AccountModel[] participants = comp.getUsersFromCompetition(accountModel
+				.getUsername());
 		competitionView.fillPlayerList(participants);
 	}
-	
-	public void showCompetionPlayers(CompetitionModel comp){
+
+	public void showCompetionPlayers(CompetitionModel comp) {
 		AccountModel[] players = comp.getChallengeAblePlayers(accountModel);
 		competitionView.clearPlayerList();
 		competitionView.fillPlayerList(players);
@@ -138,7 +139,8 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				AccountModel opponent = competitionView.getSelectedPlayer();
-				CompetitionModel comp = competitionView.getSelectedCompetition();
+				CompetitionModel comp = competitionView
+						.getSelectedCompetition();
 				ChallengeModel.create(accountModel, opponent, comp);
 
 				showCompetionPlayers(comp);
@@ -149,7 +151,8 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					CompetitionModel comp = competitionView.getSelectedCompetition();
+					CompetitionModel comp = competitionView
+							.getSelectedCompetition();
 					showCompetionPlayers(comp);
 				}
 			}
@@ -184,7 +187,7 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					
+
 					getParticipants(competitionView.getSelectedCompetition());
 				}
 			}
@@ -250,9 +253,10 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				CompetitionModel selectedComp = competitionView.getSelectedCompetition();
+				CompetitionModel selectedComp = competitionView
+						.getSelectedCompetition();
 				if (selectedComp != null) {
-					
+
 					getParticipants(selectedComp);
 					selectedComp.addPlayer(accountModel.getUsername());
 					competitionView.clearCompList();
@@ -268,7 +272,8 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					CompetitionModel comp = competitionView.getSelectedCompetition();
+					CompetitionModel comp = competitionView
+							.getSelectedCompetition();
 					getParticipants(comp);
 				}
 			}

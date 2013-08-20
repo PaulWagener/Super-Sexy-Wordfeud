@@ -5,22 +5,22 @@ public class Column {
 	private String name;
 	private Class<?> classType;
 	private int index;
-	
-	public Column(String name, Class<?> classType, int index){
+
+	public Column(String name, Class<?> classType, int index) {
 		this.classType = classType;
 		this.name = name;
 		this.index = index;
 	}
-	
-	public Class<?> getClassType(){
+
+	public Class<?> getClassType() {
 		return classType;
 	}
-	
-	public int getColumnIndex(){
+
+	public int getColumnIndex() {
 		return index;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
 }

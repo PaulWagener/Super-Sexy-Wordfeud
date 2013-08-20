@@ -12,7 +12,6 @@ import javax.swing.SwingConstants;
 
 import wordfeud.core.mvc.CorePanel;
 
-
 @SuppressWarnings("serial")
 public class DateRangePanel extends CorePanel {
 
