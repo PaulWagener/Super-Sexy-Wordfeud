@@ -21,7 +21,6 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
@@ -484,8 +483,8 @@ public class MainController extends CoreController {
 	private void setCurrentGame(GameModel selectedGame) {
 		currentGame = selectedGame;
 	}
-
-	public void setTurnLabel() {
+	
+	private void setTurnLabel() {
 		if (currentGame.isObserver()) {
 			currGamePanel.setLabelPlayerTurn(" van "
 					+ currentGame.getChallenger().getUsername());
