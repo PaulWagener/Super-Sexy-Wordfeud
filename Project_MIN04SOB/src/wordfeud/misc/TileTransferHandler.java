@@ -80,8 +80,8 @@ public class TileTransferHandler extends TransferHandler {
 
 				sourceTile = (Tile) data.getTransferData(tileFlavor);
 				
-				if(sourceTile.getLetter().equals("?")){
 				
+				if(sourceTile.isBlanc()){
 						
 						String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
 								"letter needed ", JOptionPane.WARNING_MESSAGE);

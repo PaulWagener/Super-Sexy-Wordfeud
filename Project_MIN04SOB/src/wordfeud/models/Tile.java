@@ -149,5 +149,9 @@ public class Tile implements Transferable {
 		}
 		return false;
 	}
+	
+	public boolean isBlanc(){
+		return letter.equals("?");
+	}
 
 }
