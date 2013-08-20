@@ -253,16 +253,20 @@ public class BoardPanel extends CorePanel {
 		this.turnLabel.setText(currTurnPlayerName);
 	}
 
-	public void setLabelScore(int currTurnScore) {
-		this.playerScoreLabel.setText(Integer.toString(currTurnScore));
+	public void setNameChallenger(String name){
+		this.playerNameLabel.setText(name);
 	}
-
-	public void setLabelsNamesScores(String playerName, String playerScore,
-			String opponentName, String opponentscore) {
-		this.playerNameLabel.setText(playerName);
-		this.playerScoreLabel.setText(playerScore);
-		this.opponentNameLabel.setText(opponentName);
-		this.opponentScoreLabel.setText(opponentscore);
+	 
+	public void setNameOpponent(String name){
+		this.opponentNameLabel.setText(name);
+	}
+	
+	public void setScoreChallenger(int playerScore) {
+		this.playerScoreLabel.setText(Integer.toString(playerScore) + " points");
+	}
+	
+	public void setScoreOpponent(int OpponentScore){
+		this.opponentScoreLabel.setText(Integer.toString(OpponentScore) + " points");
 	}
 
 	public void setModel(BoardModel bpm) {

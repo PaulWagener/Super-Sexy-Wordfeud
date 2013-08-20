@@ -421,8 +421,9 @@ public class MainController extends CoreController {
 		currentGame.setBoardModel(boardModel);
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
-
-		updatelabels(selectedGame.getCurrentobserveturn());
+		currGamePanel.setNameChallenger(currentGame.getChallenger().getUsername());
+		currGamePanel.setNameOpponent(currentGame.getOpponent().getUsername());
+		updatelabels(8/*selectedGame.getCurrentobserveturn()*/);
 		
 		//selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
 		selectedGame.setPlayerTiles();
@@ -502,19 +503,8 @@ public class MainController extends CoreController {
 	}
 
 	private void updatelabels(int toTurn) {
-		if (currentGame.isIamchallenger()) {
-			currGamePanel.setLabelsNamesScores(currentGame.getChallenger()
-					.getUsername(), currentGame.score(toTurn).split(",")[0],
-					currentGame.getOpponent().getUsername(),
-					currentGame.score(toTurn).split(",")[1]);
-
-		} else {
-			currGamePanel.setLabelsNamesScores(currentGame.getOpponent()
-					.getUsername(), currentGame.score(toTurn).split(",")[0],
-					currentGame.getChallenger().getUsername(), currentGame
-							.score(toTurn).split(",")[1]);
-
-		}
+		currGamePanel.setScoreChallenger(currentGame.getScoreChallenger(toTurn));
+		currGamePanel.setScoreOpponent(currentGame.getScoreOpponent(toTurn));
 		setTurnLabel();
 	}
 
