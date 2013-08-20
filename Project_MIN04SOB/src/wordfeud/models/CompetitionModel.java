@@ -26,11 +26,6 @@ public class CompetitionModel extends CoreModel {
 	private Date end;
 
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`) VALUES (?, ?)";
-	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
-	private final String chatsToRemove = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `competitie_id` = ?";
-	private final String removeChats = "DELETE FROM `chatregel` WHERE `spel_id` = ?";
-	private final String removeScores = "DELETE FROM `beurt` WHERE `spel_id` = ?";
-	private final String removeGames = "DELETE FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `competitie_id` = ?";
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
 	private final String getCreatedCompID = "SELECT `id` FROM `competitie` WHERE `account_naam_eigenaar` = ? ORDER BY `einde` DESC";
 	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
@@ -78,8 +73,8 @@ public class CompetitionModel extends CoreModel {
 						.set(user.getUsername()));
 				ResultSet dbResult = worker.get();
 				if (dbResult.next()) {
-					compId = dbResult.getInt("id");
-					addPlayer(compId, user.getUsername());
+					CompetitionModel comp = new CompetitionModel(dbResult.getInt("id"));
+					comp.addPlayer(user.getUsername());
 					firePropertyChange(Event.NEWCOMPETITION, null, this);
 				}
 
