@@ -240,8 +240,6 @@ public class AccountController extends CoreController {
 		else {
 			frame.dispose();
 			frame = null;
-			
-			ps.playSound("login.wav", false);
 		}
 
 	}
