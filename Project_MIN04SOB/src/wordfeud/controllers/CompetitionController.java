@@ -47,11 +47,11 @@ public class CompetitionController extends CoreController {
 	}
 
 	public void getAllCompetitions() {
-		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
+		competitionView.fillCompetitions(CompetitionModel.getAllCompetitions());
 	}
 
 	public void getAllCompetitionsScore() {
-		competitionScoreView.fillCompetitions(competitionModel
+		competitionScoreView.fillCompetitions(CompetitionModel
 				.getAllCompetitions());
 	}
 
@@ -68,10 +68,9 @@ public class CompetitionController extends CoreController {
 		return index;
 	}
 
-	public void getParticipants(int competition_id) {
-		competitionView.fillPlayerList(competitionModel
-				.getUsersFromCompetition(competition_id,
-						accountModel.getUsername()));
+	public void getParticipants(CompetitionModel comp) {
+		AccountModel[] participants = comp.getUsersFromCompetition(accountModel.getUsername());
+		competitionView.fillPlayerList(participants);
 	}
 	
 	public void showCompetionPlayers(CompetitionModel comp){
@@ -185,9 +184,8 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					int id = competitionView.getSelectedCompetition()
-							.getCompId();
-					getParticipants(id);
+					
+					getParticipants(competitionView.getSelectedCompetition());
 				}
 			}
 		});
@@ -220,9 +218,7 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					int id = competitionView.getSelectedCompetition()
-							.getCompId();
-					getParticipants(id);
+					getParticipants(competitionView.getSelectedCompetition());
 				}
 			}
 		});
@@ -254,17 +250,15 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (competitionView.getSelectedCompetition() != null) {
-					int id = competitionView.getSelectedCompetition()
-							.getCompId();
-					getParticipants(id);
-					competitionModel.join(id, accountModel.getUsername());
+				CompetitionModel selectedComp = competitionView.getSelectedCompetition();
+				if (selectedComp != null) {
+					
+					getParticipants(selectedComp);
+					selectedComp.addPlayer(accountModel.getUsername());
 					competitionView.clearCompList();
 					competitionView.clearPlayerList();
 					getAvailable(accountModel.getUsername());
 					competitionView.clearPlayerList();
-				} else {
-					System.out.println("selecteer een competitie");
 				}
 			}
 
@@ -274,9 +268,8 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					int id = competitionView.getSelectedCompetition()
-							.getCompId();
-					getParticipants(id);
+					CompetitionModel comp = competitionView.getSelectedCompetition();
+					getParticipants(comp);
 				}
 			}
 		});

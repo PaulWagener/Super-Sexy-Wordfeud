@@ -36,11 +36,6 @@ public class CompetitionModel extends CoreModel {
 	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
 	private final String ratingQuery = "SELECT * FROM `comp_ranking` WHERE `competitie_id` = ? ORDER BY bayesian_rating DESC";
 
-	@Deprecated
-	public CompetitionModel() {
-
-	}
-
 	public CompetitionModel(int compId) {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(initQuery).set(compId));
@@ -84,7 +79,7 @@ public class CompetitionModel extends CoreModel {
 				ResultSet dbResult = worker.get();
 				if (dbResult.next()) {
 					compId = dbResult.getInt("id");
-					join(compId, user.getUsername());
+					addPlayer(compId, user.getUsername());
 					firePropertyChange(Event.NEWCOMPETITION, null, this);
 				}
 
@@ -97,7 +92,7 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	// geef alle competities ooit aangemaakt
-	public CompetitionModel[] getAllCompetitions() {
+	public static CompetitionModel[] getAllCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
 		try {
@@ -175,15 +170,14 @@ public class CompetitionModel extends CoreModel {
 		return start;
 	}
 
-	public AccountModel[] getUsersFromCompetition(int competition_id,
-			String username) {
+	public AccountModel[] getUsersFromCompetition(String username) {
 		AccountModel[] accounts = new AccountModel[0];
 		int x = 0;
 		try {
 			Future<ResultSet> worker = Db
 					.run(new Query(
 							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` NOT LIKE ?")
-							.set(competition_id).set(username));
+							.set(compId).set(username));
 			ResultSet dbResult = worker.get();
 			accounts = new AccountModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
@@ -197,35 +191,11 @@ public class CompetitionModel extends CoreModel {
 		return accounts;
 	}
 
-	// Eigenlijk eigenschap van account, niet van speler
-	// Cringe... WTF. Groetjes
-	public void join(int competitionID, String username) {
+	public void addPlayer(String username) {
 		try {
-			Db.run(new Query(joinQuery).set(competitionID).set(username));
+			Db.run(new Query(joinQuery).set(compId).set(username));
 
 		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-	}
-
-	@Deprecated
-	public void remove(int competitionID, String username) {
-		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
-		try {
-			Future<ResultSet> worker = Db.run(new Query(chatsToRemove)
-					.set(username).set(username).set(competitionID));
-			ResultSet dbResult = worker.get();
-			while (dbResult.next()) {
-				spel_ids.add(dbResult.getInt("spel_id"));
-				for (Integer id : spel_ids) {
-					Db.run(new Query(removeChats).set(id));
-					Db.run(new Query(removeScores).set(id));
-				}
-			}
-			Db.run(new Query(removeGames).set(username).set(username)
-					.set(competitionID));
-			Db.run(new Query(removeQuery).set(competitionID).set(username));
-		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 	}
