@@ -83,13 +83,16 @@ public class TileTransferHandler extends TransferHandler {
 				
 				if(sourceTile.isBlanc()){
 						
-						String letter = JOptionPane.showInputDialog(null, "Enter your letter ",
-								"letter needed ", JOptionPane.WARNING_MESSAGE);
-						if (letter.length() < 2) {
+					//TODO get the letterset from de database
+						String[] options = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+						String letter = (String) JOptionPane.showInputDialog(null, "Welke letter wil je leggen? ",
+								"Blanco Letter", JOptionPane.WARNING_MESSAGE, null, options , "A");
+						if (letter != null) {
 							sourceTile.setLetter(letter);
+							source.repaint();
+							source.revalidate();
 						}
 				}
-				
 				
 				if (sourceTile != null && sourceTile.isMutatable()) {
 					model.setValueAt(null, sourceRow, sourceCol);
