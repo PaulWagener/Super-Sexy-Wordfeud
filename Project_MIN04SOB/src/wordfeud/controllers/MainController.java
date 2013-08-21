@@ -422,7 +422,7 @@ public class MainController extends CoreController {
 		currGamePanel.setNameChallenger(currentGame.getChallenger()
 				.getUsername());
 		currGamePanel.setNameOpponent(currentGame.getOpponent().getUsername());
-		updatelabels(8/* selectedGame.getCurrentobserveturn() */);
+		updatelabels(selectedGame.getCurrentobserveturn());
 
 		// selectedGame.setplayertilesfromdatabase(selectedGame.getNumberOfTotalTurns());
 
