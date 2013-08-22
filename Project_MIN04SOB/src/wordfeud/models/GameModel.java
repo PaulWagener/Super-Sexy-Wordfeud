@@ -383,6 +383,7 @@ public class GameModel extends CoreModel {
 		int penalty = 0;
 		Tile[] remainingTiles = playerStash.getPlayerTiles();
 		for (Tile tile : remainingTiles) {
+			if (tile != null)
 			penalty += tile.getValue();
 		}
 
