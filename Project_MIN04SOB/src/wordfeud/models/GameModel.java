@@ -31,9 +31,14 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 	private boolean iamchallenger;
+
+	@Deprecated
 	private BoardPanel boardPanel;
+
 	private int currentobserveturn;
 	private StashModel playerStash;
+	
+	@Deprecated
 	private BoardModel boardModel;
 
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
@@ -52,11 +57,8 @@ public class GameModel extends CoreModel {
 	private boolean hasTurn = true;
 	private boolean hasButtons = false;
 
-	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
-			BoardPanel boardPanel, boolean observer) {
-		this.observer = observer;
-		this.boardModel = boardModel;
-		this.boardPanel = boardPanel;
+	public GameModel(int gameId, AccountModel user, boolean observer) {
+		
 		currentUser = user;
 
 		try {
@@ -105,6 +107,10 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
+		
+		this.observer = observer;
+		this.boardModel = new BoardModel(this);
+		this.boardPanel = new BoardPanel();;
 	}
 
 	public boolean hasButtons() {
@@ -150,7 +156,7 @@ public class GameModel extends CoreModel {
 		firePropertyChange(Event.MOVE, true, false);
 		Db.run(turn);
 	}
-
+/*
 	public BoardModel getBoardFromDatabase() {
 		BoardModel oldBoard = new BoardModel();
 		try {
@@ -188,7 +194,7 @@ public class GameModel extends CoreModel {
 		}
 		return oldBoard;
 	}
-
+*/
 	public void setPlayerTiles() {
 		int turnId = getLastTurn(currentUser);
 		setPlayerTiles(turnId);
@@ -197,7 +203,9 @@ public class GameModel extends CoreModel {
 	public void setPlayerTiles(int turnId) {
 		playerStash.addRandomTiles();
 		
-		Tile[] tiles; //= playerStash.getPlayerTiles(turnId);
+		/*
+		 Tile[] tiles; //= playerStash.getPlayerTiles(turnId);
+		 
 		//System.out.println(tiles.length);
 		
 		//if(tiles.length < 1){
@@ -205,6 +213,15 @@ public class GameModel extends CoreModel {
 			tiles = playerStash.getPlayerTilesobserver(turnId);
 		//}
 		boardPanel.setPlayerTiles(tiles);
+		
+		*/
+		
+		 Tile[] tiles = playerStash.getPlayerTiles(turnId);
+		 
+			if(tiles.length > 0){
+				boardPanel.setPlayerTiles(tiles);
+			}
+			
 	}
 
 	
@@ -470,6 +487,7 @@ public class GameModel extends CoreModel {
 		firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
 	}
 
+	@Deprecated
 	public void updateboardfromdatabasetoturn(int turn_id) {
 		try { // "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
 
@@ -600,20 +618,22 @@ public class GameModel extends CoreModel {
 	public void updatelastturn() {
 		currentobserveturn = getNumberOfTotalTurns();
 	}
-
-	// legwoord methodes //
-	public int playWord(BoardModel newBoard) throws InvalidMoveException {
+	
+	public int playWord(BoardModel oldBoard, BoardModel newBoard) throws InvalidMoveException {
 		if (!yourturn()) {
 			throw new InvalidMoveException(Error.NOTYOURTURN);
 		}
 
 		int score = 0;
 		try {
-			ArrayList<Tile> currentStash = new ArrayList<Tile>(
-					Arrays.asList(playerStash.getPlayerTiles()));
+			ArrayList<Tile> currentStash = getCurrentStash();
+			Tile[][] oldBoardData = oldBoard.getTileData();
 			Tile[][] newBoardData = newBoard.getTileData();
-			Tile[][] playedLetters = (Tile[][]) checkValidMove(
-					getBoardFromDatabase(), newBoard);
+			
+			checkValidMove(oldBoard, newBoard);
+			
+			Tile[][] playedLetters = MatrixUtils.compareFields(oldBoardData, newBoardData);
+			
 			ArrayList<String> playedWords = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> letterMatrix = checkValidWord(
 					playedLetters, newBoardData);
@@ -755,6 +775,15 @@ public class GameModel extends CoreModel {
 		}
 	}
 
+	/**
+	 * 
+	 * Abstract artform, pure poetry </sarcasm>
+	 * @author Aaron
+	 * @param playedLetters
+	 * @param newBoard
+	 * @return
+	 * @throws InvalidMoveException
+	 */
 	private ArrayList<ArrayList<Tile>> checkValidWord(Tile[][] playedLetters,
 			Tile[][] newBoard) throws InvalidMoveException {
 		// verticaal woord
@@ -904,14 +933,23 @@ public class GameModel extends CoreModel {
 		return totalScore;
 	}
 
-	private Tile[][] checkValidMove(BoardModel oldBoard, BoardModel newBoard)
+	/**
+	 * 
+	 * 
+	 * @param oldBoard, the board before the player started the turn
+	 * @param newBoard, the board after the player put his letters down.
+	 * @return
+	 * 
+	 * @throws InvalidMoveException with the Error for which mistake was made.
+	 */
+	private void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
 
 		Tile[][] oldData = oldBoard.getTileData();
 		Tile[][] newData = newBoard.getTileData();
 
 		// First find out which letters where played
-		Tile[][] playedLetters = compareFields(oldData, newData);
+		Tile[][] playedLetters = MatrixUtils.compareFields(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 		if (isBoardEmpty()) {
 
@@ -943,8 +981,6 @@ public class GameModel extends CoreModel {
 		if (!lettersAreConnected(playedLetters, newBoard)) {
 			throw new InvalidMoveException(Error.NOT_CONNECTED);
 		}
-
-		return playedLetters;
 		// Everything went better than expected.jpg :)
 	}
 
@@ -1015,21 +1051,6 @@ public class GameModel extends CoreModel {
 			}
 		}
 		return true;
-	}
-
-	public Tile[][] compareFields(Tile[][] oldField, Tile[][] newField) {
-		Tile[][] playedLetters = new Tile[15][15];
-		for (int vertical = 0; vertical < 15; vertical++) {
-			for (int horizontal = 0; horizontal < 15; horizontal++) {
-				if (oldField[vertical][horizontal] == null
-						&& newField[vertical][horizontal] != null) {
-					playedLetters[vertical][horizontal] = newField[vertical][horizontal];
-				} else {
-					playedLetters[vertical][horizontal] = null;
-				}
-			}
-		}
-		return playedLetters;
 	}
 
 	// einde legwoordmethodes//

@@ -8,12 +8,15 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import wordfeud.core.database.Db;
+import wordfeud.core.database.Queries;
 import wordfeud.core.database.Query;
 import wordfeud.core.mvc.CoreTableModel;
 import wordfeud.misc.Column;
 
 public class BoardModel extends CoreTableModel {
 	private HashMap<Point, String> tilesHM = new HashMap<Point, String>();
+	private GameModel game;
+	private boolean hasTurn;
 
 	public static final int DW = 1;
 	public static final int TW = 2;
@@ -22,9 +25,58 @@ public class BoardModel extends CoreTableModel {
 	public static final int STAR = 5;
 	public static final int EMPTY = 6;
 
-	public BoardModel() {
+	public BoardModel(GameModel game) {
+		this.game = game;
 		setBoardToDefault();
+		fill();
 	}
+
+	private void fill() {
+		fill(game.getNumberOfTotalTurns());
+	}
+	
+	private void fill(int turnId){
+		try {
+			Future<ResultSet> worker = Db.run(new Query(Queries.GAMEBOARD)
+					.set(game.getGameId()).set(turnId));
+
+			ResultSet rs = worker.get();
+			while (rs.next()) {
+				int x = rs.getInt("tegel_x") - 1;// x
+				int y = rs.getInt("tegel_y") - 1;// y
+				if (x >= 0 && y >= 0) {
+					String character = rs.getString("LetterType_karakter");
+					Tile t;
+					if (character.equalsIgnoreCase("?")) {
+
+						String blancChar = rs.getString("BlancoLetterKarakter");
+						t = new Tile(blancChar, 0, Tile.NOT_MUTATABLE,
+								rs.getInt("id"));
+
+					} else {
+						t = new Tile(character, rs.getInt("waarde"),
+								Tile.NOT_MUTATABLE, rs.getInt("id"));
+					}
+					setValueAt(t, y, x);
+				}
+			}
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+	}
+	
+	public static BoardModel getBoard(GameModel game, int turnId){
+		BoardModel model = new BoardModel(game);
+		model.fill(turnId);
+		return model;
+	}
+	
+	public static BoardModel getBoard(GameModel game){
+		return getBoard(game, game.getNumberOfTotalTurns());
+	}
+
+	
+	
 
 	public int getMultiplier(Point coord) {
 		if (tilesHM.containsKey(coord)) {
@@ -134,6 +186,13 @@ public class BoardModel extends CoreTableModel {
 
 	@Override
 	public void update() {
+		boolean oldHasTurn = hasTurn;
+		hasTurn = game.yourturn();
+		
+		if(oldHasTurn != hasTurn){
+			//Update the board
+			fill();
+		}
 	}
 
 	public void removeMutatable() {
@@ -145,13 +204,6 @@ public class BoardModel extends CoreTableModel {
 				}
 			}
 		}
-	}
-
-	public static BoardModel newInstance(BoardModel model) {
-		BoardModel returnModel = new BoardModel();
-		returnModel.data = model.data;
-		returnModel.tilesHM = model.tilesHM;
-		return returnModel;
 	}
 
 	public Tile[][] getTileData() {

@@ -154,8 +154,7 @@ public class AccountModel extends CoreModel {
 					.set(State.REQUEST));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this,
-						new BoardModel(), new BoardPanel(), true));
+				games.add(new GameModel(dbResult.getInt("spel_id"), this, true));
 				// Add a new game with the gameId for this account
 			}
 
@@ -167,14 +166,13 @@ public class AccountModel extends CoreModel {
 
 	public ArrayList<GameModel> getOpenGames() {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
-		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
+		String query = "SELECT `id` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
 		try {
 			Future<ResultSet> worker = Db.run(new Query(query).set(username)
 					.set(username).set(State.PLAY));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this,
-						new BoardModel(), new BoardPanel(), false));
+				games.add(new GameModel(dbResult.getInt("id"), this, false));
 				// Add a new game with the gameId for this account
 			}
 

@@ -164,6 +164,8 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					
+					/*
 					BoardModel newBoard = new BoardModel();
 					for (int vertical = 0; vertical < 15; vertical++) {
 						for (int horizontal = 0; horizontal < 15; horizontal++) {
@@ -172,8 +174,16 @@ public class MainController extends CoreController {
 									vertical, horizontal);
 						}
 					}
-					int score = currentGame.playWord(newBoard);
+					*/
+					
+					AccountModel opponent = currentGame.getOpponent();
+					int secondLastTurn = currentGame.getLastTurn(opponent);
+					BoardModel oldBoard = BoardModel.getBoard(currentGame, secondLastTurn);
+					
+					
+					int score = currentGame.playWord(oldBoard, boardModel);
 					currentGame.setPlayerTiles();
+					
 					currGamePanel.infoBox("Score voor deze beurt: " + score, "Woord gespeeld");
 					openGame(currentGame);
 				} catch (InvalidMoveException e) {
@@ -402,7 +412,6 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 
 		currGamePanel = new BoardPanel();
-		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
 
@@ -428,7 +437,8 @@ public class MainController extends CoreController {
 
 		currGamePanel = selectedGame.getBoardPanel();
 
-		boardModel = selectedGame.getBoardFromDatabase();
+		boardModel = new BoardModel(selectedGame);
+		//.getBoardFromDatabase();
 		addModel(boardModel);
 		addView(currGamePanel);
 		currentGame.setBoardModel(boardModel);
@@ -446,6 +456,8 @@ public class MainController extends CoreController {
 
 		// selectedGame.getBoardFromDatabase();
 		selectedGame.update();
+		boardModel.update();
+		
 		if (!(selectedGame.hasButtons())) {
 
 			addButtonListeners();

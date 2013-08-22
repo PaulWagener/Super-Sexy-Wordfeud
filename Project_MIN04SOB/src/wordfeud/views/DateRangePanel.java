@@ -18,8 +18,10 @@ public class DateRangePanel extends CorePanel {
 	private JComboBox<Integer> startYear, startMonth, startDay;
 	private JComboBox<Integer> endYear, endMonth, endDay;
 	private Calendar startDate = Calendar.getInstance();
+
 	private Calendar endDate = Calendar.getInstance();
 
+	@Deprecated
 	public DateRangePanel() {
 
 		JPanel datesPanel = new JPanel();

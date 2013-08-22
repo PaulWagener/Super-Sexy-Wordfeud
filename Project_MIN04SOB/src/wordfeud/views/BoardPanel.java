@@ -229,6 +229,7 @@ public class BoardPanel extends CorePanel {
 			}
 
 			// refresh the board
+			playBoard.updateUI();
 			playBoard.revalidate();
 			playBoard.repaint();
 			setTurnLabel(hasTurn);
@@ -347,5 +348,4 @@ public class BoardPanel extends CorePanel {
 		}
 		return newBoard;
 	}
-
 }

@@ -9,6 +9,7 @@ public class BoardController extends CoreController {
 	private BoardPanel bpv;
 	private BoardModel bpm;
 
+	@Deprecated
 	public BoardController(boolean observer) {
 		bpm = new BoardModel();
 
