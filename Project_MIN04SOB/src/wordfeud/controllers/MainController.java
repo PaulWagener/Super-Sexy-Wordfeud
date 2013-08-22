@@ -156,9 +156,9 @@ public class MainController extends CoreController {
 						}
 
 					}
-					currentGame.playWord(newBoard);
+					int score = currentGame.playWord(newBoard);
 					currentGame.setPlayerTiles();
-					currGamePanel.infoBox("Woord gelegd", "Woord gelegd");
+					currGamePanel.infoBox("Woord gelegd", "Score voor deze beurt: " + score);
 					openGame(currentGame);
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
