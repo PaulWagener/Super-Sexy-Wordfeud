@@ -123,13 +123,7 @@ public class BoardPanel extends CorePanel {
 
 		playButton = new JButton();
 		playButton.setEnabled(true);
-
-		playButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-
+		
 		turnTextLabel = new JLabel("Beurt");
 		add(turnTextLabel, "cell 5 4,alignx right");
 
@@ -176,6 +170,10 @@ public class BoardPanel extends CorePanel {
 
 	}
 
+	public void addPassActionListener(ActionListener listener) {
+		passButton.addActionListener(listener);
+	}
+	
 	// enable nextButton
 	public void enableNextButton() {
 		nextButton.setEnabled(true);
@@ -246,7 +244,7 @@ public class BoardPanel extends CorePanel {
 	private void setTurnLabel(boolean hasTurn) {
 		String name;
 		if (hasTurn) {
-			name = playerNameLabel.getText();
+			name = "Aan jouw (" + playerNameLabel.getText() + ")";
 		} else {
 			name = opponentNameLabel.getText();
 		}

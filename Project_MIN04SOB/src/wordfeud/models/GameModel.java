@@ -124,7 +124,9 @@ public class GameModel extends CoreModel {
 
 		switch (action) {
 		case BEGIN:
+			break;
 		case END:
+			break;
 		case WORD:
 			turn.set((newTurnId)).set(gameId).set(username).set(score)
 					.set(action);
@@ -132,7 +134,10 @@ public class GameModel extends CoreModel {
 
 		// No score
 		case PASS:
+			turn.set((newTurnId)).set(gameId).set(username).set(0).set(action);
+			break;
 		case RESIGN:
+			break;
 		case SWAP:
 			turn.set((newTurnId)).set(gameId).set(username).set(0).set(action);
 			break;
@@ -391,6 +396,7 @@ public class GameModel extends CoreModel {
 		int penalty = 0;
 		Tile[] remainingTiles = playerStash.getPlayerTiles();
 		for (Tile tile : remainingTiles) {
+			if(tile != null)
 			penalty += tile.getValue();
 		}
 
@@ -596,11 +602,12 @@ public class GameModel extends CoreModel {
 	}
 
 	// legwoord methodes //
-	public void playWord(BoardModel newBoard) throws InvalidMoveException {
+	public int playWord(BoardModel newBoard) throws InvalidMoveException {
 		if (!yourturn()) {
 			throw new InvalidMoveException(Error.NOTYOURTURN);
 		}
 
+		int score = 0;
 		try {
 			ArrayList<Tile> currentStash = new ArrayList<Tile>(
 					Arrays.asList(playerStash.getPlayerTiles()));
@@ -619,7 +626,7 @@ public class GameModel extends CoreModel {
 			}
 			checkWordsInDatabase(playedWords);
 
-			int score = getScore(playedLetters, letterMatrix, newBoard);
+			score = getScore(playedLetters, letterMatrix, newBoard);
 
 			ArrayList<Tile> playedTiles = new ArrayList<Tile>();
 
@@ -661,7 +668,8 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-
+		
+		return score;
 	}
 
 	/**
@@ -679,6 +687,16 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void pass() {
+		
+		try {
+			createTurn(Turn.PASS, 0);
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**

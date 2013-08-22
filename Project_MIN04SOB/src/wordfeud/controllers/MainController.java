@@ -146,6 +146,19 @@ public class MainController extends CoreController {
 			}
 		});
 		
+
+		currGamePanel.addPassActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentGame.pass();
+				System.out.println("hoi");
+				
+			}
+			
+		});
+
+
 		currGamePanel.addPlayActionListener(new ActionListener() {
 
 			@Override
@@ -158,11 +171,10 @@ public class MainController extends CoreController {
 									currGamePanel.getNewBoard()[vertical][horizontal],
 									vertical, horizontal);
 						}
-
 					}
-					currentGame.playWord(newBoard);
+					int score = currentGame.playWord(newBoard);
 					currentGame.setPlayerTiles();
-					currGamePanel.infoBox("Woord gelegd", "Woord gelegd");
+					currGamePanel.infoBox("Woord gelegd", "Score voor deze beurt: " + score);
 					openGame(currentGame);
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");

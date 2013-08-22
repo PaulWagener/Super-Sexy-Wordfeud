@@ -69,15 +69,19 @@ public class CompetitionController extends CoreController {
 	}
 
 	public void getParticipants(CompetitionModel comp) {
-		AccountModel[] participants = comp.getUsersFromCompetition(accountModel
-				.getUsername());
-		competitionView.fillPlayerList(participants);
+		if(comp != null){
+			AccountModel[] participants = comp.getUsersFromCompetition(accountModel
+					.getUsername());
+			competitionView.fillPlayerList(participants);
+		}
 	}
 
 	public void showCompetionPlayers(CompetitionModel comp) {
-		AccountModel[] players = comp.getChallengeAblePlayers(accountModel);
-		competitionView.clearPlayerList();
-		competitionView.fillPlayerList(players);
+		if(comp != null){
+			AccountModel[] players = comp.getChallengeAblePlayers(accountModel);
+			competitionView.clearPlayerList();
+			competitionView.fillPlayerList(players);
+		}
 	}
 
 	@Override
@@ -311,7 +315,7 @@ public class CompetitionController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
 				try {
-					competitionModel.createCompetition(accountModel, desc);
+					CompetitionModel.createCompetition(accountModel, desc);
 					window2.dispose();
 				} catch (DuplicateCompetitionException dupE) {
 					System.out.println("Deze moet dus nog worden afgehandeld");

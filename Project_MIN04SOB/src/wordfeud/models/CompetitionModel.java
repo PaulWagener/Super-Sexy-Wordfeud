@@ -26,8 +26,6 @@ public class CompetitionModel extends CoreModel {
 	private Date end;
 
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`) VALUES (?, ?)";
-	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
-	private final String getCreatedCompID = "SELECT `id` FROM `competitie` WHERE `account_naam_eigenaar` = ? ORDER BY `einde` DESC";
 	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
 	private final String ratingQuery = "SELECT * FROM `comp_ranking` WHERE `competitie_id` = ?  GROUP BY account_naam ORDER BY bayesian_rating DESC ";
 
@@ -51,11 +49,10 @@ public class CompetitionModel extends CoreModel {
 		}
 	}
 
-	public void createCompetition(AccountModel user, String desc)
+	public static void createCompetition(AccountModel user, String desc)
 			throws DuplicateCompetitionException {
 
 		if (user.getOwnedCompetitions().length == 0) {
-			int compId = 0;
 			try {
 				Calendar cal = Calendar.getInstance();
 				DateFormat dateFormat = new SimpleDateFormat(
@@ -66,17 +63,14 @@ public class CompetitionModel extends CoreModel {
 				Date nextMonth = new Date(cal.getTimeInMillis());
 				String endDate = dateFormat.format(nextMonth);
 
-				Db.run(new Query(createQuery).set(user.getUsername())
+				Future<ResultSet> worker = Db.run(new Query("INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)").set(user.getUsername())
 						.set(currentDate).set(endDate).set(desc));
 
-				Future<ResultSet> worker = Db.run(new Query(getCreatedCompID)
-						.set(user.getUsername()));
 				ResultSet dbResult = worker.get();
 				if (dbResult.next()) {
 					CompetitionModel comp = new CompetitionModel(
-							dbResult.getInt("id"));
+							dbResult.getInt(1));
 					comp.addPlayer(user.getUsername());
-					firePropertyChange(Event.NEWCOMPETITION, null, this);
 				}
 
 			} catch (SQLException | InterruptedException | ExecutionException e) {
@@ -115,7 +109,7 @@ public class CompetitionModel extends CoreModel {
 		try {
 			Future<ResultSet> worker = Db
 					.run(new Query(
-							"SELECT DISTINCT(`ID`) FROM `competitie` WHERE `einde` > now();"));
+							"SELECT DISTINCT(`ID`) FROM `competitie` WHERE DATEDIFF(NOW(), `einde`) < 0;"));
 			ResultSet dbResult = worker.get();
 			allComps = new CompetitionModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < allComps.length) {
