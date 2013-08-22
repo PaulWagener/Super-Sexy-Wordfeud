@@ -35,6 +35,7 @@ public class ChatModel extends CoreModel {
 	public ArrayList<String> getMessages() {
 		return messages;
 	}
+	
 
 	private ArrayList<String> getNewMessages() {
 
