@@ -588,11 +588,12 @@ public class GameModel extends CoreModel {
 	}
 
 	// legwoord methodes //
-	public void playWord(BoardModel newBoard) throws InvalidMoveException {
+	public int playWord(BoardModel newBoard) throws InvalidMoveException {
 		if (!yourturn()) {
 			throw new InvalidMoveException(Error.NOTYOURTURN);
 		}
 
+		int score = 0;
 		try {
 			ArrayList<Tile> currentStash = new ArrayList<Tile>(
 					Arrays.asList(playerStash.getPlayerTiles()));
@@ -611,7 +612,7 @@ public class GameModel extends CoreModel {
 			}
 			checkWordsInDatabase(playedWords);
 
-			int score = getScore(playedLetters, letterMatrix, newBoard);
+			score = getScore(playedLetters, letterMatrix, newBoard);
 
 			ArrayList<Tile> playedTiles = new ArrayList<Tile>();
 
@@ -651,7 +652,8 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-
+		
+		return score;
 	}
 
 	/**
