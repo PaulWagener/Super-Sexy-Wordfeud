@@ -30,6 +30,11 @@ public class AcceptDeclineController extends CoreController {
 		String word = adView.getSelectedWord();
 		modModel.acceptWord(word);
 		fillWordList();
+		checkWordList();
+	}
+	
+	private void checkWordList() {
+		adView.checkWordList();
 	}
 
 	@Override
@@ -74,6 +79,7 @@ public class AcceptDeclineController extends CoreController {
 		String word = adView.getSelectedWord();
 		modModel.denyWord(word);
 		fillWordList();
+		checkWordList();
 	}
 
 	public void fillWordList() {
