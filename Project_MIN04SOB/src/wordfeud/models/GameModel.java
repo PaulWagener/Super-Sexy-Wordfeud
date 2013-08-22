@@ -124,7 +124,9 @@ public class GameModel extends CoreModel {
 
 		switch (action) {
 		case BEGIN:
+			break;
 		case END:
+			break;
 		case WORD:
 			turn.set((newTurnId)).set(gameId).set(username).set(score)
 					.set(action);
@@ -132,7 +134,10 @@ public class GameModel extends CoreModel {
 
 		// No score
 		case PASS:
+			turn.set((newTurnId)).set(gameId).set(username).set(0).set(action);
+			break;
 		case RESIGN:
+			break;
 		case SWAP:
 			turn.set((newTurnId)).set(gameId).set(username).set(0).set(action);
 			break;
@@ -666,6 +671,16 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void pass() {
+		
+		try {
+			createTurn(Turn.PASS, 0);
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**

@@ -141,6 +141,17 @@ public class MainController extends CoreController {
 				selectSwap(letters);
 			}
 		});
+		
+		currGamePanel.addPassActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentGame.pass();
+				System.out.println("hoi");
+				
+			}
+			
+		});
 
 		currGamePanel.addPlayActionListener(new ActionListener() {
 
