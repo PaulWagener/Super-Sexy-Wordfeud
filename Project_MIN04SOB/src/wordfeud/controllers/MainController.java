@@ -174,7 +174,7 @@ public class MainController extends CoreController {
 					}
 					int score = currentGame.playWord(newBoard);
 					currentGame.setPlayerTiles();
-					currGamePanel.infoBox("Woord gelegd", "Score voor deze beurt: " + score);
+					currGamePanel.infoBox("Score voor deze beurt: " + score, "Woord gespeeld");
 					openGame(currentGame);
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
