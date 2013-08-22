@@ -448,9 +448,9 @@ public class MainController extends CoreController {
 
 	private void initChat() {
 		chatPanel.getChatFieldSend().setEnabled(true);
-		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
+			
 			chatPanel.addToChatField(message);
 		}
 		chatModel.update();
