@@ -242,7 +242,7 @@ public class BoardPanel extends CorePanel {
 	private void setTurnLabel(boolean hasTurn) {
 		String name;
 		if (hasTurn) {
-			name = playerNameLabel.getText();
+			name = "Aan jouw (" + playerNameLabel.getText() + ")";
 		} else {
 			name = opponentNameLabel.getText();
 		}
