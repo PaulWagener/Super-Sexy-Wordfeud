@@ -29,7 +29,7 @@ public class CompetitionModel extends CoreModel {
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
 	private final String getCreatedCompID = "SELECT `id` FROM `competitie` WHERE `account_naam_eigenaar` = ? ORDER BY `einde` DESC";
 	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
-	private final String ratingQuery = "SELECT * FROM `comp_ranking` WHERE `competitie_id` = ? ORDER BY bayesian_rating DESC";
+	private final String ratingQuery = "SELECT * FROM `comp_ranking` WHERE `competitie_id` = ?  GROUP BY account_naam ORDER BY bayesian_rating DESC ";
 
 	public CompetitionModel(int compId) {
 		try {

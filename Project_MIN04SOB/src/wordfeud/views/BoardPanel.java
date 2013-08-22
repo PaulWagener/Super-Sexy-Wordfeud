@@ -37,6 +37,7 @@ public class BoardPanel extends CorePanel {
 	private JButton playButton;
 	private JButton nextButton;
 	private JButton prevButton;
+	private JButton refreshButton;
 
 	private JTable playBoard;
 	private JTable playerTilesField;
@@ -54,7 +55,7 @@ public class BoardPanel extends CorePanel {
 	private JLabel playerScoreLabel;
 
 	private DefaultTableModel playerStash;
-	private JButton refreshButton;
+	
 
 	public BoardPanel() {
 		playerStash = new DefaultTableModel(1, 8);
