@@ -17,6 +17,8 @@ public class Queries {
 	public static final String TURN_TILES_OB;
 	public static final String AVAILABLE_COMPETITIONS;
 	public static final String GAMEBOARD;
+	
+	private static final boolean MYPROJECTSETUPISMESSEDUP = false;
 
 
 	static {
@@ -32,10 +34,14 @@ public class Queries {
 	}
 
 	private static String readFile(final String file) {
+		String filePath = file;
+		if(MYPROJECTSETUPISMESSEDUP){
+			filePath = "Project_MIN04SOB/" + file;
+		}
 		BufferedReader reader = null;
 		StringBuilder stringBuilder = new StringBuilder();
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new FileReader(filePath));
 
 			String line = null;
 			String ls = System.getProperty("line.separator");
