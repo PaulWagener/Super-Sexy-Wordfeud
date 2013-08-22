@@ -115,7 +115,7 @@ public class AccountModel extends CoreModel {
 		try {
 			Future<ResultSet> worker = Db
 					.run(new Query(
-							"SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?")
+							"SELECT `competitie_id` FROM `deelnemer` AS `d` JOIN `competitie` AS `c` ON `c`.`id` = `d`.`competitie_id` WHERE `account_naam` = ? AND datediff(NOW(), `einde`) < 0")
 							.set(username));
 			ResultSet dbResult = worker.get();
 			compDesc = new CompetitionModel[Query.getNumRows(dbResult)];

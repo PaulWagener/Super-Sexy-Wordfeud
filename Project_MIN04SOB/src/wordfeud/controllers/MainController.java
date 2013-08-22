@@ -154,7 +154,6 @@ public class MainController extends CoreController {
 									currGamePanel.getNewBoard()[vertical][horizontal],
 									vertical, horizontal);
 						}
-
 					}
 					int score = currentGame.playWord(newBoard);
 					currentGame.setPlayerTiles();
