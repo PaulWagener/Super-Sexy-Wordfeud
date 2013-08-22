@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 import wordfeud.controllers.ChallengeModel;
 import wordfeud.core.Event;
 import wordfeud.core.database.Db;
+import wordfeud.core.database.Queries;
 import wordfeud.core.database.Query;
 import wordfeud.core.mvc.CoreModel;
 import wordfeud.misc.constants.Role;
@@ -47,8 +48,6 @@ public class AccountModel extends CoreModel {
 	private String username;
 
 	private boolean isLoggedIn;
-
-	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
 
 	private int gameCount;
 
@@ -93,10 +92,8 @@ public class AccountModel extends CoreModel {
 		CompetitionModel[] comp_desc = new CompetitionModel[0];
 		int x = 0;
 		try {
-			// deze query laat alleen de beschikbare competities zien die al
-			// minimaal 1 deelnemer heeft
 			Future<ResultSet> worker = Db.run(new Query(
-					availableCompetitionQuery).set(username));
+					Queries.AVAILABLE_COMPETITIONS).set(username));
 			ResultSet rs = worker.get();
 			comp_desc = new CompetitionModel[Query.getNumRows(rs)];
 			while (rs.next() && x < comp_desc.length) {
