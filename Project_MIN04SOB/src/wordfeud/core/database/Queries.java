@@ -20,14 +20,14 @@ public class Queries {
 
 
 	static {
-		CURRENT_TILES = Queries.readFile("Project_MIN04SOB/queries/currentTiles.sql");
-		RANKING = Queries.readFile("Project_MIN04SOB/queries/ranking.sql");
-		TILE = Queries.readFile("Project_MIN04SOB/queries/tileQuery.sql");
-		LATEST_TURN = Queries.readFile("Project_MIN04SOB/queries/latestTurnForPlayer.sql");
-		TURN_TILES = Queries.readFile("Project_MIN04SOB/queries/tilesForTurns.sql");
-		TURN_TILES_OB = Queries.readFile("Project_MIN04SOB/queries/tilesForTurnsOb.sql");
-		AVAILABLE_COMPETITIONS = Queries.readFile("Project_MIN04SOB/queries/availableCompetitions.sql");
-		GAMEBOARD = Queries.readFile("Project_MIN04SOB/queries/getGameBoard.sql");
+		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
+		RANKING = Queries.readFile("queries/ranking.sql");
+		TILE = Queries.readFile("queries/tileQuery.sql");
+		LATEST_TURN = Queries.readFile("queries/latestTurnForPlayer.sql");
+		TURN_TILES = Queries.readFile("queries/tilesForTurns.sql");
+		TURN_TILES_OB = Queries.readFile("queries/tilesForTurnsOb.sql");
+		AVAILABLE_COMPETITIONS = Queries.readFile("queries/availableCompetitions.sql");
+		GAMEBOARD = Queries.readFile("queries/getGameBoard.sql");
 
 	}
 
