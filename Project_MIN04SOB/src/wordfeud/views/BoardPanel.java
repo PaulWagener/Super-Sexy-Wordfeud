@@ -122,13 +122,7 @@ public class BoardPanel extends CorePanel {
 
 		playButton = new JButton();
 		playButton.setEnabled(true);
-
-		playButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-
+		
 		turnTextLabel = new JLabel("Beurt");
 		add(turnTextLabel, "cell 5 4,alignx right");
 
@@ -173,6 +167,10 @@ public class BoardPanel extends CorePanel {
 
 	}
 
+	public void addPassActionListener(ActionListener listener) {
+		passButton.addActionListener(listener);
+	}
+	
 	// enable nextButton
 	public void enableNextButton() {
 		nextButton.setEnabled(true);
