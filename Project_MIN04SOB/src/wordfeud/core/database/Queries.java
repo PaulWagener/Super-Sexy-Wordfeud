@@ -14,6 +14,7 @@ public class Queries {
 	public static final String TILE;
 	public static final String LATEST_TURN;
 	public static final String TURN_TILES;
+	public static final String TURN_TILES_OB;
 
 	static {
 		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
@@ -21,6 +22,7 @@ public class Queries {
 		TILE = Queries.readFile("queries/tileQuery.sql");
 		LATEST_TURN = Queries.readFile("queries/latestTurnForPlayer.sql");
 		TURN_TILES = Queries.readFile("queries/tilesForTurns.sql");
+		TURN_TILES_OB = Queries.readFile("queries/tilesForTurnsOb.sql");
 	}
 
 	private static String readFile(final String file) {

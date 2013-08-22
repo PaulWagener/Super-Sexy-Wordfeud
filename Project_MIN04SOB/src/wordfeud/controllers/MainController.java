@@ -98,9 +98,12 @@ public class MainController extends CoreController {
 
 					currentGame.updateboardfromdatabasetoturn(currentGame
 							.getCurrentobserveturn());
-
+					
+					
+					
+					
 					currentGame.getBoardModel().update();
-
+					updatePlayerlettersToTurn();
 					updatelabels(currentGame.getCurrentobserveturn());
 				} else {
 					currGamePanel.disableNextButton();
@@ -124,6 +127,7 @@ public class MainController extends CoreController {
 
 					}
 					updatelabels(currentGame.getCurrentobserveturn());
+					updatePlayerlettersToTurn();
 				} else {
 					currGamePanel.disablePreviousButton();
 				}
@@ -141,7 +145,7 @@ public class MainController extends CoreController {
 				selectSwap(letters);
 			}
 		});
-
+		
 		currGamePanel.addPlayActionListener(new ActionListener() {
 
 			@Override
@@ -447,15 +451,15 @@ public class MainController extends CoreController {
 	}
 
 	private void initChat() {
-		chatPanel.empty(); 
+		chatPanel.empty();
 		chatPanel.getChatFieldSend().setEnabled(true);
-		
+
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
-			
+
 			chatPanel.addToChatField(message);
 		}
-		
+
 	}
 
 	public void openPanels() {
@@ -529,6 +533,16 @@ public class MainController extends CoreController {
 				swapWindow.dispose();
 			}
 		});
+	}
+	public void updatePlayerlettersToTurn(){
+
+		currentGame.setPlayerTiles(currentGame
+				.getCurrentobserveturn());
+	}
+
+	public void setLetters(Tile[] tiles) {
+		// for observer //
+
 	}
 
 }

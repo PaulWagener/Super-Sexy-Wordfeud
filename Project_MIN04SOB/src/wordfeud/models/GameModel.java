@@ -191,9 +191,18 @@ public class GameModel extends CoreModel {
 
 	public void setPlayerTiles(int turnId) {
 		playerStash.addRandomTiles();
-		Tile[] tiles = playerStash.getPlayerTiles(turnId);
+		
+		Tile[] tiles; //= playerStash.getPlayerTiles(turnId);
+		//System.out.println(tiles.length);
+		
+		//if(tiles.length < 1){
+			
+			tiles = playerStash.getPlayerTilesobserver(turnId);
+		//}
 		boardPanel.setPlayerTiles(tiles);
 	}
+
+	
 
 	public BoardModel getBoardModel() {
 		return boardModel;
@@ -304,6 +313,10 @@ public class GameModel extends CoreModel {
 
 	public Tile[] getPlayerTiles() {
 		return playerStash.getPlayerTiles();
+	}
+
+	public Tile[] getPlayerTiles(int turn) {
+		return playerStash.getPlayerTiles(turn);
 	}
 
 	public boolean isFree(int x, int y) {
@@ -626,13 +639,15 @@ public class GameModel extends CoreModel {
 						// Add the tile to the array,
 						// These will be removed from the players stash
 						playedTiles.add(tile);
-						
-						if(tile.isBlanc()){
-							insertLetterQuery.set(tileId).set(gameId).set(turnId)
-							.set(x + 1).set(y + 1).set("standard").set(tile.getLetter());
+
+						if (tile.isBlanc()) {
+							insertLetterQuery.set(tileId).set(gameId)
+									.set(turnId).set(x + 1).set(y + 1)
+									.set("standard").set(tile.getLetter());
 						} else {
-							insertLetterQuery.set(tileId).set(gameId).set(turnId)
-							.set(x + 1).set(y + 1).set("standard").set();
+							insertLetterQuery.set(tileId).set(gameId)
+									.set(turnId).set(x + 1).set(y + 1)
+									.set("standard").set();
 						}
 
 						insertLetterQuery.addBatch();
@@ -1000,4 +1015,8 @@ public class GameModel extends CoreModel {
 	}
 
 	// einde legwoordmethodes//
+	public void switchIAmChallenger() {
+		// voor observer
+		
+	}
 }

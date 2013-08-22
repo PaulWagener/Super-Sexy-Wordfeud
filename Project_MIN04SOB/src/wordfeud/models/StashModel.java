@@ -205,6 +205,30 @@ public class StashModel extends CoreModel {
 		return playerTiles;
 	}
 
+	public Tile[] getPlayerTilesobserver(int turnId) {
+		Tile[] playerTiles = new Tile[STASH_SIZE];
+
+		try {
+
+			Future<ResultSet> worker = Db.run(new Query(Queries.TURN_TILES_OB)
+					.set(game.getGameId()).set(turnId));
+			ResultSet res = worker.get();
+
+			// Fill the tile array
+			int index = 0;
+			while (res.next()) {
+				playerTiles[index] = new Tile(game.getGameId(),
+						res.getInt("id"));
+
+				index++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		return playerTiles;
+	}
+
 	public boolean letterleft(int game_id) {
 
 		try {
@@ -226,6 +250,10 @@ public class StashModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public Tile[] getPlayerTilesForTurn(int turn) {
+		return getPlayerTiles(turn);
 	}
 
 	@Override

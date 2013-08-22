@@ -38,6 +38,7 @@ public class BoardPanel extends CorePanel {
 	private JButton nextButton;
 	private JButton prevButton;
 	private JButton refreshButton;
+	
 
 	private JTable playBoard;
 	private JTable playerTilesField;
@@ -141,7 +142,9 @@ public class BoardPanel extends CorePanel {
 		swapButton.setFont(new Font("Dialog", Font.PLAIN, 12));
 		swapButton.setText("Wissel");
 		add(swapButton, "cell 2 5,grow");
-
+		
+		
+		
 		passButton = new JButton();
 		passButton.setFont(new Font("Dialog", Font.PLAIN, 12));
 		passButton.setText("Passen");
@@ -190,6 +193,7 @@ public class BoardPanel extends CorePanel {
 	public void addPlayActionListener(ActionListener listener) {
 		playButton.addActionListener(listener);
 	}
+	
 
 	public void addNextActionListener(ActionListener listener) {
 		nextButton.addActionListener(listener);
@@ -306,6 +310,7 @@ public class BoardPanel extends CorePanel {
 		playButton.setEnabled(false);
 		playerTilesField.setEnabled(false);
 		playBoard.setEnabled(false);
+	
 
 	}
 
@@ -316,6 +321,7 @@ public class BoardPanel extends CorePanel {
 		playButton.setEnabled(true);
 		playerTilesField.setEnabled(true);
 		playBoard.setEnabled(true);
+		
 	}
 
 	public void infoBox(String infoMessage, String title) {
