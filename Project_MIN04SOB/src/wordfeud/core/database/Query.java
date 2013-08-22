@@ -45,7 +45,13 @@ public class Query implements Callable<ResultSet> {
 	}
 
 	public Query set(Blob value) throws SQLException {
-		statement.setBlob(index, value); // Cast to string
+		statement.setBlob(index, value);
+		index++;
+		return this;
+	}
+	
+	public Query set() throws SQLException {
+		statement.setString(index, "");
 		index++;
 		return this;
 	}

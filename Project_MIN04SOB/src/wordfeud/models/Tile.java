@@ -19,18 +19,12 @@ public class Tile implements Transferable {
 	private int value;
 	private boolean mutatable;
 	private int tileId;
+	private boolean blanc;
 	public final static boolean MUTATABLE = true;
 	public final static boolean NOT_MUTATABLE = false;
 	private final static DataFlavor flavors[] = { new DataFlavor(Tile.class,
 			"Tile") };
 
-	@Deprecated
-	public Tile() {
-		letter = "";
-		value = 0;
-		mutatable = true;
-		tileId = 0;
-	}
 
 	@Override
 	public int hashCode() {
@@ -60,11 +54,15 @@ public class Tile implements Transferable {
 		try {
 			worker = Db.run(new Query(Queries.TILE).set(gameId).set(letterId));
 			res = worker.get();
-			if (res.next()) {
+			if (res.first()) {
 				letter = res.getString("karakter");
 				value = res.getInt("waarde");
 				mutatable = Tile.MUTATABLE;
 				tileId = res.getInt("id");
+				blanc = false;
+				if(letter.equals("?")){
+					blanc = true;
+				}
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
@@ -145,7 +143,7 @@ public class Tile implements Transferable {
 	}
 
 	public boolean isBlanc() {
-		return letter.equals("?");
+		return blanc;
 	}
 
 }

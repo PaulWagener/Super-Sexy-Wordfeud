@@ -611,8 +611,8 @@ public class GameModel extends CoreModel {
 			ArrayList<Tile> playedTiles = new ArrayList<Tile>();
 
 			Query insertLetterQuery = new Query(
-					"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam)"
-							+ "VALUES (?, ?, ?, ?, ?, ?);");
+					"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?);");
 
 			int turnId = getNextTurnId();
 
@@ -626,9 +626,15 @@ public class GameModel extends CoreModel {
 						// Add the tile to the array,
 						// These will be removed from the players stash
 						playedTiles.add(tile);
+						
+						if(tile.isBlanc()){
+							insertLetterQuery.set(tileId).set(gameId).set(turnId)
+							.set(x + 1).set(y + 1).set("standard").set(tile.getLetter());
+						} else {
+							insertLetterQuery.set(tileId).set(gameId).set(turnId)
+							.set(x + 1).set(y + 1).set("standard").set();
+						}
 
-						insertLetterQuery.set(tileId).set(gameId).set(turnId)
-								.set(x + 1).set(y + 1).set("standard");
 						insertLetterQuery.addBatch();
 					}
 				}
