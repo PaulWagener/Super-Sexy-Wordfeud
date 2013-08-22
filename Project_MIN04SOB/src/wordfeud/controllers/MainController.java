@@ -447,13 +447,15 @@ public class MainController extends CoreController {
 	}
 
 	private void initChat() {
+		chatPanel.empty(); 
 		chatPanel.getChatFieldSend().setEnabled(true);
+		
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
 			
 			chatPanel.addToChatField(message);
 		}
-		chatModel.update();
+		
 	}
 
 	public void openPanels() {

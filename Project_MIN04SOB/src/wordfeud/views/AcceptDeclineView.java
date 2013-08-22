@@ -102,7 +102,6 @@ public class AcceptDeclineView extends CorePanel {
 			String[] words = (String[]) evt.getNewValue();
 			fillWordList(words);
 			break;
-
 		default:
 			break;
 		}
@@ -115,5 +114,11 @@ public class AcceptDeclineView extends CorePanel {
 	public void setButtonsEnabled(boolean enabled) {
 		acceptButton.setEnabled(enabled);
 		deniedButton.setEnabled(enabled);
+	}
+
+	public void checkWordList() {
+		if(wordList.getModel().getSize() == 0) {
+			removeWindow();
+		}
 	}
 }
