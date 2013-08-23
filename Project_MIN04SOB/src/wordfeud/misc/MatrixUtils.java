@@ -133,4 +133,19 @@ public class MatrixUtils {
 
 		return xorMatrix;
 	}
+	
+	public static Tile[][] compareFields(Tile[][] oldField, Tile[][] newField) {
+		Tile[][] playedLetters = new Tile[15][15];
+		for (int vertical = 0; vertical < 15; vertical++) {
+			for (int horizontal = 0; horizontal < 15; horizontal++) {
+				if (oldField[vertical][horizontal] == null
+						&& newField[vertical][horizontal] != null) {
+					playedLetters[vertical][horizontal] = newField[vertical][horizontal];
+				} else {
+					playedLetters[vertical][horizontal] = null;
+				}
+			}
+		}
+		return playedLetters;
+	}
 }

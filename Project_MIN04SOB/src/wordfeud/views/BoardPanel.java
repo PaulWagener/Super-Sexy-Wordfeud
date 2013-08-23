@@ -55,7 +55,6 @@ public class BoardPanel extends CorePanel {
 	private JLabel playerScoreLabel;
 
 	private DefaultTableModel playerStash;
-	
 
 	public BoardPanel() {
 		playerStash = new DefaultTableModel(1, 8);
@@ -122,7 +121,7 @@ public class BoardPanel extends CorePanel {
 
 		playButton = new JButton();
 		playButton.setEnabled(true);
-		
+
 		turnTextLabel = new JLabel("Beurt");
 		add(turnTextLabel, "cell 5 4,alignx right");
 
@@ -170,7 +169,7 @@ public class BoardPanel extends CorePanel {
 	public void addPassActionListener(ActionListener listener) {
 		passButton.addActionListener(listener);
 	}
-	
+
 	// enable nextButton
 	public void enableNextButton() {
 		nextButton.setEnabled(true);
@@ -225,11 +224,24 @@ public class BoardPanel extends CorePanel {
 			}
 
 			// refresh the board
+			playBoard.updateUI();
 			playBoard.revalidate();
 			playBoard.repaint();
 			setTurnLabel(hasTurn);
 			break;
 
+		case Event.OPPONENTSCORE:
+
+			int opponentScore = (int) evt.getNewValue();
+			setScoreOpponent(opponentScore);
+			break;
+
+		case Event.CHALLENGERSCORE:
+
+			int challengerScore = (int) evt.getNewValue();
+			setScoreChallenger(challengerScore);
+			break;
+			
 		case Event.RESIGN:
 			observerView();
 			break;
@@ -292,11 +304,6 @@ public class BoardPanel extends CorePanel {
 		playBoard.setDefaultRenderer(Tile.class, renderer);
 	}
 
-	public void update() {
-
-		this.repaint();
-	}
-
 	public void observerView() {
 		passButton.setEnabled(false);
 		resignButton.setEnabled(false);
@@ -314,6 +321,7 @@ public class BoardPanel extends CorePanel {
 		playButton.setEnabled(true);
 		playerTilesField.setEnabled(true);
 		playBoard.setEnabled(true);
+
 	}
 
 	public void infoBox(String infoMessage, String title) {
@@ -341,5 +349,4 @@ public class BoardPanel extends CorePanel {
 		}
 		return newBoard;
 	}
-
 }

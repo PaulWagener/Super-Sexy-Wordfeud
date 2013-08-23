@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 import wordfeud.controllers.ChallengeModel;
 import wordfeud.core.Event;
 import wordfeud.core.database.Db;
+import wordfeud.core.database.Queries;
 import wordfeud.core.database.Query;
 import wordfeud.core.mvc.CoreModel;
 import wordfeud.misc.constants.Role;
@@ -47,8 +48,6 @@ public class AccountModel extends CoreModel {
 	private String username;
 
 	private boolean isLoggedIn;
-
-	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
 
 	private int gameCount;
 
@@ -93,10 +92,8 @@ public class AccountModel extends CoreModel {
 		CompetitionModel[] comp_desc = new CompetitionModel[0];
 		int x = 0;
 		try {
-			// deze query laat alleen de beschikbare competities zien die al
-			// minimaal 1 deelnemer heeft
 			Future<ResultSet> worker = Db.run(new Query(
-					availableCompetitionQuery).set(username));
+					Queries.AVAILABLE_COMPETITIONS).set(username));
 			ResultSet rs = worker.get();
 			comp_desc = new CompetitionModel[Query.getNumRows(rs)];
 			while (rs.next() && x < comp_desc.length) {
@@ -157,8 +154,7 @@ public class AccountModel extends CoreModel {
 					.set(State.REQUEST));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this,
-						new BoardModel(), new BoardPanel(), true));
+				games.add(new GameModel(dbResult.getInt("spel_id"), this, true));
 				// Add a new game with the gameId for this account
 			}
 
@@ -170,14 +166,13 @@ public class AccountModel extends CoreModel {
 
 	public ArrayList<GameModel> getOpenGames() {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
-		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
+		String query = "SELECT `id` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
 		try {
 			Future<ResultSet> worker = Db.run(new Query(query).set(username)
 					.set(username).set(State.PLAY));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this,
-						new BoardModel(), new BoardPanel(), false));
+				games.add(new GameModel(dbResult.getInt("id"), this, false));
 				// Add a new game with the gameId for this account
 			}
 

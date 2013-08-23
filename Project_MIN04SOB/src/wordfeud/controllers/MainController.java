@@ -94,13 +94,16 @@ public class MainController extends CoreController {
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() + 1);
 					currGamePanel.enablePreviousButton();
-					currGamePanel.update();
+					currGamePanel.repaint();
 
 					currentGame.updateboardfromdatabasetoturn(currentGame
 							.getCurrentobserveturn());
-
+					
+					
+					
+					
 					currentGame.getBoardModel().update();
-
+					updatePlayerlettersToTurn();
 					updatelabels(currentGame.getCurrentobserveturn());
 				} else {
 					currGamePanel.disableNextButton();
@@ -116,7 +119,7 @@ public class MainController extends CoreController {
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() - 1);
 					currentGame.getBoardModel().setBoardToDefault();
-					currGamePanel.update();
+					currGamePanel.repaint();
 					currGamePanel.enableNextButton();
 					for (int x = 0; currentGame.getCurrentobserveturn() > x
 							|| currentGame.getCurrentobserveturn() == x; x++) {
@@ -124,6 +127,7 @@ public class MainController extends CoreController {
 
 					}
 					updatelabels(currentGame.getCurrentobserveturn());
+					updatePlayerlettersToTurn();
 				} else {
 					currGamePanel.disablePreviousButton();
 				}
@@ -142,22 +146,27 @@ public class MainController extends CoreController {
 			}
 		});
 		
+
 		currGamePanel.addPassActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				currentGame.pass();
-				System.out.println("hoi");
-				
+				if(currentGame.getpassCount() >= 3){
+					currentGame.end();
+				}
 			}
 			
 		});
+
 
 		currGamePanel.addPlayActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					
+					/*
 					BoardModel newBoard = new BoardModel();
 					for (int vertical = 0; vertical < 15; vertical++) {
 						for (int horizontal = 0; horizontal < 15; horizontal++) {
@@ -166,16 +175,34 @@ public class MainController extends CoreController {
 									vertical, horizontal);
 						}
 					}
-					int score = currentGame.playWord(newBoard);
+					*/
+					
+					AccountModel opponent = currentGame.getOpponent();
+					int secondLastTurn = currentGame.getLastTurn(opponent);
+					BoardModel oldBoard = BoardModel.getBoard(currentGame, secondLastTurn);
+					
+					
+					int score = currentGame.playWord(oldBoard, boardModel);
 					currentGame.setPlayerTiles();
-					currGamePanel.infoBox("Woord gelegd", "Score voor deze beurt: " + score);
+					
+					currGamePanel.infoBox("Score voor deze beurt: " + score, "Woord gespeeld");
 					openGame(currentGame);
+					
+					if(currentGame.hasEnded()){
+						//Also play end for ourself
+						//This will deduct any remaining point.
+						currentGame.end();
+					}
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
 				}
 			}
+
+			
 		});
 	}
+	
+	
 
 	@Override
 	public void addListeners() {
@@ -396,7 +423,6 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 
 		currGamePanel = new BoardPanel();
-		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
 
@@ -422,7 +448,8 @@ public class MainController extends CoreController {
 
 		currGamePanel = selectedGame.getBoardPanel();
 
-		boardModel = selectedGame.getBoardFromDatabase();
+		boardModel = new BoardModel(selectedGame);
+		//.getBoardFromDatabase();
 		addModel(boardModel);
 		addView(currGamePanel);
 		currentGame.setBoardModel(boardModel);
@@ -440,6 +467,8 @@ public class MainController extends CoreController {
 
 		// selectedGame.getBoardFromDatabase();
 		selectedGame.update();
+		boardModel.update();
+		
 		if (!(selectedGame.hasButtons())) {
 
 			addButtonListeners();
@@ -457,15 +486,15 @@ public class MainController extends CoreController {
 	}
 
 	private void initChat() {
-		chatPanel.empty(); 
+		chatPanel.empty();
 		chatPanel.getChatFieldSend().setEnabled(true);
-		
+
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
-			
+
 			chatPanel.addToChatField(message);
 		}
-		
+
 	}
 
 	public void openPanels() {
@@ -539,6 +568,16 @@ public class MainController extends CoreController {
 				swapWindow.dispose();
 			}
 		});
+	}
+	public void updatePlayerlettersToTurn(){
+
+		currentGame.setPlayerTiles(currentGame
+				.getCurrentobserveturn());
+	}
+
+	public void setLetters(Tile[] tiles) {
+		// for observer //
+
 	}
 
 }
