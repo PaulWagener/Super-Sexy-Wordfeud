@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="wordfeud.models.StashModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/StashModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="333" width="268" x="4755" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="wordfeud.models.Tile" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="513" width="237" x="3022" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="wordfeud.models.ChatModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/ChatModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="212" x="5308" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="wordfeud.models.GameModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/GameModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1503" width="313" x="4692" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="wordfeud.models.CompetitionModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/CompetitionModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="477" width="301" x="5084" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="wordfeud.models.ModeratorModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/ModeratorModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="181" x="5066" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="wordfeud.models.ChallengeModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/ChallengeModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="477" width="377" x="6019" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="wordfeud.models.AccountModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/AccountModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="567" width="274" x="4694" y="3455"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="wordfeud.models.BoardModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/models/BoardModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="477" width="208" x="6457" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="wordfeud.views.StartPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/StartPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="268" x="3040" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="wordfeud.views.BoardPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/BoardPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="945" width="268" x="3966" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="wordfeud.views.ResignPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/ResignPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="268" x="4006" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="wordfeud.views.ChatPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/ChatPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="441" width="268" x="3348" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="wordfeud.views.LoginPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/LoginPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="268" x="2077" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="wordfeud.views.CompetitionScoreView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/CompetitionScoreView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="441" width="290" x="1060" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="wordfeud.views.CreateCompetitionView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/CreateCompetitionView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="268" x="1390" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="wordfeud.views.SelectSwapView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/SelectSwapView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="268" x="2711" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="wordfeud.views.AcceptDeclineView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/AcceptDeclineView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="405" width="275" x="4356" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="wordfeud.views.ChangePassPanelAdministrator" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/ChangePassPanelAdministrator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="351" width="268" x="1769" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="wordfeud.views.CompetitionView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/CompetitionView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="513" width="268" x="752" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="wordfeud.views.ChangePassPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/ChangePassPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="567" width="268" x="2714" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="wordfeud.views.RegisterPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/RegisterPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="621" width="268" x="2385" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="wordfeud.views.ChallengeView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/ChallengeView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="369" width="268" x="3677" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="wordfeud.views.MenuView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/views/MenuView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1035" width="295" x="2069" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="wordfeud.controllers.MainController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/controllers/MainController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="192" x="3637" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="wordfeud.controllers.AccountController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/controllers/AccountController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="225" x="2425" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="wordfeud.controllers.ChallengeController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/controllers/ChallengeController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="196" x="3869" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="wordfeud.controllers.ChallengeModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/controllers/ChallengeModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="477" width="377" x="5602" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="wordfeud.controllers.ResignController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/controllers/ResignController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="169" x="4105" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="wordfeud.controllers.CompetitionController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/controllers/CompetitionController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="369" width="290" x="1698" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="wordfeud.controllers.AcceptDeclineController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/controllers/AcceptDeclineController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="162" x="4356" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="wordfeud.core.Event" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/Event.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="163" x="2230" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="wordfeud.core.database.DatabasePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/database/DatabasePool.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="166" x="299" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="wordfeud.core.database.Query" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/database/Query.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="171" x="503" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="wordfeud.core.database.Db" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/database/Db.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="172" x="1557" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="wordfeud.core.database.Queries" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/database/Queries.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="261" width="226" x="1769" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="wordfeud.core.mvc.CoreWindow" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/mvc/CoreWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="268" x="1698" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="wordfeud.core.mvc.CoreModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/mvc/CoreModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="327" x="5562" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="wordfeud.core.mvc.CorePanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/mvc/CorePanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="102" x="2465" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="wordfeud.core.mvc.CorePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/mvc/CorePool.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="167" x="296" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="41" language="java" name="wordfeud.core.mvc.CoreView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/mvc/CoreView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="268" x="1461" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="42" language="java" name="wordfeud.core.mvc.CoreTableModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/mvc/CoreTableModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="369" width="277" x="6918" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="wordfeud.core.mvc.CoreController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/core/mvc/CoreController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="240" x="3050" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="wordfeud.misc.TileTable" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/TileTable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="192" x="64" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="wordfeud.misc.PlaySound" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/PlaySound.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="177" x="3637" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="wordfeud.misc.ScrabbleTableCellRenderer" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/ScrabbleTableCellRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="421" x="6457" y="927"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="wordfeud.misc.MatrixUtils" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/MatrixUtils.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="194" x="1164" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="wordfeud.misc.TileTransferHandler" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/TileTransferHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="251" x="714" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="49" language="java" name="wordfeud.misc.InvalidMoveException" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/InvalidMoveException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="161" x="2849" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="50" language="java" name="wordfeud.misc.Column" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/Column.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="159" x="6918" y="2470"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="wordfeud.misc.MainClass" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/MainClass.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="155" x="2035" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="wordfeud.misc.DuplicateCompetitionException" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/DuplicateCompetitionException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="201" x="2608" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="53" language="java" name="wordfeud.misc.constants.Turn" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/constants/Turn.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="119" x="1398" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="54" language="java" name="wordfeud.misc.constants.State" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/constants/State.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="119" x="1005" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="55" language="java" name="wordfeud.misc.constants.Error" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/constants/Error.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="155" x="515" y="500"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="56" language="java" name="wordfeud.misc.constants.Role" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/wordfeud/misc/constants/Role.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="135" x="2433" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <association id="57">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="58" name="menu"/>      
+      <multiplicity id="59" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="60">    
+    <bendpoint x="4703" y="2470"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="61" name="currentUser"/>      
+      <multiplicity id="62" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="63">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="43"/>  
+  </generalization>  
+  <association id="64">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="65" name="comp"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="68" name="chatModel"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="70">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="71" name="chatPanel"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="73">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="40"/>  
+  </generalization>  
+  <generalization id="74">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="75">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="77">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="78" name="modModel"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="81" name="playerStash"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="84" name="swapView"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="87" name="accountcontroller"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="90" name="gameModel"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="92">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="41"/>  
+  </realization>  
+  <association id="93">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="94" name="competition"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="96">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="43"/>  
+  </generalization>  
+  <association id="97">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="98" name="competitionView"/>      
+      <multiplicity id="99" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="100">    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="101" name="boardModel"/>      
+      <multiplicity id="102" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="103">    
+    <bendpoint x="5571" y="927"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="104">    
+    <bendpoint x="5550" y="927"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="105" name="boardModel"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="107">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="108">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="109" name="registerPanel"/>      
+      <multiplicity id="110" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="111">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="112" name="window2"/>      
+      <multiplicity id="113" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="114">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="115" name="currentGame"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="117">    
+    <bendpoint x="5277" y="927"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <generalization id="118">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="42"/>  
+  </generalization>  
+  <generalization id="119">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="120">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="121" name="boardPanel"/>      
+      <multiplicity id="122" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="123">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="124">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="125" name="adView"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="128" name="startPanel"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="130">    
+    <bendpoint x="3009" y="927"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="131">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="132" name="pool"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="134">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="135" name="owner"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="137">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="138" name="lettersArray"/>      
+      <multiplicity id="139" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="140">    
+    <bendpoint x="4682" y="2470"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="141" name="challenger"/>      
+      <multiplicity id="142" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="143">    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="144" name="error"/>      
+      <multiplicity id="145" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="55" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="146">    
+    <bendpoint x="5415" y="2470"/>    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="147" name="challenger"/>      
+      <multiplicity id="148" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="149">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="150" name="frame"/>      
+      <multiplicity id="151" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="152">    
+    <bendpoint x="3646" y="927"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="153" name="ps"/>      
+      <multiplicity id="154" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="45" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="155">    
+    <bendpoint x="5053" y="2470"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="156" name="account"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="158">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="159" name="competitionScoreView"/>      
+      <multiplicity id="160" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="161">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="162" name="loginPanel"/>      
+      <multiplicity id="163" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="164">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="165">    
+    <bendpoint x="5436" y="2470"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="166" name="challenger"/>      
+      <multiplicity id="167" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="168">    
+    <bendpoint x="2683" y="2470"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="169" name="accountModel"/>      
+      <multiplicity id="170" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="171">    
+    <bendpoint x="700" y="500"/>    
+    <bendpoint x="700" y="927"/>    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="172" name="registeredViews"/>      
+      <multiplicity id="173" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="174">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="43"/>  
+  </generalization>  
+  <association id="175">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="176" name="comp"/>      
+      <multiplicity id="177" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="178">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="179" name="changepassPaneladmin"/>      
+      <multiplicity id="180" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="181">    
+    <bendpoint x="2394" y="927"/>    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="182">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="183">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="184" name="changepassPanel"/>      
+      <multiplicity id="185" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="186">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="187" name="registeredModels"/>      
+      <multiplicity id="188" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="189">    
+    <bendpoint x="2680" y="927"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="190">    
+    <bendpoint x="721" y="927"/>    
+    <bendpoint x="721" y="2470"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="191" name="accountModel"/>      
+      <multiplicity id="192" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="193">    
+    <bendpoint x="2434" y="500"/>    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="43"/>  
+  </generalization>  
+  <association id="194">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="195" name="swapWindow"/>      
+      <multiplicity id="196" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="197">    
+    <bendpoint x="4724" y="2470"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="198" name="opponent"/>      
+      <multiplicity id="199" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="200">    
+    <bendpoint x="3975" y="927"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="201" name="currGamePanel"/>      
+      <multiplicity id="202" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="203">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="204" name="window"/>      
+      <multiplicity id="205" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="206">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="207" name="boardModel"/>      
+      <multiplicity id="208" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="209">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="210">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="211" name="challengeView"/>      
+      <multiplicity id="212" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="213">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="214" name="createCompetitionView"/>      
+      <multiplicity id="215" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="216">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="217" name="columns"/>      
+      <multiplicity id="218" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="219">    
+    <bendpoint x="4304" y="927"/>    
+    <bendpoint x="4304" y="2470"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="220" name="account"/>      
+      <multiplicity id="221" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="222">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="41"/>  
+  </realization>  
+  <generalization id="223">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="43"/>  
+  </generalization>  
+  <generalization id="224">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="43"/>  
+  </generalization>  
+  <association id="225">    
+    <bendpoint x="5035" y="927"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="226" name="competitionModel"/>      
+      <multiplicity id="227" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="228">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="229">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="230" name="game"/>      
+      <multiplicity id="231" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="232">    
+    <bendpoint x="1996" y="927"/>    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="41"/>  
+  </realization>  
+  <generalization id="233">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="234">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="235" name="owner"/>      
+      <multiplicity id="236" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="237">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="238" name="resignPanel"/>      
+      <multiplicity id="239" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="240">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="241">    
+    <bendpoint x="4325" y="927"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="242" name="competitionModel"/>      
+      <multiplicity id="243" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="244">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="245">    
+    <bendpoint x="6426" y="2470"/>    
+    <bendpoint x="6426" y="927"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <association id="246">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="247" name="window1"/>      
+      <multiplicity id="248" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="249">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <generalization id="250">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="251">    
+    <bendpoint x="2038" y="927"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <association id="252">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="253" name="ps"/>      
+      <multiplicity id="254" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="45" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="255">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="256" name="instance"/>      
+      <multiplicity id="257" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="258">    
+    <bendpoint x="4661" y="927"/>    
+    <bendpoint x="4661" y="2470"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="259" name="account"/>      
+      <multiplicity id="260" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="261">    
+    <bendpoint x="2017" y="927"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
