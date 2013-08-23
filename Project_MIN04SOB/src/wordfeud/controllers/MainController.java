@@ -152,6 +152,9 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				currentGame.pass();
+				if(currentGame.getpassCount() >= 3){
+					currentGame.end();
+				}
 			}
 			
 		});
@@ -184,12 +187,22 @@ public class MainController extends CoreController {
 					
 					currGamePanel.infoBox("Score voor deze beurt: " + score, "Woord gespeeld");
 					openGame(currentGame);
+					
+					if(currentGame.hasEnded()){
+						//Also play end for ourself
+						//This will deduct any remaining point.
+						currentGame.end();
+					}
 				} catch (InvalidMoveException e) {
 					currGamePanel.infoBox(e.getMessage(), "Ongeldige zet");
 				}
 			}
+
+			
 		});
 	}
+	
+	
 
 	@Override
 	public void addListeners() {
