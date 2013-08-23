@@ -94,7 +94,7 @@ public class MainController extends CoreController {
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() + 1);
 					currGamePanel.enablePreviousButton();
-					currGamePanel.update();
+					currGamePanel.repaint();
 
 					currentGame.updateboardfromdatabasetoturn(currentGame
 							.getCurrentobserveturn());
@@ -119,7 +119,7 @@ public class MainController extends CoreController {
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() - 1);
 					currentGame.getBoardModel().setBoardToDefault();
-					currGamePanel.update();
+					currGamePanel.repaint();
 					currGamePanel.enableNextButton();
 					for (int x = 0; currentGame.getCurrentobserveturn() > x
 							|| currentGame.getCurrentobserveturn() == x; x++) {
@@ -152,8 +152,6 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				currentGame.pass();
-				System.out.println("hoi");
-				
 			}
 			
 		});

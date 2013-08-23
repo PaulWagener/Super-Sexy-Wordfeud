@@ -483,8 +483,15 @@ public class GameModel extends CoreModel {
 	public void update() {
 		boolean oldHasTurn = hasTurn;
 		hasTurn = yourturn();
-
+		
+		if(oldHasTurn != hasTurn){
+			int opponentScore = getScore(opponent.getUsername());
+			int challengerScore = getScore(currentUser.getUsername());
+			firePropertyChange(Event.OPPONENTSCORE, 0, opponentScore);
+			firePropertyChange(Event.CHALLENGERSCORE, 0, challengerScore);
+		}
 		firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
+		
 	}
 
 	@Deprecated
@@ -1030,8 +1037,11 @@ public class GameModel extends CoreModel {
 		return true;
 	}
 
-	private boolean wordIsAlligned(Object[][] playedLetters) {
+	private boolean wordIsAlligned(Object[][] playedLetters) throws InvalidMoveException {
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+		if(letterPositions.length == 0){
+			throw new InvalidMoveException(Error.NO_LETTERS_PUT);
+		}
 		int holdX = (int) letterPositions[0].getX();
 		int holdY = (int) letterPositions[0].getY();
 		if (letterPositions.length == 1) {
