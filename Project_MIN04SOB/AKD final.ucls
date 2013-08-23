@@ -514,7 +514,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="60">    
-    <bendpoint x="4703" y="2470"/>    
+    <bendpoint x="4681" y="2470"/>    
     <end type="SOURCE" refId="4" navigable="false">      
       <attribute id="61" name="currentUser"/>      
       <multiplicity id="62" minimum="0" maximum="1"/>    
@@ -751,7 +751,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="140">    
-    <bendpoint x="4682" y="2470"/>    
+    <bendpoint x="4626" y="2477"/>    
     <end type="SOURCE" refId="4" navigable="false">      
       <attribute id="141" name="challenger"/>      
       <multiplicity id="142" minimum="0" maximum="1"/>    
@@ -1115,7 +1115,7 @@
   </association>  
   <association id="258">    
     <bendpoint x="4661" y="927"/>    
-    <bendpoint x="4661" y="2470"/>    
+    <bendpoint x="4542" y="2512"/>    
     <end type="SOURCE" refId="27" navigable="false">      
       <attribute id="259" name="account"/>      
       <multiplicity id="260" minimum="0" maximum="1"/>    
