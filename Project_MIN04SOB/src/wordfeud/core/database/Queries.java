@@ -18,7 +18,7 @@ public class Queries {
 	public static final String AVAILABLE_COMPETITIONS;
 	public static final String GAMEBOARD;
 	
-	private static final boolean MYPROJECTSETUPISMESSEDUP = true;
+	private static final boolean MYPROJECTSETUPISMESSEDUP = false;
 
 
 	static {

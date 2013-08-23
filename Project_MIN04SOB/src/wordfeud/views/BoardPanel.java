@@ -236,10 +236,10 @@ public class BoardPanel extends CorePanel {
 			setScoreOpponent(opponentScore);
 			break;
 
-		case Event.CHALLENGERSCORE:
+		case Event.PLAYERSCORE:
 
-			int challengerScore = (int) evt.getNewValue();
-			setScoreChallenger(challengerScore);
+			int playerScore = (int) evt.getNewValue();
+			setScoreChallenger(playerScore);
 			break;
 			
 		case Event.RESIGN:

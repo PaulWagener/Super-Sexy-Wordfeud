@@ -45,7 +45,7 @@ public class GameModel extends CoreModel {
 
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
-	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
+	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` = ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID, ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
 	private final String getLastTurnQuery = "SELECT Account_naam, ID FROM beurt WHERE Spel_ID = ? ORDER BY ID DESC LIMIT 0, 1";
 
@@ -469,9 +469,9 @@ public class GameModel extends CoreModel {
 
 		if (oldHasTurn != hasTurn) {
 			int opponentScore = getScore(opponent.getUsername());
-			int challengerScore = getScore(currentUser.getUsername());
+			int playerrScore = getScore(currentUser.getUsername());
 			firePropertyChange(Event.OPPONENTSCORE, 0, opponentScore);
-			firePropertyChange(Event.CHALLENGERSCORE, 0, challengerScore);
+			firePropertyChange(Event.PLAYERSCORE, 0, playerrScore);
 		}
 		firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
 	}
@@ -483,13 +483,13 @@ public class GameModel extends CoreModel {
 	private Turn getTurnType(int turnId) throws SQLException,
 			InterruptedException, ExecutionException {
 		Query q = new Query(
-				"SELECT `aktie_type` FROM `beurt` WHERE `spel_id` = ? AND `beurt_id` = ?");
+				"SELECT `aktie_type` FROM `beurt` WHERE `spel_id` = ? AND `id` = ?");
 		q.set(gameId);
 		q.set(turnId);
 		Future<ResultSet> worker = Db.run(q);
 		ResultSet res = worker.get();
+		res.next();
 		String type = res.getString("aktie_type");
-
 		for (Turn turn : Turn.values()) {
 			if (type.equals(turn)) {
 				return turn;

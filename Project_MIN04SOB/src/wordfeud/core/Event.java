@@ -12,5 +12,5 @@ public class Event {
 	public final static String NEWCOMPETITION = "newcompetition";
 	public final static String RESIGN = "resign";
 	public final static String OPPONENTSCORE = "opponentscore";
-	public final static String CHALLENGERSCORE = "playerscore";
+	public final static String PLAYERSCORE = "playerscore";
 }
